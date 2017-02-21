@@ -5,14 +5,14 @@ import A from './A'
 import Img from './Img'
 import NavBar from './NavBar'
 import HeaderLink from './HeaderLink'
-import Banner from './logo_ns.png'
+import Banner from './_the.png'
 import messages from './messages'
 
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render () {
     return (
       <div>
-        <A href='https://twitter.com/mxstbr'>
+        <A href='http://localhost:3000'>
           <Img src={Banner} alt='react-boilerplate - Logo' />
         </A>
         <NavBar>

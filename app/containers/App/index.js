@@ -27,10 +27,10 @@ export function App(props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate Chris"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - The Newspeller"
+        defaultTitle="The Newspeller"
         meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
+          { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' },
         ]}
       />
       <Header />
