@@ -6,13 +6,13 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React from 'react';
-import Helmet from 'react-helmet';
-import styled from 'styled-components';
+import React from 'react'
+import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import withProgressBar from 'components/ProgressBar';
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import withProgressBar from 'components/ProgressBar'
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -21,27 +21,27 @@ const AppWrapper = styled.div`
   min-height: 100%;
   padding: 0 16px;
   flex-direction: column;
-`;
+`
 
-export function App(props) {
+export function App (props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - The Newspeller"
-        defaultTitle="The Newspeller"
+        titleTemplate='%s - The Newspeller'
+        defaultTitle='The Newspeller'
         meta={[
-          { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' },
+          { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' }
         ]}
       />
       <Header />
       {React.Children.toArray(props.children)}
       <Footer />
     </AppWrapper>
-  );
+  )
 }
 
 App.propTypes = {
-  children: React.PropTypes.node,
-};
+  children: React.PropTypes.node
+}
 
-export default withProgressBar(App);
+export default withProgressBar(App)

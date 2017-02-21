@@ -109,11 +109,11 @@ HomePage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     onAdd: (topic) => {
-      const {currentUser, item} = topic.props
+      const {item} = topic.props
       dispatch(addTopic(item))
     },
     onRemove: (topic) => {
-      const {currentUser, item} = topic.props
+      const {item} = topic.props
       dispatch(removeTopic(item))
     },
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
