@@ -7,6 +7,9 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+// import persistState from 'redux-localstorage'
+// import adapter from 'redux-localstorage/lib/adapters/localStorage';
+// import filter from 'redux-localstorage-filter';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,8 +22,13 @@ export default function configureStore(initialState = {}, history) {
     routerMiddleware(history),
   ];
 
+  // const storage = compose(
+  // filter('nested.key')
+  // )(adapter(window.localStorage));
+
   const enhancers = [
     applyMiddleware(...middlewares),
+    // persistState(storage, 'my-storage-key')
   ];
 
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

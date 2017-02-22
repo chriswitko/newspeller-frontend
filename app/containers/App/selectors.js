@@ -8,7 +8,7 @@ const selectGlobal = (state) => state.get('global')
 
 const makeSelectCurrentUser = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('currentUser')
+  (globalState) => globalState.get('currentUser') || window.localStorage.getItem('currentUser')
 )
 
 const makeSelectNextAt = () => createSelector(

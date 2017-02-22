@@ -8,7 +8,7 @@ const selectHome = (state) => state.get('home')
 
 const makeSelectUsername = () => createSelector(
   selectHome,
-  (homeState) => homeState.get('username') || 'chris.witko@me.com'
+  (homeState) => homeState.get('username') || window.localStorage.getItem('currentUser') || ''
 )
 
 export {
