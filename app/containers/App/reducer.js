@@ -95,10 +95,12 @@ function appReducer (state = initialState, action) {
     case LOAD_FEEDS_SUCCESS:
       const all = []
       action.repos.map(channel => {
-        channel.topics.map(topic => all.push(`${channel.code}_${topic.code}`))
+        channel.sections.map(section => all.push(`${channel.code}_${section.code}`))
       })
+      // console.log('all', all)
+      // console.log('repo', state.getIn(['userData', 'repositories']))
       return state
-        .setIn(['channels'], all.filter(channel => !~state.getIn(['userData', 'repositories']).indexOf(channel)))
+        .setIn(['channels'], all)
         .set('loading', false)
     case LOAD_FEEDS_ERROR:
       return state
@@ -110,6 +112,7 @@ function appReducer (state = initialState, action) {
         .set('error', false)
         .setIn(['userData', 'repositories'], false)
     case LOAD_REPOS_SUCCESS:
+      // console.log('action.repos', action.repos)
       return state
         .setIn(['userData', 'repositories'], action.repos)
         .setIn(['userData', 'days'], action.days)

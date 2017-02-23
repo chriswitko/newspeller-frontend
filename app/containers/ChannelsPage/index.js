@@ -39,7 +39,8 @@ export class ChannelsPage extends React.PureComponent { // eslint-disable-line r
       onAdd,
       loading,
       error,
-      channels
+      channels,
+      repos
     }
 
     return (
@@ -106,8 +107,8 @@ export function mapDispatchToProps (dispatch) {
       dispatch(loadRepos())
     },
     onReady: () => {
-      dispatch(loadRepos())
       dispatch(loadFeeds())
+      dispatch(loadRepos())
       // dispatch(loadRepos, loadFeeds)
       // return bindActionCreators(Object.assign({}, loadFeeds, loadRepos), dispatch)
     }
