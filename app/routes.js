@@ -12,6 +12,13 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
 
+const requireAuth = (nextState, replace) => {
+  if (!window.localStorage.getItem('token')) {
+    replace({
+      pathname: '/signin'
+    })
+  }
+}
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -20,7 +27,12 @@ export default function createRoutes(store) {
     {
       path: '/',
       name: 'home',
+      onEnter: requireAuth,
       getComponent(nextState, cb) {
+        if (!window.localStorage.getItem('token')) {
+          window.location.href = '/signin'
+        }
+
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -41,12 +53,11 @@ export default function createRoutes(store) {
     }, {
       path: '/schedule',
       name: 'schedule',
+      onEnter: requireAuth,
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
-          // import('containers/SchedulePage/reducer'),
-          // import('containers/SchedulePage/sagas'),
           import('containers/SchedulePage'),
         ]);
 
@@ -64,13 +75,38 @@ export default function createRoutes(store) {
     }, {
       path: '/channels',
       name: 'channels',
+      onEnter: requireAuth,
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
-          // import('containers/ChannelsPage/reducer'),
-          // import('containers/ChannelsPage/sagas'),
           import('containers/ChannelsPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('home', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/signin',
+      name: 'signin',
+      getComponent(nextState, cb) {
+        if (window.localStorage.getItem('token')) {
+          window.location.href = '/'
+        }
+
+        console.log('nextState', nextState)
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/SignInPage'),
         ]);
 
         const renderRoute = loadModule(cb);

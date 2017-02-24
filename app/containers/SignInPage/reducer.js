@@ -17,13 +17,14 @@ import {
 
 // The initial state of the App
 const initialState = fromJS({
-  username: ''
+  username: '',
+  repos: []
 })
 
-function scheduleReducer (state = initialState, action) {
+function homeReducer (state = initialState, action) {
   switch (action.type) {
     case CHANGE_USERNAME:
-
+      window.localStorage.setItem('currentUser', action.name)
       // Delete prefixed '@' from the github username
       return state
         .set('username', action.name)
@@ -33,4 +34,4 @@ function scheduleReducer (state = initialState, action) {
   }
 }
 
-export default scheduleReducer
+export default homeReducer

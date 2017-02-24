@@ -11,6 +11,11 @@ const makeSelectCurrentUser = () => createSelector(
   (globalState) => globalState.get('currentUser') || window.localStorage.getItem('currentUser')
 )
 
+const makeSelectUserId = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('currentUserId') || window.localStorage.getItem('currentUserId')
+)
+
 const makeSelectNextAt = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'nextAt'])

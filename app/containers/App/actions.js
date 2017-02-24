@@ -33,7 +33,11 @@ import {
   REMOVE_HOUR,
   REMOVE_HOUR_SUCCESS,
   ADD_HOUR,
-  ADD_HOUR_SUCCESS
+  ADD_HOUR_SUCCESS,
+  USER_AUTHORIZE,
+  USER_SUCCESS,
+  USER_ERROR,
+  USER_LOGOUT
 } from './constants'
 
 /**
@@ -74,6 +78,33 @@ export function addHourSuccess (hour) {
   }
 }
 
+export function authorizeUser (email, password) {
+  return {
+    type: USER_AUTHORIZE,
+    email,
+    password
+  }
+}
+
+export function authorizeSuccess (user) {
+  return {
+    type: USER_SUCCESS,
+    user
+  }
+}
+
+export function authorizeError (err) {
+  return {
+    type: USER_ERROR,
+    err
+  }
+}
+
+export function logoutUser () {
+  return {
+    type: USER_LOGOUT
+  }
+}
 /**
  * Dispatched when the repositories are loaded by the request saga
  *

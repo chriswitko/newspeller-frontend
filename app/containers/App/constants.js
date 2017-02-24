@@ -25,6 +25,10 @@ export const REMOVE_HOUR_SUCCESS = 'boilerplate/App/REMOVE_HOUR_SUCCESS'
 export const ADD_HOUR = 'boilerplate/App/ADD_HOUR'
 export const ADD_HOUR_SUCCESS = 'boilerplate/App/ADD_HOUR_SUCCESS'
 
+export const USER_AUTHORIZE = 'boilerplate/App/USER_AUTHORIZE'
+export const USER_SUCCESS = 'boilerplate/App/USER_SUCCESS'
+export const USER_ERROR = 'boilerplate/App/USER_AUTHORIZED'
+export const USER_LOGOUT = 'boilerplate/App/USER_LOGOUT'
 
 export const LOAD_FEEDS = 'boilerplate/App/LOAD_FEEDS'
 export const LOAD_FEEDS_SUCCESS = 'boilerplate/App/LOAD_FEEDS_SUCCESS'

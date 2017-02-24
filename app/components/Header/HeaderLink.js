@@ -1,3 +1,4 @@
+import { PropTypes } from 'react'
 import { Link } from 'react-router';
 import styled from 'styled-components';
 

@@ -29,7 +29,9 @@ import {
   ADD_HOUR,
   ADD_HOUR_SUCCESS,
   ADD_TOPIC,
-  ADD_TOPIC_SUCCESS
+  ADD_TOPIC_SUCCESS,
+  USER_SUCCESS,
+  USER_LOGOUT
 } from './constants'
 
 // The initial state of the App
@@ -37,6 +39,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   currentUser: false,
+  token: false,
   channels: false,
   userData: {
     nextAt: '',
@@ -53,6 +56,16 @@ const strToMin = str => {
 
 function appReducer (state = initialState, action) {
   switch (action.type) {
+    case USER_LOGOUT: 
+      window.localStorage.setItem('token', '')
+      return state
+        .set('token', false)
+    case USER_SUCCESS:
+      window.localStorage.setItem('currentUser', action.user.email)
+      window.localStorage.setItem('token', action.user.token)
+      return state
+        .set('currentUser', action.user.email)
+        .set('token', action.user.token)
     case ADD_TOPIC:
       return state
         .setIn(['userData', 'repositories'], [...state.getIn(['userData', 'repositories']), action.topic])

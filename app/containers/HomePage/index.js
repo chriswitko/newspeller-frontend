@@ -4,6 +4,8 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
+// console.log('process', process.env)
+
 import React from 'react'
 import Helmet from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
@@ -13,13 +15,10 @@ import { createStructuredSelector } from 'reselect'
 import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import ReposList from 'components/ReposList'
-import AtPrefix from './AtPrefix'
 import CenteredSection from './CenteredSection'
-import Form from './Form'
-import Input from './Input'
 import Section from './Section'
 import messages from './messages'
-import { loadRepos, removeTopic, addTopic } from '../App/actions'
+import { loadRepos, removeTopic, addTopic, logoutUser } from '../App/actions'
 import { changeUsername } from './actions'
 import { makeSelectUsername } from './selectors'
 
@@ -34,7 +33,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loading, error, repos, onRemove, nextAt } = this.props
+    const { loading, error, repos, onRemove, nextAt, handleLogout } = this.props
     const reposListProps = {
       nextAt,
       onRemove,
@@ -52,6 +51,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <div>
+          <a href='#' onClick={handleLogout}>
+          Logout
+          </a>
           <CenteredSection>
             <H2>
               <FormattedMessage {...messages.startProjectHeader} />
@@ -64,22 +66,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <H2>
               <FormattedMessage {...messages.trymeHeader} />
             </H2>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor='username'>
-                <FormattedMessage {...messages.trymeMessage} />
-                <AtPrefix>
-                  <FormattedMessage {...messages.trymeAtPrefix} />
-                </AtPrefix>
-                <Input
-                  id='username'
-                  type='text'
-                  placeholder='chris.witko@me.com'
-                  value={this.props.username}
-                  onChange={this.props.onChangeUsername}
-                />
-              </label>
-            </Form>
             <div>Next delivery at: {nextAt}</div>
+            <br />
             <ReposList {...reposListProps} />
           </Section>
         </div>
@@ -102,12 +90,16 @@ HomePage.propTypes = {
   onSubmitForm: React.PropTypes.func,
   username: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func,
+  handleLogout: React.PropTypes.func,
   onRemove: React.PropTypes.func,
   onAdd: React.PropTypes.func
 }
 
 export function mapDispatchToProps (dispatch) {
   return {
+    handleLogout: () => {
+      dispatch(logoutUser())
+    },
     onAdd: (topic) => {
       const {item} = topic.props
       dispatch(addTopic(item))

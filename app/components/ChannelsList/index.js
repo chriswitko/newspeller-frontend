@@ -6,9 +6,6 @@ import LoadingIndicator from 'components/LoadingIndicator'
 import RepoListItem from 'containers/RepoListItem'
 
 function ChannelsList ({ loading, error, channels = [], repos = [], onRemove, onAdd }) {
-  console.log('list channels', channels)
-  console.log('list repos', repos)
-
   let all = []
 
   if (channels !== false && repos !== false) {
