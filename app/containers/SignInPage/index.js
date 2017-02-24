@@ -101,7 +101,7 @@ SignInPage.propTypes = {
   onChangeUsername: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch) {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
@@ -109,8 +109,6 @@ export function mapDispatchToProps (dispatch, props) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault()
       if (evt) {
         if (evt.target.username.value && evt.target.password.value) {
-          console.log('username', evt.target.username.value)
-          console.log('password', evt.target.password.value)
           dispatch(authorizeUser(evt.target.username.value, evt.target.password.value))
         }
       }
