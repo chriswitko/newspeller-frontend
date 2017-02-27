@@ -17,9 +17,33 @@ import Form from './Form'
 import Input from './Input'
 import Section from './Section'
 import messages from './messages'
+import ButtonSubmit from './ButtonSubmit'
+import Label from './Label'
 import { authorizeUser } from '../App/actions'
 import { changeUsername, changePassword } from './actions'
 import { makeSelectUsername, makeSelectPassword, makeSelectToken } from './selectors'
+import styled from 'styled-components'
+import { Page, Row, Column } from 'hedron'
+import Logo from 'components/Logo'
+
+const Wrapper = styled.div`
+  max-width: calc(368px + 16px * 2);
+  display: flex;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;
+`
+
+const Box = styled.div`
+  max-width: 100%;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  margin-top: 20px;
+`
 
 export class SignInPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -41,49 +65,63 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
     const { onSubmitForm, username, password } = this.props
 
     return (
-      <article>
-        <Helmet
-          title='Sing In'
-          meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-          ]}
-        />
-        <div>
-          <CenteredSection>
-            <H2>
-              Sign In to adjust time and content of your newsletter
-            </H2>
-          </CenteredSection>
-          <Section>
-            <Form id='form' onSubmit={this.props.onSubmitForm}>
-              <label htmlFor='username'>
-                <FormattedMessage {...messages.trymeMessage} />
-                &nbsp;
-                <Input
-                  id='username'
-                  type='text'
-                  placeholder='Your email address'
-                  value={username}
-                  onChange={this.props.onChangeUsername}
-                />
-              </label>
-              <br />
-              <label htmlFor='password'>
-                Password
-                &nbsp;
-                <Input
-                  id='password'
-                  type='password'
-                  value={password}
-                  onChange={this.props.onChangePassword}
-                />
-              </label>
-              <br />
-              <button type='submit' onClick={onSubmitForm(this.form)}>Log in</button>
-            </Form>
-          </Section>
-        </div>
-      </article>
+      <Wrapper>
+        <Logo />
+        <Box>
+          <Page>
+            <Row>
+              <Column lg={12}>
+                <article>
+                  <Helmet
+                    title='Sing In'
+                    meta={[
+                      { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
+                    ]}
+                  />
+                  <div>
+                    <CenteredSection>
+                      <H2>
+                        Sign In to adjust time and content of your newsletter
+                      </H2>
+                    </CenteredSection>
+                    <Section style={{margin: 0, padding: 0}}>
+                      <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
+                        <Label htmlFor='username'>
+                          <FormattedMessage {...messages.trymeMessage} />
+                        </Label>
+                        <Input
+                          id='username'
+                          type='text'
+                          placeholder='Your email address'
+                          value={username}
+                          onChange={this.props.onChangeUsername}
+                        />
+                        <br />
+                        <br />
+                        <Label htmlFor='password'>
+                          Password
+                        </Label>
+                        <Input
+                          id='password'
+                          type='password'
+                          value={password}
+                          onChange={this.props.onChangePassword}
+                        />
+                        <br />
+                        <br />
+                        <ButtonSubmit type='submit' onClick={onSubmitForm(this.form)}>Log in</ButtonSubmit>
+                      </Form>
+                      <a href='#'>
+                        Forgot password?
+                      </a>
+                    </Section>
+                  </div>
+                </article>
+              </Column>
+            </Row>
+          </Page>
+        </Box>
+      </Wrapper>
     )
   }
 }

@@ -6,6 +6,11 @@ import { createSelector } from 'reselect'
 
 const selectGlobal = (state) => state.get('global')
 
+const makeSelectToken = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('token') || window.localStorage.getItem('token')
+)
+
 const makeSelectCurrentUser = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('currentUser') || window.localStorage.getItem('currentUser')
@@ -31,9 +36,15 @@ const makeSelectError = () => createSelector(
   (globalState) => globalState.get('error')
 )
 
+
 const makeSelectRepos = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'repositories'])
+)
+
+const makeSelectSubscriptions = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'subscriptions'])
 )
 
 const makeSelectDays = () => createSelector(
@@ -77,5 +88,8 @@ export {
   makeSelectDays,
   makeSelectHours,
   makeSelectFeeds,
-  makeSelectLocationState
+  makeSelectLocationState,
+  makeSelectUserId,
+  makeSelectToken,
+  makeSelectSubscriptions
 }

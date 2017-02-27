@@ -13,15 +13,20 @@ import styled from 'styled-components'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import withProgressBar from 'components/ProgressBar'
+import { Page, Row, Column } from 'hedron'
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
   flex-direction: column;
 `
+        // <Row>
+        //   <Header />
+        // </Row>
+
+        // <Row>
+        //   <Footer />
+        // </Row>
 
 export function App (props) {
   return (
@@ -33,9 +38,7 @@ export function App (props) {
           { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' }
         ]}
       />
-      <Header />
       {React.Children.toArray(props.children)}
-      <Footer />
     </AppWrapper>
   )
 }

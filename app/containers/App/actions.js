@@ -142,10 +142,11 @@ export function addTopicSuccess (topic) {
   }
 }
 
-export function reposLoaded (repos, days, hours, nextAt, username) {
+export function reposLoaded (repos, subscriptions, days, hours, nextAt, username) {
   return {
     type: LOAD_REPOS_SUCCESS,
     repos,
+    subscriptions,
     days,
     hours,
     nextAt,
@@ -161,6 +162,7 @@ export function reposLoaded (repos, days, hours, nextAt, username) {
  * @return {object}       An action object with a type of LOAD_REPOS_ERROR passing the error
  */
 export function repoLoadingError (error) {
+  console.log('repoLoadingError error', error)
   return {
     type: LOAD_REPOS_ERROR,
     error
@@ -196,6 +198,7 @@ export function removeTopic (name) {
 }
 
 export function removeTopicSuccess (topic) {
+  console.log('GOGOGO!!! removeTopicSuccess action', topic)
   return {
     type: REMOVE_TOPIC_SUCCESS,
     topic

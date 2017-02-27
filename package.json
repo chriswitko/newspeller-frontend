@@ -209,12 +209,14 @@
     "testRegex": "tests/.*\\.test\\.js$"
   },
   "dependencies": {
+    "@blueprintjs/core": "^1.10.0",
     "babel-polyfill": "6.20.0",
     "chalk": "1.1.3",
     "compression": "1.6.2",
     "cross-env": "3.1.3",
     "express": "4.14.0",
     "fontfaceobserver": "2.0.7",
+    "hedron": "^0.6.0",
     "immutable": "3.8.1",
     "intl": "1.2.5",
     "invariant": "2.2.2",
@@ -222,6 +224,7 @@
     "lodash": "4.17.2",
     "minimist": "1.2.0",
     "react": "15.4.1",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "15.4.1",
     "react-helmet": "3.2.2",
     "react-intl": "2.1.5",

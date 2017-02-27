@@ -9,20 +9,28 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedNumber } from 'react-intl'
 
-import { makeSelectCurrentUser } from 'containers/App/selectors'
+import { makeSelectCurrentUser, makeSelectSubscriptions } from 'containers/App/selectors'
 import ListItem from 'components/ListItem'
-import IssueIcon from './IssueIcon'
-import IssueLink from './IssueLink'
 import RemoveButton from './RemoveButton'
 import AddButton from './AddButton'
 import RepoLink from './RepoLink'
 import Wrapper from './Wrapper'
 
-export class RepoListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class RepoListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render () {
-    const {currentUser, item, onRemove, onAdd} = this.props
-    // let nameprefix = ''
+    const {currentUser, item, channels, subscriptions, onRemove, onAdd} = this.props
 
+    const isSubscribed = (item) => {
+      const allSubscriptions = (subscriptions || []).map(s => {
+        if (s.is_subscribed) {
+          return s.code
+        }
+      })
+
+      return ~allSubscriptions.indexOf(item.code) || item.is_subscribed
+    }
+
+    // let nameprefix = ''
     // If the repository is owned by a different person than we got the data for
     // it's a fork and we should show the name of the owner
     // if (item.owner.login !== this.props.currentUser) {
@@ -38,23 +46,16 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 
     // Put together the content of the repository
     // {`${currentUser}/${item}/issues`}
+
+    const buttonRemove = <RemoveButton href='#' onClick={() => onRemove(item)}>Remove</RemoveButton>
+    const buttonAdd = <AddButton href='#' onClick={() => onAdd(item)}>Add</AddButton>
+
     const content = (
       <Wrapper>
         <RepoLink href='' target='_blank'>
-          {item}
+          {item.name} ({ item.is_subscribed ? 'yes' : 'no' }) [{ isSubscribed(item) ? 'yes' : 'no'}]
         </RepoLink>
-        <RemoveButton href='#' onClick={() => onRemove(this)}>
-          Remove
-        </RemoveButton>
-        &nbsp;
-        <AddButton href='#' onClick={() => onAdd(this)}>
-          Add
-        </AddButton>
-        &nbsp;
-        <IssueLink href='' target='_blank'>
-          <IssueIcon />
-          <FormattedNumber value='1' />
-        </IssueLink>
+        { isSubscribed(item) ? buttonRemove : buttonAdd }
       </Wrapper>
     )
 
@@ -66,7 +67,7 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 }
 
 RepoListItem.propTypes = {
-  item: React.PropTypes.string,
+  item: React.PropTypes.any,
   onRemove: React.PropTypes.func,
   onAdd: React.PropTypes.func,
   currentUser: React.PropTypes.oneOfType([
@@ -76,5 +77,6 @@ RepoListItem.propTypes = {
 }
 
 export default connect(createStructuredSelector({
-  currentUser: makeSelectCurrentUser()
+  currentUser: makeSelectCurrentUser(),
+  subscriptions: makeSelectSubscriptions()
 }))(RepoListItem)

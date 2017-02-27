@@ -17,6 +17,20 @@ import CenteredSection from './CenteredSection'
 import Section from './Section'
 import messages from './messages'
 import { loadRepos, loadFeeds, addTopic, removeTopic } from '../App/actions'
+import styled from 'styled-components'
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import { Page, Row, Column } from 'hedron'
+import { Link } from 'react-router'
+
+const Box = styled.div`
+  max-width: 100%;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+`
 
 export class ChannelsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -44,30 +58,44 @@ export class ChannelsPage extends React.PureComponent { // eslint-disable-line r
     }
 
     return (
-      <article>
-        <Helmet
-          title='Channels'
-          meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-          ]}
-        />
-        <div>
-          <CenteredSection>
-            <H2>
-              Channels
-            </H2>
-            <p>
-              <FormattedMessage {...messages.startProjectMessage} />
-            </p>
-          </CenteredSection>
-          <Section>
-            <H2>
-              All Channels
-            </H2>
-            <ChannelsList {...reposListProps} />
-          </Section>
-        </div>
-      </article>
+      <Box>
+        <Page style={{display: 'flex', flexDirection: 'column'}}>
+          <Row>
+            <Header />
+          </Row>
+          <Row style={{flex: 1}}>
+            <Column>
+              <article>
+                <Helmet
+                  title='Channels'
+                  meta={[
+                    { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
+                  ]}
+                />
+                <div>
+                  <CenteredSection>
+                    <H2>
+                      Channels
+                    </H2>
+                    <p>
+                      <FormattedMessage {...messages.startProjectMessage} />
+                    </p>
+                  </CenteredSection>
+                  <Section>
+                    <H2>
+                      All Channels
+                    </H2>
+                    <ChannelsList {...reposListProps} />
+                  </Section>
+                </div>
+              </article>
+            </Column>
+          </Row>
+          <Row alignSelf='flex-start' style={{width: '100%'}}>
+            <Footer />
+          </Row>
+        </Page>
+      </Box>
     )
   }
 }
@@ -92,12 +120,10 @@ ChannelsPage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     onAdd: (topic) => {
-      const {currentUser, item} = topic.props
-      dispatch(addTopic(item))
+      dispatch(addTopic(topic))
     },
     onRemove: (topic) => {
-      const {currentUser, item} = topic.props
-      dispatch(removeTopic(item))
+      dispatch(removeTopic(topic))
     },
     onSubmitForm: (evt) => {
       // if (evt !== undefined && evt.preventDefault) evt.preventDefault()

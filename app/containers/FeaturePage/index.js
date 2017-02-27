@@ -78,6 +78,42 @@ export default class FeaturePage extends React.Component { // eslint-disable-lin
               <FormattedMessage {...messages.intlMessage} />
             </p>
           </ListItem>
+
+          <ListItem>
+            <ListItemTitle>
+              <FormattedMessage {...messages.intlHeader} />
+            </ListItemTitle>
+            <p>
+              <FormattedMessage {...messages.intlMessage} />
+            </p>
+          </ListItem>
+
+          <ListItem>
+            <ListItemTitle>
+              <FormattedMessage {...messages.intlHeader} />
+            </ListItemTitle>
+            <p>
+              <FormattedMessage {...messages.intlMessage} />
+            </p>
+          </ListItem>
+
+          <ListItem>
+            <ListItemTitle>
+              <FormattedMessage {...messages.intlHeader} />
+            </ListItemTitle>
+            <p>
+              <FormattedMessage {...messages.intlMessage} />
+            </p>
+          </ListItem>
+
+          <ListItem>
+            <ListItemTitle>
+              <FormattedMessage {...messages.intlHeader} />
+            </ListItemTitle>
+            <p>
+              <FormattedMessage {...messages.intlMessage} />
+            </p>
+          </ListItem>
         </List>
       </div>
     );

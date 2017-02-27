@@ -8,7 +8,8 @@ import {
   put,
   select,
   cancel,
-  takeLatest
+  takeLatest,
+  takeEvery
 } from 'redux-saga/effects'
 import {
   LOCATION_CHANGE
@@ -57,7 +58,7 @@ export function* getRepos () {
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL)
-    yield put(reposLoaded(repos.subscription.sources, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
+    yield put(reposLoaded(repos.subscription.sources, repos.subscription.channels, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
   } catch (err) {
     yield put(repoLoadingError(err))
   }
@@ -66,12 +67,31 @@ export function* getRepos () {
 export function* removeTopicRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/remove_topic/${action.name}?token=${token}`
+  const requestURL = `http://localhost:3100/subscriptions/remove_topic/${action.name.code}?token=${token}`
+  console.log('removeTopicRemotely url', requestURL)
+
+  try {
+    console.log('YEY', action.name)
+    // Call our request helper (see 'utils/request')
+    yield call(request, requestURL)
+    yield put(removeTopicSuccess(action.name))
+  } catch (err) {
+    console.log('removeTopicRemotely error', err)
+    yield put(repoLoadingError(err))
+  }
+}
+
+export function* addTopicRemotely (action) {
+  // Select username from store
+  console.log('ADDTOPICREMO', action.topic)
+
+  const token = yield select(makeSelectToken())
+  const requestURL = `http://localhost:3100/subscriptions/add_topic/${action.topic.code}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
     yield call(request, requestURL)
-    yield put(removeTopicSuccess(action.topic))
+    yield put(addTopicSuccess(action.topic))
   } catch (err) {
     yield put(repoLoadingError(err))
   }
@@ -134,20 +154,6 @@ export function* addHourRemotely (action) {
   }
 }
 
-export function* addTopicRemotely (action) {
-  // Select username from store
-  const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/add_topic/${action.topic}?token=${token}`
-
-  try {
-    // Call our request helper (see 'utils/request')
-    yield call(request, requestURL)
-    yield put(addTopicSuccess(action.topic))
-  } catch (err) {
-    yield put(repoLoadingError(err))
-  }
-}
-
 /**
  * Root saga manages watcher lifecycle
  */
@@ -177,11 +183,11 @@ export function* removeTopicSaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(REMOVE_TOPIC, removeTopicRemotely)
+  yield takeEvery(REMOVE_TOPIC, removeTopicRemotely)
 
   // Suspend execution until location changes
-  yield take(LOCATION_CHANGE)
-  yield cancel(watcher)
+  // yield take(LOCATION_CHANGE)
+  // yield cancel(watcher)
 }
 
 export function* removeDaySaga () {
@@ -210,11 +216,9 @@ export function* addTopicSaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(ADD_TOPIC, addTopicRemotely)
+  yield takeEvery(ADD_TOPIC, addTopicRemotely)
 
   // Suspend execution until location changes
-  yield take(LOCATION_CHANGE)
-  yield cancel(watcher)
 }
 
 export function* addHourSaga () {

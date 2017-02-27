@@ -23,6 +23,19 @@ import messages from './messages'
 import { loadRepos, addNewHour, removeDay, addDay, removeHour } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
+import styled from 'styled-components'
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import { Page, Row, Column } from 'hedron'
+
+const Box = styled.div`
+  max-width: 100%;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+`
 
 export class SchedulePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -47,49 +60,63 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
     }
 
     return (
-      <article>
-        <Helmet
-          title='Schedule'
-          meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-          ]}
-        />
-        <div>
-          <CenteredSection>
-            <H2>
-              Schedule newsletter delivery
-            </H2>
-            <p>
-              <FormattedMessage {...messages.startProjectMessage} />
-            </p>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor='time'>
-                <AtPrefix>
-                  Enter new time
-                </AtPrefix>
-                &nbsp;
-                <Input
-                  id='time'
-                  type='text'
-                  placeholder='Enter new time HH:MM'
-                  value={this.props.time}
-                  onChange={this.props.onChangeTime}
+      <Box>
+        <Page style={{display: 'flex', flexDirection: 'column'}}>
+          <Row>
+            <Header />
+          </Row>
+          <Row style={{flex: 1}}>
+            <Column>
+              <article>
+                <Helmet
+                  title='Schedule'
+                  meta={[
+                    { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
+                  ]}
                 />
-              </label>
-            </Form>
-          </CenteredSection>
-          <Section>
-            <H2>
-              Days
-            </H2>
-            <ReposDays {...reposDaysProps} />
-            <H2>
-              Hours
-            </H2>
-            <ReposHours {...reposDaysProps} />
-          </Section>
-        </div>
-      </article>
+                <div>
+                  <CenteredSection>
+                    <H2>
+                      Schedule newsletter delivery
+                    </H2>
+                    <p>
+                      <FormattedMessage {...messages.startProjectMessage} />
+                    </p>
+                    <Form onSubmit={this.props.onSubmitForm}>
+                      <label htmlFor='time'>
+                        <AtPrefix>
+                          Enter new time
+                        </AtPrefix>
+                        &nbsp;
+                        <Input
+                          id='time'
+                          type='text'
+                          placeholder='Enter new time HH:MM'
+                          value={this.props.time}
+                          onChange={this.props.onChangeTime}
+                        />
+                      </label>
+                    </Form>
+                  </CenteredSection>
+                  <Section>
+                    <H2>
+                      Days
+                    </H2>
+                    <ReposDays {...reposDaysProps} />
+                    <H2>
+                      Hours
+                    </H2>
+                    <ReposHours {...reposDaysProps} />
+                  </Section>
+                </div>
+              </article>
+            </Column>
+          </Row>
+          <Row alignSelf='flex-start' style={{width: '100%'}}>
+            <Footer />
+          </Row>
+        </Page>
+      </Box>          
     )
   }
 }

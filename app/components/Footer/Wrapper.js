@@ -1,10 +1,17 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Wrapper = styled.footer`
   display: flex;
   justify-content: space-between;
-  padding: 3em 0;
-  border-top: 1px solid #666;
-`;
+  background-color: rgb(40, 60, 70);
+  color: white;
+  padding: 20px;
+  width: 100%;
+  font-size: 0.9em;
 
-export default Wrapper;
+  a {
+    color: rgb(203, 238, 250);
+  }
+`
+
+export default Wrapper

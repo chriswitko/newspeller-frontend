@@ -19,6 +19,15 @@ const requireAuth = (nextState, replace) => {
     })
   }
 }
+
+const verifyAuthedUser = () => {
+  if (!window.localStorage.getItem('token')) {
+    window.location.href = '/signin'
+  } else {
+    return true
+  }
+}
+
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -29,9 +38,7 @@ export default function createRoutes(store) {
       name: 'home',
       onEnter: requireAuth,
       getComponent(nextState, cb) {
-        if (!window.localStorage.getItem('token')) {
-          window.location.href = '/signin'
-        }
+        verifyAuthedUser()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -55,6 +62,8 @@ export default function createRoutes(store) {
       name: 'schedule',
       onEnter: requireAuth,
       getComponent(nextState, cb) {
+        verifyAuthedUser()
+
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -77,6 +86,8 @@ export default function createRoutes(store) {
       name: 'channels',
       onEnter: requireAuth,
       getComponent(nextState, cb) {
+        verifyAuthedUser()
+
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -98,11 +109,6 @@ export default function createRoutes(store) {
       path: '/signin',
       name: 'signin',
       getComponent(nextState, cb) {
-        if (window.localStorage.getItem('token')) {
-          window.location.href = '/'
-        }
-
-        console.log('nextState', nextState)
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),

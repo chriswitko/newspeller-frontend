@@ -5,7 +5,7 @@ import ListItem from 'components/ListItem'
 import LoadingIndicator from 'components/LoadingIndicator'
 import RepoListItem from 'containers/RepoListItem'
 
-function ReposList ({ loading, error, repos, onRemove, onAdd }) {
+function ReposList ({ loading, error, subscriptions, onRemove, onAdd }) {
   if (loading) {
     return <List component={LoadingIndicator} />
   }
@@ -17,8 +17,9 @@ function ReposList ({ loading, error, repos, onRemove, onAdd }) {
     return <List component={ErrorComponent} />
   }
 
-  if (repos !== false) {
-    return <List items={repos} component={RepoListItem} onRemove={onRemove} onAdd={onAdd} />
+  if (subscriptions !== false) {
+    console.log('redraw ReposList subscriptions', subscriptions)
+    return <List items={subscriptions} component={RepoListItem} onRemove={onRemove} onAdd={onAdd} />
   }
 
   return null
@@ -28,6 +29,7 @@ ReposList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   repos: PropTypes.any,
+  subscriptions: PropTypes.any,
   onRemove: PropTypes.func,
   onAdd: PropTypes.func
 }

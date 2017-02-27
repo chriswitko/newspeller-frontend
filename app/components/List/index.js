@@ -9,9 +9,11 @@ function List (props) {
 
   // If we have items, render them
   if (props.items) {
-    content = props.items.map((item, index) => (
-      <ComponentToRender key={`item-${index}`} item={item} onRemove={props.onRemove} onAdd={props.onAdd} />
-    ))
+    console.log('redraw item on list', props.items)
+    content = props.items.map((item, index) => {
+      console.log('redraw', item.code, item.is_subscribed)
+      return <ComponentToRender key={`item-${index}`} item={item} onRemove={props.onRemove} onAdd={props.onAdd} />
+    })
   } else {
     // Otherwise render a single component
     content = (<ComponentToRender />)
@@ -28,7 +30,7 @@ function List (props) {
 
 List.propTypes = {
   component: React.PropTypes.func.isRequired,
-  items: React.PropTypes.array,
+  items: React.PropTypes.any,
   onRemove: React.PropTypes.func,
   onAdd: React.PropTypes.func
 }

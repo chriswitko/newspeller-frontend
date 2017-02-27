@@ -4,6 +4,7 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
   body {
+    background-color: rgb(251, 247, 240);
     height: 100%;
     width: 100%;
   }
@@ -17,14 +18,12 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
     min-height: 100%;
     min-width: 100%;
   }
 
   p,
   label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
   }
 `;

@@ -11,17 +11,16 @@ function Footer () {
     <Wrapper>
       <section>
         <FormattedMessage {...messages.licenseMessage} />
-      </section>
-      <section>
-        <LocaleToggle />
-      </section>
-      <section>
+        <br/>
         <FormattedMessage
           {...messages.authorMessage}
           values={{
             author: <A href='https://twitter.com/chris_witko'>Chris Witko</A>
           }}
         />
+      </section>
+      <section>
+        <LocaleToggle />
       </section>
     </Wrapper>
   )

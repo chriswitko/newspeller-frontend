@@ -43,6 +43,7 @@ const initialState = fromJS({
   channels: false,
   userData: {
     nextAt: '',
+    subscriptions: false,
     repositories: false,
     days: false,
     hours: false
@@ -56,7 +57,7 @@ const strToMin = str => {
 
 function appReducer (state = initialState, action) {
   switch (action.type) {
-    case USER_LOGOUT: 
+    case USER_LOGOUT:
       window.localStorage.setItem('token', '')
       return state
         .set('token', false)
@@ -68,14 +69,38 @@ function appReducer (state = initialState, action) {
         .set('token', action.user.token)
     case ADD_TOPIC:
       return state
-        .setIn(['userData', 'repositories'], [...state.getIn(['userData', 'repositories']), action.topic])
-        .setIn(['channels'], state.getIn(['channels']).filter(channel => channel !== action.topic))
+        .setIn(['userData', 'repositories'], [...state.getIn(['userData', 'repositories']), action.topic.code])
+        // .setIn(['channels'], state.getIn(['channels']).filter(channel => channel !== action.topic.name))
     case ADD_TOPIC_SUCCESS:
       return state
-        .setIn(['channels'], state.getIn(['channels']))
+        .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']).map(item => {
+          if (item.code === action.topic.code) {
+            return Object.assign({}, item, {is_subscribed: true})
+          } else {
+            return item
+          }
+        }))
+        .setIn(['channels'], state.getIn(['channels']).map(item => {
+          if (item.code === action.topic.code) {
+            return Object.assign({}, item, {is_subscribed: true})
+          } else {
+            return item
+          }
+        }))
+    case REMOVE_TOPIC:
+      return state
+        .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']))
+      //   .setIn(['userData', 'repositories'], state.getIn(['userData', 'repositories']).filter(source => source.code !== action.name.code))
+        // .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']))
     case REMOVE_TOPIC_SUCCESS:
       return state
-        .setIn(['userData', 'repositories'], state.getIn(['userData', 'repositories']))
+        .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']).map(item => {
+          if (item.code === action.topic.code) {
+            return Object.assign({}, item, {is_subscribed: false})
+          } else {
+            return item
+          }
+        }))
     case ADD_HOUR:
       return state
         .setIn(['userData', 'hours'], [...state.getIn(['userData', 'hours']), action.hour].sort((a, b) => strToMin(a) - strToMin(b)))
@@ -97,21 +122,22 @@ function appReducer (state = initialState, action) {
     case REMOVE_DAY:
       return state
         .setIn(['userData', 'days'], state.getIn(['userData', 'days']).filter(day => day !== action.day))
-    case REMOVE_TOPIC:
-      return state
-        .setIn(['userData', 'repositories'], state.getIn(['userData', 'repositories']).filter(source => source !== action.name))
     case LOAD_FEEDS:
       return state
         .set('loading', true)
         .set('error', false)
         .setIn(['channels'], false)
     case LOAD_FEEDS_SUCCESS:
-      const all = []
+      let all = []
       action.repos.map(channel => {
-        channel.sections.map(section => all.push(`${channel.code}_${section.code}`))
+        channel.sections.map(section => all.push({
+          code: `${channel.code}_${section.code}`,
+          name: `${channel.name} / ${section.name}`,
+          description: section.description,
+          url: section.url,
+          is_subscribed: false
+        }))
       })
-      // console.log('all', all)
-      // console.log('repo', state.getIn(['userData', 'repositories']))
       return state
         .setIn(['channels'], all)
         .set('loading', false)
@@ -125,8 +151,19 @@ function appReducer (state = initialState, action) {
         .set('error', false)
         .setIn(['userData', 'repositories'], false)
     case LOAD_REPOS_SUCCESS:
-      // console.log('action.repos', action.repos)
+      let allSubscriptions = []
+      action.subscriptions.map(item => {
+        // channel.sections.map(section => all.push(`${channel.code}_${section.code}`))
+        allSubscriptions.push({
+          code: `${item.channel.code}_${item.topic.code}`,
+          name: `${item.channel.name} / ${item.topic.name}`,
+          description: item.topic.description,
+          url: item.topic.url,
+          is_subscribed: true
+        })
+      })
       return state
+        .setIn(['userData', 'subscriptions'], allSubscriptions)
         .setIn(['userData', 'repositories'], action.repos)
         .setIn(['userData', 'days'], action.days)
         .setIn(['userData', 'hours'], action.hours)
