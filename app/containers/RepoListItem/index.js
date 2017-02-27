@@ -52,8 +52,8 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
 
     const content = (
       <Wrapper>
-        <RepoLink href='' target='_blank'>
-          {item.name} ({ item.is_subscribed ? 'yes' : 'no' }) [{ isSubscribed(item) ? 'yes' : 'no'}]
+        <RepoLink href={item.url} target='_blank'>
+          {item.name}
         </RepoLink>
         { isSubscribed(item) ? buttonRemove : buttonAdd }
       </Wrapper>

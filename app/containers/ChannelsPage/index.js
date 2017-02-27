@@ -30,6 +30,14 @@ const Box = styled.div`
   display: flex;
   flex: 1;
   min-height: 100vh;
+
+  a {
+    color: rgb(0, 102, 204)
+  }
+
+  a:hover, a:visited {
+    color: #06c
+  }  
 `
 
 export class ChannelsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
