@@ -26,6 +26,7 @@ import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
 import { Link } from 'react-router'
+import Moment from 'react-moment'
 
 const Box = styled.div`
   max-width: 100%;
@@ -94,7 +95,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                     <H2>
                       <FormattedMessage {...messages.trymeHeader} />
                     </H2>
-                    <div>Next delivery at: {nextAt} (Europe/London) - <Link to='schedule'>Manage schedule</Link></div>
+                    <div>Next delivery <strong><Moment fromNow>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm">{nextAt}</Moment>, Europe/London) - <Link to='schedule'>Manage schedule</Link></small></div>
                     <br />
                     <ReposList {...reposListProps} />
                   </Section>

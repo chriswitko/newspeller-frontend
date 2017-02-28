@@ -9,8 +9,9 @@ const Wrapper = styled.footer`
   width: 100%;
   font-size: 0.9em;
 
-  a {
+  a, a:hover, a:visited {
     color: rgb(203, 238, 250);
+    text-decoration: none;
   }
 `
 

@@ -23,7 +23,8 @@ import {
   ADD_DAY,
   ADD_HOUR,
   LOAD_FEEDS,
-  USER_AUTHORIZE
+  USER_AUTHORIZE,
+  UPDATE_TIMEZONE
 } from 'containers/App/constants'
 import {
   reposLoaded,
@@ -37,13 +38,16 @@ import {
   feedsLoaded,
   feedLoadingError,
   authorizeSuccess,
-  authorizeError
+  authorizeError,
+  updateTimezoneSuccess
 } from 'containers/App/actions'
 import request from 'utils/request'
 import {
   makeSelectUsername,
   makeSelectToken
 } from 'containers/HomePage/selectors'
+
+const API_ENDPOINT = process.env.NODE_ENV === 'development' ? window.location.origin.replace(':3000', ':3100') : 'https://api.newspeller.com'
 
 /**
  * Github repos request/response handler
@@ -53,12 +57,12 @@ export function* getRepos () {
   const token = yield select(makeSelectToken())
   const username = yield select(makeSelectUsername())
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`
-  const requestURL = `http://localhost:3100/subscriptions?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL)
-    yield put(reposLoaded(repos.subscription.sources, repos.subscription.channels, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
+    yield put(reposLoaded(repos.subscription.sources, repos.subscription.channels, repos.subscription.timezone, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
   } catch (err) {
     yield put(repoLoadingError(err))
   }
@@ -67,7 +71,7 @@ export function* getRepos () {
 export function* removeTopicRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/remove_topic/${action.name.code}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/remove_topic/${action.name.code}?token=${token}`
   console.log('removeTopicRemotely url', requestURL)
 
   try {
@@ -86,7 +90,7 @@ export function* addTopicRemotely (action) {
   console.log('ADDTOPICREMO', action.topic)
 
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/add_topic/${action.topic.code}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/add_topic/${action.topic.code}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -101,7 +105,7 @@ export function* removeHourRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
   // Select username from store
-  const requestURL = `http://localhost:3100/subscriptions/remove_hour/${action.hour}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/remove_hour/${action.hour}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -115,7 +119,7 @@ export function* removeHourRemotely (action) {
 export function* removeDayRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/remove_day/${action.day}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/remove_day/${action.day}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -129,7 +133,7 @@ export function* removeDayRemotely (action) {
 export function* addDayRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/add_day/${action.day}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/add_day/${action.day}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -143,7 +147,7 @@ export function* addDayRemotely (action) {
 export function* addHourRemotely (action) {
   // Select username from store
   const token = yield select(makeSelectToken())
-  const requestURL = `http://localhost:3100/subscriptions/add_hour/${action.hour}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/add_hour/${action.hour}?token=${token}`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -153,6 +157,22 @@ export function* addHourRemotely (action) {
     yield put(repoLoadingError(err))
   }
 }
+
+export function* updateTimezoneRemotely (action) {
+  // Select username from store
+  const token = yield select(makeSelectToken())
+  const requestURL = `${API_ENDPOINT}/subscriptions/update_timezone?timezone=${action.timezone}&token=${token}`
+
+  try {
+    // Call our request helper (see 'utils/request')
+    yield call(request, requestURL)
+    yield put(updateTimezoneSuccess(action.timezone))
+  } catch (err) {
+    yield put(repoLoadingError(err))
+  }
+}
+
+
 
 /**
  * Root saga manages watcher lifecycle
@@ -232,9 +252,18 @@ export function* addHourSaga () {
   yield cancel(watcher)
 }
 
+export function* updateTimezoneSaga () {
+  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
+  // By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+  yield takeLatest(UPDATE_TIMEZONE, updateTimezoneRemotely)
+
+  // Suspend execution until location changes
+}
+
 export function* getFeeds () {
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`
-  const requestURL = `http://localhost:3100/feeds/all`
+  const requestURL = `${API_ENDPOINT}/feeds/all`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -261,7 +290,7 @@ export function* loadFeedsData () {
 
 export function* getUser (action) {
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`
-  const requestURL = `http://localhost:3100/subscribers/auth`
+  const requestURL = `${API_ENDPOINT}/subscribers/auth`
 
   try {
     // Call our request helper (see 'utils/request')
@@ -306,5 +335,6 @@ export default [
   addHourSaga,
   removeTopicSaga,
   addTopicSaga,
-  authorizeUser
+  authorizeUser,
+  updateTimezoneSaga
 ]

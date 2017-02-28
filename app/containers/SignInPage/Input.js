@@ -22,10 +22,7 @@ const Input = styled.input`
   font-size: 17px;
   line-height: 25px;
   max-width: 100%;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
+  padding: 0.7rem;
   background: white;
   width: 100%;
 `

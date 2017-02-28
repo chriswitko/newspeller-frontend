@@ -31,7 +31,8 @@ import {
   ADD_TOPIC,
   ADD_TOPIC_SUCCESS,
   USER_SUCCESS,
-  USER_LOGOUT
+  USER_LOGOUT,
+  UPDATE_TIMEZONE_SUCCESS
 } from './constants'
 
 // The initial state of the App
@@ -43,6 +44,7 @@ const initialState = fromJS({
   channels: false,
   userData: {
     nextAt: '',
+    timezone: 'Europe/London',
     subscriptions: false,
     repositories: false,
     days: false,
@@ -101,6 +103,9 @@ function appReducer (state = initialState, action) {
             return item
           }
         }))
+    case UPDATE_TIMEZONE_SUCCESS:
+      return state
+        .setIn(['userData', 'hours'], action.timezone)
     case ADD_HOUR:
       return state
         .setIn(['userData', 'hours'], [...state.getIn(['userData', 'hours']), action.hour].sort((a, b) => strToMin(a) - strToMin(b)))
@@ -168,6 +173,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'days'], action.days)
         .setIn(['userData', 'hours'], action.hours)
         .setIn(['userData', 'nextAt'], action.nextAt)
+        .setIn(['userData', 'timezone'], action.timezone)
         .set('loading', false)
         .set('currentUser', action.username)
     case LOAD_REPOS_ERROR:

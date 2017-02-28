@@ -6,6 +6,11 @@ import { createSelector } from 'reselect'
 
 const selectGlobal = (state) => state.get('global')
 
+const makeSelectTimezone = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'timezone'])
+)
+
 const makeSelectToken = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('token') || window.localStorage.getItem('token')
@@ -91,5 +96,6 @@ export {
   makeSelectLocationState,
   makeSelectUserId,
   makeSelectToken,
-  makeSelectSubscriptions
+  makeSelectSubscriptions,
+  makeSelectTimezone
 }

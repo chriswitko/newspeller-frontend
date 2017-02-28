@@ -37,7 +37,9 @@ import {
   USER_AUTHORIZE,
   USER_SUCCESS,
   USER_ERROR,
-  USER_LOGOUT
+  USER_LOGOUT,
+  UPDATE_TIMEZONE,
+  UPDATE_TIMEZONE_SUCCESS
 } from './constants'
 
 /**
@@ -78,6 +80,14 @@ export function addHourSuccess (hour) {
   }
 }
 
+export function updateTimezoneSuccess (timezone) {
+  return {
+    type: UPDATE_TIMEZONE_SUCCESS,
+    timezone
+  }
+}
+
+
 export function authorizeUser (email, password) {
   return {
     type: USER_AUTHORIZE,
@@ -114,6 +124,13 @@ export function logoutUser () {
  * @return {object}      An action object with a type of LOAD_REPOS_SUCCESS passing the repos
  */
 
+export function updateTimezone (timezone) {
+  return {
+    type: UPDATE_TIMEZONE,
+    timezone
+  }
+}
+
 export function removeHourSuccess (hour) {
   return {
     type: REMOVE_HOUR_SUCCESS,
@@ -142,11 +159,12 @@ export function addTopicSuccess (topic) {
   }
 }
 
-export function reposLoaded (repos, subscriptions, days, hours, nextAt, username) {
+export function reposLoaded (repos, subscriptions, timezone, days, hours, nextAt, username) {
   return {
     type: LOAD_REPOS_SUCCESS,
     repos,
     subscriptions,
+    timezone,
     days,
     hours,
     nextAt,

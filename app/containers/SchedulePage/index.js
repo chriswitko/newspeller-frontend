@@ -10,17 +10,18 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError } from 'containers/App/selectors'
+import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import ReposDays from 'components/ReposDays'
 import ReposHours from 'components/ReposHours'
+import TimezonePicker from 'components/TimezonePicker'
 import AtPrefix from './AtPrefix'
 import CenteredSection from './CenteredSection'
 import Section from './Section'
 import Form from './Form'
 import Input from './Input'
 import messages from './messages'
-import { loadRepos, addNewHour, removeDay, addDay, removeHour } from '../App/actions'
+import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
 import styled from 'styled-components'
@@ -48,7 +49,8 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
   }
 
   render () {
-    const { loading, error, days, hours, onRemoveDay, onAddDay, onRemoveHour } = this.props
+    const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour } = this.props
+    console.log('to load tz', timezone)
     const reposDaysProps = {
       onRemoveHour,
       onAddDay,
@@ -82,7 +84,24 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
                     <p>
                       <FormattedMessage {...messages.startProjectMessage} />
                     </p>
-                    <Form onSubmit={this.props.onSubmitForm}>
+                  </CenteredSection>
+                  <Section>
+                    <H2>
+                      Select your time zone
+                    </H2>
+                    <TimezonePicker
+                      placeholder='Select timezone...'
+                      defaultValue={timezone}
+                      onChange={this.props.onChangeTimezone}
+                    />
+                    <H2>
+                      When would you like to receive email?
+                    </H2>
+                    <ReposDays {...reposDaysProps} />
+                    <H2>
+                      ... and what time?
+                    </H2>
+                    <Form onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
                       <label htmlFor='time'>
                         <AtPrefix>
                           Enter new time
@@ -91,22 +110,18 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
                         <Input
                           id='time'
                           type='text'
-                          placeholder='Enter new time HH:MM'
+                          placeholder='HH:MM'
                           value={this.props.time}
                           onChange={this.props.onChangeTime}
+                          maxLength='5'
+                          autoComplete={'off'}
                         />
+                        &nbsp;
+                        and press ENTER
                       </label>
                     </Form>
-                  </CenteredSection>
-                  <Section>
-                    <H2>
-                      Days
-                    </H2>
-                    <ReposDays {...reposDaysProps} />
-                    <H2>
-                      Hours
-                    </H2>
                     <ReposHours {...reposDaysProps} />
+                    <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
                   </Section>
                 </div>
               </article>
@@ -116,7 +131,7 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
             <Footer />
           </Row>
         </Page>
-      </Box>          
+      </Box>
     )
   }
 }
@@ -147,6 +162,7 @@ export function mapDispatchToProps (dispatch) {
     onRemoveHour: (hour) => dispatch(removeHour(hour)),
     onAddDay: (day) => dispatch(addDay(day)),
     onRemoveDay: (day) => dispatch(removeDay(day)),
+    onChangeTimezone: (evt) => dispatch(updateTimezone(evt.target.value)),
     onChangeTime: (evt) => dispatch(changeTime(evt.target.value)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault()
@@ -159,6 +175,7 @@ export function mapDispatchToProps (dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  timezone: makeSelectTimezone(),
   days: makeSelectDays(),
   hours: makeSelectHours(),
   username: makeSelectUsername(),

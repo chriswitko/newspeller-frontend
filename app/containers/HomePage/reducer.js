@@ -13,7 +13,7 @@ import { fromJS } from 'immutable'
 
 import {
   CHANGE_USERNAME,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
 } from './constants'
 
 // The initial state of the App
@@ -34,6 +34,7 @@ function homeReducer (state = initialState, action) {
     case CHANGE_PASSWORD:
       return state
         .set('password', action.password)
+    
     default:
       return state
   }
