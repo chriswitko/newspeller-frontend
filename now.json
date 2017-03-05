@@ -1,0 +1,10 @@
+{
+  "name": "newspeller-frontend",
+  "aliases": [
+    "newspeller.now.sh",
+    "newspeller.com"
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

@@ -1,0 +1,18 @@
+[
+{
+  "name"      : "PROD_FRONTEND",
+  "script"    : "./server",
+  "args"      : "['--production']",
+  "ignoreWatch" : ["[\\/\\\\]\\./", "node_modules"],
+  "instances" : 1,
+  "exec_mode"  : "cluster_mode",
+  "max_memory_restart": "256M",
+  "error_file": "logs/dev_error.log",
+  "out_file": "logs/dev_output.log",
+  "merge_logs": true,
+  "env" : {
+    "PORT": 3006,
+    "NODE_ENV": "production"
+  }
+}
+]

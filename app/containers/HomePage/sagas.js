@@ -192,7 +192,7 @@ export function* removeHourSaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(REMOVE_HOUR, removeHourRemotely)
+  const watcher = yield takeEvery(REMOVE_HOUR, removeHourRemotely)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
@@ -214,7 +214,7 @@ export function* removeDaySaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(REMOVE_DAY, removeDayRemotely)
+  const watcher = yield takeEvery(REMOVE_DAY, removeDayRemotely)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
@@ -225,7 +225,7 @@ export function* addDaySaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(ADD_DAY, addDayRemotely)
+  const watcher = yield takeEvery(ADD_DAY, addDayRemotely)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
@@ -245,7 +245,7 @@ export function* addHourSaga () {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(ADD_HOUR, addHourRemotely)
+  const watcher = yield takeEvery(ADD_HOUR, addHourRemotely)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
