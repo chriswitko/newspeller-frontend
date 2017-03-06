@@ -12,7 +12,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions } from 'containers/App/selectors'
+import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import ReposList from 'components/ReposList'
 import CenteredSection from './CenteredSection'
@@ -56,8 +56,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loading, error, repos, onRemove, onAdd, nextAt, subscriptions } = this.props
+    const { loading, error, repos, onRemove, onAdd, nextAt, timezone, subscriptions } = this.props
     const reposListProps = {
+      timezone,
       nextAt,
       onRemove,
       onAdd,
@@ -65,6 +66,22 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       error,
       repos,
       subscriptions
+    }
+
+    const getNextDelivery = () => {
+      if (!loading) {
+        if (nextAt) {
+          return <div>Next delivery <strong><Moment fromNow>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm">{nextAt}</Moment>, {timezone}) - <Link to='schedule'>Manage schedule</Link></small></div>
+        } else {
+          if (repos.length) {
+            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='schedule'>Manage schedule</Link></div>
+          } else {
+            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='schedule'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
+          }
+        }
+      } else {
+        return <div>Loading your settings. Please wait...</div>
+      }
     }
 
     return (
@@ -95,7 +112,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                     <H2>
                       <FormattedMessage {...messages.trymeHeader} />
                     </H2>
-                    <div>Next delivery <strong><Moment fromNow>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm">{nextAt}</Moment>, Europe/London) - <Link to='schedule'>Manage schedule</Link></small></div>
+                    {getNextDelivery()}
                     <br />
                     <ReposList {...reposListProps} />
                   </Section>
@@ -156,6 +173,7 @@ export function mapDispatchToProps (dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  timezone: makeSelectTimezone(),
   nextAt: makeSelectNextAt(),
   subscriptions: makeSelectSubscriptions(),
   repos: makeSelectRepos(),
