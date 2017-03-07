@@ -71,7 +71,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const getNextDelivery = () => {
       if (!loading) {
         if (nextAt) {
-          return <div>Next delivery <strong><Moment fromNow>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm">{nextAt}</Moment>, {timezone}) - <Link to='schedule'>Manage schedule</Link></small></div>
+          return <div>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm" tz={timezone}>{nextAt}</Moment>, {timezone}) - <Link to='schedule'>Manage schedule</Link></small></div>
         } else {
           if (repos.length) {
             return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='schedule'>Manage schedule</Link></div>
