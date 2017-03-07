@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
-import defaultTimezones from './timezones.json'
 import styled from 'styled-components'
 import arrows from './select_up_down_arrow.svg'
 
@@ -9,16 +8,18 @@ const Select = styled.select`
   color: #283c46;
   background: #fff url(${arrows}) no-repeat right 0.8em center;
   background-size: 0.55em;
-  padding-right: 2.6em;
   max-width: 100%;
   border-radius: 0.4rem;
   border: 1px solid #bfbfbf;
   transition: box-shadow 0.15s ease-in-out;
-  max-width: 100%;
   border-radius: 0.4rem;
   border: 1px solid #bfbfbf;
-  padding: 0.7rem;
+  padding: 0.6rem;
+  padding-right: 2.6em;
+  margin-right: 1em;
   background-color: #fff;
+  display: inline-table;
+  float: left;
   font-family: inherit;
   font-weight: inherit;
   -webkit-appearance: none;
@@ -26,6 +27,7 @@ const Select = styled.select`
 `
 
 const propTypes = {
+  defaultValues: PropTypes.array.isRequired,
   defaultValue: PropTypes.any,
   initialValue: PropTypes.any,
   onChange: PropTypes.func,
@@ -33,13 +35,14 @@ const propTypes = {
 }
 
 const defaultProps = {
+  defaultValues: [],
   defaultValue: '',
   initialValue: '',
   placeholder: '',
   onChange: () => {}
 }
 
-class TimezonePicker extends Component {
+class DropDownPicker extends Component {
   constructor (props) {
     super(props)
 
@@ -57,7 +60,7 @@ class TimezonePicker extends Component {
   }
 
   render () {
-    const { defaultValue, onChange } = this.props
+    const { defaultValue, defaultValues, onChange } = this.props
 
     return (
       <div>
@@ -65,8 +68,8 @@ class TimezonePicker extends Component {
           value={defaultValue}
           onChange={onChange}
         >
-          {Object.keys(defaultTimezones).map((tz, index) => {
-            return <option key={index} value={defaultTimezones[tz]}>{tz}</option>
+          {defaultValues.map((df, index) => {
+            return <option key={index} value={df}>{df}</option>
           })}
         </Select>
       </div>
@@ -74,7 +77,7 @@ class TimezonePicker extends Component {
   }
 }
 
-TimezonePicker.propTypes = propTypes
-TimezonePicker.defaultProps = defaultProps
+DropDownPicker.propTypes = propTypes
+DropDownPicker.defaultProps = defaultProps
 
-export default TimezonePicker
+export default DropDownPicker
