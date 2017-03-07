@@ -107,8 +107,11 @@ function appReducer (state = initialState, action) {
       return state
         .setIn(['userData', 'hours'], action.timezone)
     case ADD_HOUR:
+      if (!state.getIn(['userData', 'hours']).includes(action.hour)) {
+        return state
+          .setIn(['userData', 'hours'], [...state.getIn(['userData', 'hours']), action.hour].sort((a, b) => strToMin(a) - strToMin(b)))
+      }
       return state
-        .setIn(['userData', 'hours'], [...state.getIn(['userData', 'hours']), action.hour].sort((a, b) => strToMin(a) - strToMin(b)))
     case ADD_HOUR_SUCCESS:
       return state
         .setIn(['userData', 'hours'], state.getIn(['userData', 'hours']))
