@@ -127,13 +127,13 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
                       ... and what time?
                     </H2>
                     <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
-                      <label htmlFor='time'>
-                        <AtPrefix>
-                          Enter new time
-                        </AtPrefix>
-                        <br/>
-                        <br/>
-                      </label>
+                      <div style={{marginBottom: '10px'}}>
+                        <label htmlFor='time'>
+                          <AtPrefix>
+                            Wish to receive your newsletter often, just add new time below.
+                          </AtPrefix>
+                        </label>
+                      </div>
                       <DropDownPicker
                         placeholder='HH'
                         defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
