@@ -13,6 +13,7 @@ import { createStructuredSelector } from 'reselect'
 import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone } from 'containers/App/selectors'
 import { makeSelectHour } from './selectors'
 import H2 from 'components/H2'
+import Box from 'components/Box'
 import ReposDays from 'components/ReposDays'
 import ReposHours from 'components/ReposHours'
 import TimezonePicker from 'components/TimezonePicker'
@@ -32,15 +33,6 @@ import styled from 'styled-components'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
-
-const Box = styled.div`
-  max-width: 100%;
-  background: white;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-  display: flex;
-  flex: 1;
-  min-height: 100vh;
-`
 
 export class SchedulePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor () {
@@ -86,8 +78,52 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
       hours
     }
 
+    const page = loading ? <div>Loading your settings. Please wait...</div> : error ? <div>Something went wrong, please try again!</div> : (
+      <Section>
+        <H2>
+          Select your time zone
+        </H2>
+        <TimezonePicker
+          placeholder='Select timezone...'
+          defaultValue={timezone}
+          onChange={this.props.onChangeTimezone}
+        />
+        <H2>
+          When would you like to receive email?
+        </H2>
+        <ReposDays {...reposDaysProps} />
+        <H2>
+          ... and what time?
+        </H2>
+        <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
+          <div style={{marginBottom: '10px'}}>
+            <label htmlFor='time'>
+              <AtPrefix>
+                Wish to receive your newsletter often, just add new time below.
+              </AtPrefix>
+            </label>
+          </div>
+          <DropDownPicker
+            placeholder='HH'
+            defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
+            defaultValue={hour}
+            onChange={this.onChangeHour}
+          />                      
+          <DropDownPicker
+            placeholder='MM'
+            defaultValues={['MM', '00', '15', '30', '45']}
+            defaultValue={minute}
+            onChange={this.onChangeMinute}
+          />            
+          <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>          
+        </Form>
+        <ReposHours {...reposDaysProps} />
+        <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
+      </Section>
+    )
+
     return (
-      <Box>
+      <Box fullScreen>
         <Page style={{display: 'flex', flexDirection: 'column'}}>
           <Row>
             <Header />
@@ -110,47 +146,7 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
                       <FormattedMessage {...messages.startProjectMessage} />
                     </p>
                   </CenteredSection>
-                  <Section>
-                    <H2>
-                      Select your time zone
-                    </H2>
-                    <TimezonePicker
-                      placeholder='Select timezone...'
-                      defaultValue={timezone}
-                      onChange={this.props.onChangeTimezone}
-                    />
-                    <H2>
-                      When would you like to receive email?
-                    </H2>
-                    <ReposDays {...reposDaysProps} />
-                    <H2>
-                      ... and what time?
-                    </H2>
-                    <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
-                      <div style={{marginBottom: '10px'}}>
-                        <label htmlFor='time'>
-                          <AtPrefix>
-                            Wish to receive your newsletter often, just add new time below.
-                          </AtPrefix>
-                        </label>
-                      </div>
-                      <DropDownPicker
-                        placeholder='HH'
-                        defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
-                        defaultValue={hour}
-                        onChange={this.onChangeHour}
-                      />                      
-                      <DropDownPicker
-                        placeholder='MM'
-                        defaultValues={['MM', '00', '15', '30', '45']}
-                        defaultValue={minute}
-                        onChange={this.onChangeMinute}
-                      />            
-                      <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>          
-                    </Form>
-                    <ReposHours {...reposDaysProps} />
-                    <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
-                  </Section>
+                  {page}
                 </div>
               </article>
             </Column>

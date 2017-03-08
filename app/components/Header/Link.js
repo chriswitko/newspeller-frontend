@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import NormalA from 'components/A';
+import { Link } from 'react-router'
 
-const A = styled(NormalA)`
+const A = styled(Link)`
   padding: 2em 0;
   text-decoration: none;
   color: white;

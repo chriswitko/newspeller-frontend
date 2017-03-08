@@ -15,6 +15,7 @@ export default styled(Link)`
   border-bottom: 3px solid rgba(0, 0, 0, 0.14902);
   color: #ffffff;
   background-color: rgb(0, 136, 201);
+  text-decoration: none;
   
   &:active {
     background: #41ADDD;

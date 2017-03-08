@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect'
 
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
 import H2 from 'components/H2'
+import Box from 'components/Box'
 import CenteredSection from './CenteredSection'
 import Form from './Form'
 import Input from './Input'
@@ -37,14 +38,6 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-const Box = styled.div`
-  max-width: 100%;
-  background: white;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-  border-radius: 5px;
-  margin-top: 20px;
-`
-
 export class SignInPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
@@ -66,8 +59,8 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
 
     return (
       <Wrapper>
-        <Logo />
-        <Box>
+        <Logo bottomed/>
+        <Box centered>
           <Page>
             <Row>
               <Column lg={12}>

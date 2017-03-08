@@ -1,37 +1,14 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 
 import A from './A'
-import Img from './Img'
-import NavBar from './NavBar'
 import HeaderLink from './HeaderLink'
-import Banner from './_the_white.png'
-import messages from './messages'
 import { Row, Column } from 'hedron'
-import { Link } from 'react-router'
+import Link from './Link'
 import { createStructuredSelector } from 'reselect'
 import { makeSelectToken } from 'containers/App/selectors'
 import { connect } from 'react-redux'
 import Logo from 'components/Logo'
 import { logoutUser } from 'containers/App/actions'
-
- // <NavBar>
-        //   <HeaderLink to='/signin'>
-        //     <FormattedMessage {...messages.signin} />
-        //   </HeaderLink>
-        //   <HeaderLink to='/'>
-        //     <FormattedMessage {...messages.home} />
-        //   </HeaderLink>
-        //   <HeaderLink to='/schedule'>
-        //     <FormattedMessage {...messages.scheduling} />
-        //   </HeaderLink>
-        //   <HeaderLink to='/channels'>
-        //     <FormattedMessage {...messages.channels} />
-        //   </HeaderLink>
-        //   <HeaderLink to='/features'>
-        //     <FormattedMessage {...messages.features} />
-        //   </HeaderLink>
-        // </NavBar>
 
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render () {
@@ -56,34 +33,34 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     if (token) {
       buttons = (
         <div>
-          <Link to='' style={{color: 'white', fontWeight: 'bold'}}>
+          <Link to=''>
             Home
           </Link>
           &nbsp;&nbsp;&nbsp;
-          <Link to='channels' style={{color: 'white', fontWeight: 'bold'}}>
+          <Link to='channels'>
             Channels
           </Link>
           &nbsp;&nbsp;&nbsp;
-          <Link to='schedule' style={{color: 'white', fontWeight: 'bold'}}>
+          <Link to='schedule'>
             Settings
           </Link>
           &nbsp;&nbsp;&nbsp;
-          <a href='#' onClick={handleLogout} style={{color: 'white', fontWeight: 'bold'}}>
+          <A href='#' onClick={handleLogout}>
             Log out
-          </a>
+          </A>
         </div>
       )
     }
 
     return (
       <div style={{width: '100%'}}>
-        <Row alignItems='center' style={{backgroundColor: '#3cb371'}}>
-          <Column lg={6}>
+        <Row alignItems='center' style={{backgroundColor: '#3cb371', padding: '0'}}>
+          <Column lg={6} style={{padding: '10px 20px'}}>
             <Link to=''>
               <Logo white width='200' />
             </Link>
           </Column>
-          <Column lg={6} style={{textAlign: 'right'}}>
+          <Column lg={6} style={{textAlign: 'right', padding: '10px 20px'}}>
             {buttons}
           </Column>
         </Row>
@@ -104,11 +81,9 @@ export function mapDispatchToProps (dispatch) {
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   token: makeSelectToken()
 })
 
 // export default Header
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
-
