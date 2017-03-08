@@ -16,6 +16,7 @@ const Ul = styled.ul`
     display: inline-table;
     padding-right: 5px;
     margin-bottom: 5px;
+    vertical-align: middle;
 
     &:last-child {
       padding-right: 0;
@@ -43,6 +44,10 @@ const Ul = styled.ul`
         background: #2f8d59;
         color: #FFF;
       }
+
+      span {
+        font-weight: 100;
+      }
     }
   }
 `
@@ -67,7 +72,7 @@ function ReposHours ({ loading, error, hours, onRemoveHour }) {
             <li
               key={index}
             >
-              <a href='#' onClick={() => onRemoveHour(hour)}>{hour}</a>
+              <a href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<span>[X]</span></a>
             </li>
           ))}
         </Ul>
