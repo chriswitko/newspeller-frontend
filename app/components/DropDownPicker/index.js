@@ -53,19 +53,14 @@ class DropDownPicker extends Component {
     this.prevValue = this.state.value
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.setState({ value })
-    }
-  }
-
   render () {
-    const { defaultValue, defaultValues, onChange } = this.props
+    const { value, defaultValue, defaultValues, onChange } = this.props
 
     return (
       <div>
         <Select
-          value={defaultValue}
+          defaultValue={defaultValue}
+          value={value}
           onChange={onChange}
         >
           {defaultValues.map((df, index) => {

@@ -9,9 +9,7 @@ function List (props) {
 
   // If we have items, render them
   if (props.items) {
-    console.log('redraw item on list', props.items)
     content = props.items.map((item, index) => {
-      console.log('redraw', item.code, item.is_subscribed)
       return <ComponentToRender key={`item-${index}`} item={item} onRemove={props.onRemove} onAdd={props.onAdd} />
     })
   } else {

@@ -20,13 +20,17 @@ function Footer () {
     <Wrapper>
       <section>
         <div>
-          <FA href='#'>About Newspeller</FA>
+          <FA href='#' target='_blank'>Blog</FA>
           &nbsp;&middot;&nbsp;
-          <FA href='#'>Terms of Use</FA>
+          <FA href='#' target='_blank'>Help</FA>
           &nbsp;&middot;&nbsp;
-          <FA href='#'>Privacy Policy</FA>
+          <FA href='/about'>About Newspeller</FA>
           &nbsp;&middot;&nbsp;
-          <FA href='#'>News Publishers</FA>
+          <FA href='/terms'>Terms of Use</FA>
+          &nbsp;&middot;&nbsp;
+          <FA href='/privacy'>Privacy Policy</FA>
+          &nbsp;&middot;&nbsp;
+          <FA href='/news-publishers'>News Publishers</FA>
         </div>
         <FormattedMessage {...messages.licenseMessage} />
       </section>

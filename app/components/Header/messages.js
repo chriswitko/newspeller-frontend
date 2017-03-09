@@ -24,6 +24,6 @@ export default defineMessages({
   },
   scheduling: {
     id: 'boilerplate.components.Header.scheduling',
-    defaultMessage: 'Schedule'
+    defaultMessage: 'Settings'
   }
 })

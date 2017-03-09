@@ -16,15 +16,15 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
 
     let buttons = (
       <div>
-        <A href='/signin' style={{color: 'white', fontWeight: 'bold'}}>
+        <Link to='signin'>
           Sign in
-        </A>
+        </Link>
         &nbsp;&nbsp;&nbsp;
-        <A href='/features' style={{color: 'white', fontWeight: 'bold'}}>
+        <Link to='about'>
           How it works
-        </A>
+        </Link>
         &nbsp;&nbsp;&nbsp;
-        <HeaderLink to='/signin'>
+        <HeaderLink to='signin'>
           Register
         </HeaderLink>
       </div>
@@ -41,7 +41,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
             Channels
           </Link>
           &nbsp;&nbsp;&nbsp;
-          <Link to='schedule'>
+          <Link to='settings'>
             Settings
           </Link>
           &nbsp;&nbsp;&nbsp;
@@ -55,12 +55,10 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     return (
       <div style={{width: '100%'}}>
         <Row alignItems='center' style={{backgroundColor: '#3cb371', padding: '0'}}>
-          <Column lg={6} style={{padding: '10px 20px'}}>
-            <Link to=''>
-              <Logo white width='200' />
-            </Link>
+          <Column lg={4} style={{padding: '10px 20px'}}>
+            <Logo white width='200' />
           </Column>
-          <Column lg={6} style={{textAlign: 'right', padding: '10px 20px'}}>
+          <Column lg={8} style={{textAlign: 'right', padding: '10px 20px'}}>
             {buttons}
           </Column>
         </Row>

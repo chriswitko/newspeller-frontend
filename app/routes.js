@@ -28,6 +28,14 @@ const verifyAuthedUser = () => {
   }
 }
 
+const verifyAuthedUserRedirect = () => {
+  if (!window.localStorage.getItem('token')) {
+    return true
+  } else {
+    window.location.href = '/home'
+  }
+}
+
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -35,6 +43,31 @@ export default function createRoutes(store) {
   return [
     {
       path: '/',
+      name: 'index',
+      getComponent(nextState, cb) {
+        verifyAuthedUserRedirect()
+        import('containers/IndexPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/terms',
+      name: 'terms',
+      getComponent(nextState, cb) {
+        import('containers/TermsPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/privacy',
+      name: 'privacy',
+      getComponent(nextState, cb) {
+        import('containers/PrivacyPolicyPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/home',
       name: 'home',
       onEnter: requireAuth,
       getComponent(nextState, cb) {
@@ -58,8 +91,8 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/schedule',
-      name: 'schedule',
+      path: '/settings',
+      name: 'settings',
       onEnter: requireAuth,
       getComponent(nextState, cb) {
         verifyAuthedUser()
@@ -67,7 +100,7 @@ export default function createRoutes(store) {
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
-          import('containers/SchedulePage'),
+          import('containers/SettingsPage')
         ]);
 
         const renderRoute = loadModule(cb);
@@ -127,10 +160,34 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/features',
-      name: 'features',
+      path: '/about',
+      name: 'about',
       getComponent(nextState, cb) {
-        import('containers/FeaturePage')
+        import('containers/AboutPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/thankyou',
+      name: 'thankyou',
+      getComponent(nextState, cb) {
+        import('containers/ThankYouPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/unsubscribed',
+      name: 'unsubscribed',
+      getComponent(nextState, cb) {
+        import('containers/UnsubscribedPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/news-publishers',
+      name: 'newspublishers',
+      getComponent(nextState, cb) {
+        import('containers/NewsPublishersPage')
           .then(loadModule(cb))
           .catch(errorLoading);
       },

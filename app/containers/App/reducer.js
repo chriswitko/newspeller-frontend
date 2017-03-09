@@ -32,7 +32,8 @@ import {
   ADD_TOPIC_SUCCESS,
   USER_SUCCESS,
   USER_LOGOUT,
-  UPDATE_TIMEZONE_SUCCESS
+  UPDATE_TIMEZONE_SUCCESS,
+  UPDATE_GROUPBY_SUCCESS
 } from './constants'
 
 // The initial state of the App
@@ -45,6 +46,7 @@ const initialState = fromJS({
   userData: {
     nextAt: '',
     timezone: 'Europe/London',
+    groupBy: 'channels',
     subscriptions: false,
     repositories: false,
     days: false,
@@ -61,6 +63,7 @@ function appReducer (state = initialState, action) {
   switch (action.type) {
     case USER_LOGOUT:
       window.localStorage.setItem('token', '')
+      window.location.href = '/signin'
       return state
         .set('token', false)
     case USER_SUCCESS:
@@ -72,7 +75,6 @@ function appReducer (state = initialState, action) {
     case ADD_TOPIC:
       return state
         .setIn(['userData', 'repositories'], [...state.getIn(['userData', 'repositories']), action.topic.code])
-        // .setIn(['channels'], state.getIn(['channels']).filter(channel => channel !== action.topic.name))
     case ADD_TOPIC_SUCCESS:
       return state
         .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']).map(item => {
@@ -92,8 +94,6 @@ function appReducer (state = initialState, action) {
     case REMOVE_TOPIC:
       return state
         .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']))
-      //   .setIn(['userData', 'repositories'], state.getIn(['userData', 'repositories']).filter(source => source.code !== action.name.code))
-        // .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']))
     case REMOVE_TOPIC_SUCCESS:
       return state
         .setIn(['userData', 'subscriptions'], state.getIn(['userData', 'subscriptions']).map(item => {
@@ -103,9 +103,12 @@ function appReducer (state = initialState, action) {
             return item
           }
         }))
+    case UPDATE_GROUPBY_SUCCESS:
+      return state
+        .setIn(['userData', 'groupBy'], action.groupBy)
     case UPDATE_TIMEZONE_SUCCESS:
       return state
-        .setIn(['userData', 'hours'], action.timezone)
+        .setIn(['userData', 'timezone'], action.timezone)
     case ADD_HOUR:
       if (!state.getIn(['userData', 'hours']).includes(action.hour)) {
         return state
@@ -161,7 +164,6 @@ function appReducer (state = initialState, action) {
     case LOAD_REPOS_SUCCESS:
       let allSubscriptions = []
       action.subscriptions.map(item => {
-        // channel.sections.map(section => all.push(`${channel.code}_${section.code}`))
         allSubscriptions.push({
           code: `${item.channel.code}_${item.topic.code}`,
           name: `${item.channel.name} / ${item.topic.name}`,
@@ -177,6 +179,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'hours'], action.hours)
         .setIn(['userData', 'nextAt'], action.nextAt)
         .setIn(['userData', 'timezone'], action.timezone)
+        .setIn(['userData', 'groupBy'], action.groupBy)
         .set('loading', false)
         .set('currentUser', action.username)
     case LOAD_REPOS_ERROR:

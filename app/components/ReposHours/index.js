@@ -5,6 +5,7 @@ import ListItem from 'components/ListItem'
 import LoadingIndicator from 'components/LoadingIndicator'
 
 import styled from 'styled-components'
+import Ionicon from 'react-ionicons'
 
 const Ul = styled.ul`
   list-style: none;
@@ -72,7 +73,7 @@ function ReposHours ({ loading, error, hours, onRemoveHour }) {
             <li
               key={index}
             >
-              <a href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<span>[X]</span></a>
+              <a href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<Ionicon icon='ion-ios-trash-outline' fontSize='19px' color='red' /></a>
             </li>
           ))}
         </Ul>
@@ -89,6 +90,5 @@ ReposHours.propTypes = {
   hours: PropTypes.any,
   onRemoveHour: PropTypes.func
 }
-
 
 export default ReposHours

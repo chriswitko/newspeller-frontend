@@ -39,7 +39,9 @@ import {
   USER_ERROR,
   USER_LOGOUT,
   UPDATE_TIMEZONE,
-  UPDATE_TIMEZONE_SUCCESS
+  UPDATE_TIMEZONE_SUCCESS,
+  UPDATE_GROUPBY,
+  UPDATE_GROUPBY_SUCCESS
 } from './constants'
 
 /**
@@ -87,6 +89,12 @@ export function updateTimezoneSuccess (timezone) {
   }
 }
 
+export function updateGroupBySuccess (groupBy) {
+  return {
+    type: UPDATE_GROUPBY_SUCCESS,
+    groupBy
+  }
+}
 
 export function authorizeUser (email, password) {
   return {
@@ -131,6 +139,13 @@ export function updateTimezone (timezone) {
   }
 }
 
+export function updateGroupBy (groupBy) {
+  return {
+    type: UPDATE_GROUPBY,
+    groupBy
+  }
+}
+
 export function removeHourSuccess (hour) {
   return {
     type: REMOVE_HOUR_SUCCESS,
@@ -159,12 +174,13 @@ export function addTopicSuccess (topic) {
   }
 }
 
-export function reposLoaded (repos, subscriptions, timezone, days, hours, nextAt, username) {
+export function reposLoaded (repos, subscriptions, timezone, groupBy, days, hours, nextAt, username) {
   return {
     type: LOAD_REPOS_SUCCESS,
     repos,
     subscriptions,
     timezone,
+    groupBy,
     days,
     hours,
     nextAt,
@@ -180,7 +196,6 @@ export function reposLoaded (repos, subscriptions, timezone, days, hours, nextAt
  * @return {object}       An action object with a type of LOAD_REPOS_ERROR passing the error
  */
 export function repoLoadingError (error) {
-  console.log('repoLoadingError error', error)
   return {
     type: LOAD_REPOS_ERROR,
     error
@@ -216,7 +231,6 @@ export function removeTopic (name) {
 }
 
 export function removeTopicSuccess (topic) {
-  console.log('GOGOGO!!! removeTopicSuccess action', topic)
   return {
     type: REMOVE_TOPIC_SUCCESS,
     topic

@@ -1,5 +1,5 @@
 /*
- * HomePage
+ * SettingsPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone } from 'containers/App/selectors'
+import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone, makeSelectGroupBy } from 'containers/App/selectors'
 import { makeSelectHour } from './selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
@@ -18,23 +18,26 @@ import ReposDays from 'components/ReposDays'
 import ReposHours from 'components/ReposHours'
 import TimezonePicker from 'components/TimezonePicker'
 import DropDownPicker from 'components/DropDownPicker'
+import DropDownObjectPicker from 'components/DropDownObjectPicker'
 import ButtonSubmit from './ButtonSubmit'
 
 import AtPrefix from './AtPrefix'
 import CenteredSection from './CenteredSection'
 import Section from './Section'
+import Small from 'components/Small'
 import Form from './Form'
 import Input from './Input'
 import messages from './messages'
-import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone } from '../App/actions'
+import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone, updateGroupBy } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
-import styled from 'styled-components'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
 
-export class SchedulePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+const API_ENDPOINT = process.env.NODE_ENV === 'development' ? window.location.origin.replace(':3000', ':3100') : 'https://api.newspeller.com'
+
+export class SettingsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor () {
     super()
 
@@ -65,7 +68,7 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
   }
 
   render () {
-    const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour } = this.props
+    const { loading, error, days, hours, timezone, groupBy, onRemoveDay, onAddDay, onRemoveHour, onChangeGroupBy, onChangeTimezone } = this.props
     const { hour, minute, onChangeHour, onChangeMinute } = this.state
     
     const reposDaysProps = {
@@ -80,45 +83,70 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
 
     const page = loading ? <div>Loading your settings. Please wait...</div> : error ? <div>Something went wrong, please try again!</div> : (
       <Section>
-        <H2>
-          Select your time zone
-        </H2>
-        <TimezonePicker
-          placeholder='Select timezone...'
-          defaultValue={timezone}
-          onChange={this.props.onChangeTimezone}
-        />
-        <H2>
-          When would you like to receive email?
-        </H2>
-        <ReposDays {...reposDaysProps} />
-        <H2>
-          ... and what time?
-        </H2>
-        <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
-          <div style={{marginBottom: '10px'}}>
-            <label htmlFor='time'>
-              <AtPrefix>
-                Wish to receive your newsletter often, just add new time below.
-              </AtPrefix>
-            </label>
-          </div>
-          <DropDownPicker
-            placeholder='HH'
-            defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
-            defaultValue={hour}
-            onChange={this.onChangeHour}
-          />                      
-          <DropDownPicker
-            placeholder='MM'
-            defaultValues={['MM', '00', '15', '30', '45']}
-            defaultValue={minute}
-            onChange={this.onChangeMinute}
-          />            
-          <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>          
-        </Form>
-        <ReposHours {...reposDaysProps} />
-        <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
+        <Row>
+          <Column style={{padding: '0'}}>
+            <H2>
+              How would you like to group news?
+            </H2>
+            <DropDownObjectPicker
+              placeholder='Group by'
+              defaultValues={[{name: 'By Channels', value: 'channels'}, {name: 'By Category', value: 'category'}]}
+              defaultValue={groupBy}
+              onChange={onChangeGroupBy}
+            />                      
+          </Column>
+        </Row>
+        <Row>
+          <Column style={{padding: '0'}}>
+            <H2>
+              What is your time zone?
+            </H2>
+            <TimezonePicker
+              placeholder='Select timezone...'
+              defaultValue={timezone}
+              onChange={onChangeTimezone}
+            />
+          </Column>
+        </Row>
+        <Row>
+          <Column style={{padding: '0'}}>
+            <H2>
+              When would you like to receive emails...
+            </H2>
+            <ReposDays {...reposDaysProps} />
+          </Column>
+        </Row>
+        <Row>
+          <Column style={{padding: '0'}}>
+            <H2>
+              ... and at what time?
+            </H2>
+            <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
+              <div style={{marginBottom: '10px'}}>
+                <label htmlFor='time'>
+                  <AtPrefix>
+                    Wish to receive your newsletter often, just add new time below.
+                  </AtPrefix>
+                </label>
+              </div>
+              <DropDownPicker
+                placeholder='HH'
+                defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
+                defaultValue={hour}
+                onChange={this.onChangeHour}
+              />                      
+              <DropDownPicker
+                placeholder='MM'
+                defaultValues={['MM', '00', '15', '30', '45']}
+                defaultValue={minute}
+                onChange={this.onChangeMinute}
+              />            
+              <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>          
+            </Form>
+            <ReposHours {...reposDaysProps} />
+            <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
+          </Column>
+        </Row>
       </Section>
     )
 
@@ -132,7 +160,7 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
             <Column>
               <article>
                 <Helmet
-                  title='Schedule'
+                  title='Settings'
                   meta={[
                     { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
                   ]}
@@ -150,6 +178,11 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
                 </div>
               </article>
             </Column>
+            {!loading ? (
+              <Column>
+                <Small><a href={API_ENDPOINT + '/track/remove/123'}>Remove my email address from The Newspeller database</a></Small>
+              </Column>
+            ) : ''}
           </Row>
           <Row alignSelf='flex-start' style={{width: '100%'}}>
             <Footer />
@@ -160,7 +193,7 @@ export class SchedulePage extends React.PureComponent { // eslint-disable-line r
   }
 }
 
-SchedulePage.propTypes = {
+SettingsPage.propTypes = {
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
     React.PropTypes.object,
@@ -187,17 +220,15 @@ export function mapDispatchToProps (dispatch, props) {
     onAddDay: (day) => dispatch(addDay(day)),
     onRemoveDay: (day) => dispatch(removeDay(day)),
     onChangeTimezone: (evt) => dispatch(updateTimezone(evt.target.value)),
+    onChangeGroupBy: (evt) => dispatch(updateGroupBy(evt.target.value)),
     onChangeTime: (evt) => dispatch(changeTime(evt.target.value)),
-    onSubmitForm: (hour, minute) => {
-      dispatch(addNewHour(`${hour}:${minute}`))
-    },
-    onLoad: () => {
-      dispatch(loadRepos())
-    }
+    onSubmitForm: (hour, minute) => dispatch(addNewHour(`${hour}:${minute}`)),
+    onLoad: () => dispatch(loadRepos())
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  groupBy: makeSelectGroupBy(),
   timezone: makeSelectTimezone(),
   days: makeSelectDays(),
   hours: makeSelectHours(),
@@ -207,4 +238,4 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(SchedulePage)
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage)

@@ -21,4 +21,8 @@ export default styled(Link)`
     background: #41ADDD;
     color: #FFF;
   }
+
+  &:hover {
+    color: #fff;
+  }
 `

@@ -59,7 +59,7 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
 
     return (
       <Wrapper>
-        <Logo bottomed/>
+        <Logo bottomed />
         <Box centered>
           <Page>
             <Row>

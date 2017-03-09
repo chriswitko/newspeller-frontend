@@ -18,7 +18,6 @@ function ReposList ({ loading, error, subscriptions, onRemove, onAdd }) {
   }
 
   if (subscriptions !== false) {
-    console.log('redraw ReposList subscriptions', subscriptions)
     return <List items={subscriptions} component={RepoListItem} onRemove={onRemove} onAdd={onAdd} />
   }
 

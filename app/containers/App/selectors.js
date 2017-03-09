@@ -11,6 +11,11 @@ const makeSelectTimezone = () => createSelector(
   (globalState) => globalState.getIn(['userData', 'timezone'])
 )
 
+const makeSelectGroupBy = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'groupBy'])
+)
+
 const makeSelectToken = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('token') || window.localStorage.getItem('token')
@@ -40,7 +45,6 @@ const makeSelectError = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('error')
 )
-
 
 const makeSelectRepos = () => createSelector(
   selectGlobal,
@@ -97,5 +101,6 @@ export {
   makeSelectUserId,
   makeSelectToken,
   makeSelectSubscriptions,
-  makeSelectTimezone
+  makeSelectTimezone,
+  makeSelectGroupBy
 }

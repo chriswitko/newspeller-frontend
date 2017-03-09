@@ -28,6 +28,9 @@ export const ADD_HOUR_SUCCESS = 'boilerplate/App/ADD_HOUR_SUCCESS'
 export const UPDATE_TIMEZONE = 'boilerplate/App/UPDATE_TIMEZONE'
 export const UPDATE_TIMEZONE_SUCCESS = 'boilerplate/App/UPDATE_TIMEZONE_SUCCESS'
 
+export const UPDATE_GROUPBY = 'boilerplate/App/UPDATE_GROUPBY'
+export const UPDATE_GROUPBY_SUCCESS = 'boilerplate/App/UPDATE_GROUPBY_SUCCESS'
+
 export const USER_AUTHORIZE = 'boilerplate/App/USER_AUTHORIZE'
 export const USER_SUCCESS = 'boilerplate/App/USER_SUCCESS'
 export const USER_ERROR = 'boilerplate/App/USER_AUTHORIZED'

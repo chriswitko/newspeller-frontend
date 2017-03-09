@@ -11,6 +11,7 @@ const Select = styled.select`
   background-size: 0.55em;
   padding-right: 2.6em;
   max-width: 100%;
+  width: 100%;
   border-radius: 0.4rem;
   border: 1px solid #bfbfbf;
   transition: box-shadow 0.15s ease-in-out;
@@ -51,18 +52,20 @@ class TimezonePicker extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    const { value } = nextProps
     if (nextProps.value !== this.props.value) {
       this.setState({ value })
     }
   }
 
   render () {
-    const { defaultValue, onChange } = this.props
+    const { value, defaultValue, onChange } = this.props
 
     return (
       <div>
         <Select
-          value={defaultValue}
+          defaultValue={defaultValue}
+          value={value}
           onChange={onChange}
         >
           {Object.keys(defaultTimezones).map((tz, index) => {

@@ -22,7 +22,6 @@ import messages from './messages'
 import { loadRepos, removeTopic, addTopic } from '../App/actions'
 import { changeUsername } from './actions'
 import { makeSelectUsername } from './selectors'
-import styled from 'styled-components'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
@@ -55,12 +54,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const getNextDelivery = () => {
       if (!loading) {
         if (nextAt) {
-          return <div>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm" tz={timezone}>{nextAt}</Moment>, {timezone}) - <Link to='schedule'>Manage schedule</Link></small></div>
+          return <div>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format="YYYY/MM/DD HH:mm" tz={timezone}>{nextAt}</Moment>, {timezone}) - <Link to='settings'>Manage schedule</Link></small></div>
         } else {
           if (repos.length) {
-            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='schedule'>Manage schedule</Link></div>
+            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link></div>
           } else {
-            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='schedule'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
+            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
           }
         }
       } else {
