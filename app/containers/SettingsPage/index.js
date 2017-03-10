@@ -6,7 +6,6 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -20,11 +19,9 @@ import DropDownPicker from 'components/DropDownPicker'
 import ButtonSubmit from './ButtonSubmit'
 
 import AtPrefix from './AtPrefix'
-import CenteredSection from './CenteredSection'
 import Section from './Section'
 import Small from 'components/Small'
 import Form from './Form'
-import messages from './messages'
 import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone, removeAccount } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
@@ -148,14 +145,6 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                   ]}
                 />
                 <div>
-                  <CenteredSection>
-                    <H2>
-                      Schedule newsletter delivery
-                    </H2>
-                    <p>
-                      <FormattedMessage {...messages.startProjectMessage} />
-                    </p>
-                  </CenteredSection>
                   {page}
                 </div>
               </article>

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import A from 'components/A';
+import A from 'components/A'
 
 const IssueLink = styled(A)`
   height: 100%;
@@ -8,6 +8,6 @@ const IssueLink = styled(A)`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
-export default IssueLink;
+export default IssueLink
