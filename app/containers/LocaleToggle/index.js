@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
+import { createStructuredSelector } from 'reselect'
 
 import Toggle from 'components/Toggle'
 import Wrapper from './Wrapper'
@@ -30,9 +30,10 @@ LocaleToggle.propTypes = {
   locale: React.PropTypes.string
 }
 
-const mapStateToProps = createSelector(
-  makeSelectLocale(),
-  (locale) => ({ locale })
+const mapStateToProps = createStructuredSelector({
+  locale: makeSelectLocale()
+}
+  // (locale) => ({ locale })
 )
 
 export function mapDispatchToProps (dispatch) {

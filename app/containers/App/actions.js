@@ -41,7 +41,10 @@ import {
   UPDATE_TIMEZONE,
   UPDATE_TIMEZONE_SUCCESS,
   UPDATE_GROUPBY,
-  UPDATE_GROUPBY_SUCCESS
+  UPDATE_GROUPBY_SUCCESS,
+  REMOVE_ACCOUNT,
+  REMOVE_ACCOUNT_SUCCESS,
+  CHANGE_LOCALE_SUCCESS
 } from './constants'
 
 /**
@@ -209,6 +212,24 @@ export function feedsLoaded (repos) {
   }
 }
 
+export function removeAccount () {
+  return {
+    type: REMOVE_ACCOUNT
+  }
+}
+
+export function removeAccountSuccess () {
+  return {
+    type: REMOVE_ACCOUNT_SUCCESS
+  }
+}
+
+export function changeLocaleSuccess () {
+  return {
+    type: CHANGE_LOCALE_SUCCESS
+  }
+}
+
 /**
  * Dispatched when loading the repositories fails
  *
@@ -237,7 +258,6 @@ export function removeTopicSuccess (topic) {
   }
 }
 
-
 export function removeDay (day) {
   return {
     type: REMOVE_DAY,
@@ -258,4 +278,3 @@ export function removeHour (hour) {
     hour
   }
 }
-

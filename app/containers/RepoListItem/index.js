@@ -7,7 +7,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { FormattedNumber } from 'react-intl'
 
 import { makeSelectCurrentUser, makeSelectSubscriptions } from 'containers/App/selectors'
 import ListItem from 'components/ListItem'
@@ -18,7 +17,7 @@ import Wrapper from './Wrapper'
 
 export class RepoListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render () {
-    const {currentUser, item, channels, subscriptions, onRemove, onAdd} = this.props
+    const {item, subscriptions, onRemove, onAdd} = this.props
 
     const isSubscribed = (item) => {
       const allSubscriptions = (subscriptions || []).map(s => {
@@ -30,30 +29,15 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
       return ~allSubscriptions.indexOf(item.code) || item.is_subscribed
     }
 
-    // let nameprefix = ''
-    // If the repository is owned by a different person than we got the data for
-    // it's a fork and we should show the name of the owner
-    // if (item.owner.login !== this.props.currentUser) {
-    //   nameprefix = `${item.owner.login}/`;
-    // }
-        // <RepoLink href={item.html_url} target="_blank">
-        //   {nameprefix + item.name}
-        // </RepoLink>
-        // <IssueLink href={`${item.html_url}/issues`} target="_blank">
-        //   <IssueIcon />
-        //   <FormattedNumber value={item.open_issues_count} />
-        // </IssueLink>
-
-    // Put together the content of the repository
-    // {`${currentUser}/${item}/issues`}
-
     const buttonRemove = <RemoveButton href='#' onClick={() => onRemove(item)}>Remove</RemoveButton>
     const buttonAdd = <AddButton href='#' onClick={() => onAdd(item)}>Add</AddButton>
 
     const content = (
       <Wrapper>
         <RepoLink href={item.url} target='_blank'>
-          {item.name}
+          <img src='https://logo.clearbit.com/cnn.com?s=20' />
+          &nbsp;&nbsp;
+          {item.name} (PL)
         </RepoLink>
         { isSubscribed(item) ? buttonRemove : buttonAdd }
       </Wrapper>

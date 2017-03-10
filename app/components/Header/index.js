@@ -1,7 +1,6 @@
 import React from 'react'
 
 import A from './A'
-import HeaderLink from './HeaderLink'
 import { Row, Column } from 'hedron'
 import Link from './Link'
 import { createStructuredSelector } from 'reselect'
@@ -19,14 +18,6 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
         <Link to='signin'>
           Sign in
         </Link>
-        &nbsp;&nbsp;&nbsp;
-        <Link to='about'>
-          How it works
-        </Link>
-        &nbsp;&nbsp;&nbsp;
-        <HeaderLink to='signin'>
-          Register
-        </HeaderLink>
       </div>
     )
 
@@ -55,10 +46,10 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     return (
       <div style={{width: '100%'}}>
         <Row alignItems='center' style={{backgroundColor: '#3cb371', padding: '0'}}>
-          <Column lg={4} style={{padding: '10px 20px'}}>
-            <Logo white width='200' />
+          <Column lg={4} sm={4} style={{padding: '10px 20px'}}>
+            <Logo white width='100%' />
           </Column>
-          <Column lg={8} style={{textAlign: 'right', padding: '10px 20px'}}>
+          <Column lg={8} sm={8} style={{textAlign: 'right', padding: '10px 20px'}}>
             {buttons}
           </Column>
         </Row>

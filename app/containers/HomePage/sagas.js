@@ -21,7 +21,8 @@ import {
   LOAD_FEEDS,
   USER_AUTHORIZE,
   UPDATE_TIMEZONE,
-  UPDATE_GROUPBY
+  REMOVE_ACCOUNT,
+  CHANGE_LOCALE
 } from 'containers/App/constants'
 import {
   reposLoaded,
@@ -37,7 +38,8 @@ import {
   authorizeSuccess,
   authorizeError,
   updateTimezoneSuccess,
-  updateGroupBySuccess
+  removeAccountSuccess,
+  changeLocaleSuccess
 } from 'containers/App/actions'
 import request from 'utils/request'
 import {
@@ -50,11 +52,11 @@ const API_ENDPOINT = process.env.NODE_ENV === 'development' ? window.location.or
 /**
  * Github repos request/response handler
  */
-export function* getRepos () {
+export function * getRepos () {
   const token = yield select(makeSelectToken())
   const username = yield select(makeSelectUsername())
   const requestURL = `${API_ENDPOINT}/subscriptions?token=${token}`
-  
+
   try {
     const repos = yield call(request, requestURL)
     yield put(reposLoaded(repos.subscription.sources, repos.subscription.channels, repos.subscription.timezone, repos.subscription.group_by, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
@@ -63,7 +65,7 @@ export function* getRepos () {
   }
 }
 
-export function* removeTopicRemotely (action) {
+export function * removeTopicRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/remove_topic/${action.name.code}?token=${token}`
 
@@ -75,7 +77,7 @@ export function* removeTopicRemotely (action) {
   }
 }
 
-export function* addTopicRemotely (action) {
+export function * addTopicRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/add_topic/${action.topic.code}?token=${token}`
 
@@ -87,7 +89,7 @@ export function* addTopicRemotely (action) {
   }
 }
 
-export function* removeHourRemotely (action) {
+export function * removeHourRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/remove_hour/${action.hour}?token=${token}`
 
@@ -99,7 +101,7 @@ export function* removeHourRemotely (action) {
   }
 }
 
-export function* removeDayRemotely (action) {
+export function * removeDayRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/remove_day/${action.day}?token=${token}`
 
@@ -111,7 +113,7 @@ export function* removeDayRemotely (action) {
   }
 }
 
-export function* addDayRemotely (action) {
+export function * addDayRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/add_day/${action.day}?token=${token}`
 
@@ -123,7 +125,7 @@ export function* addDayRemotely (action) {
   }
 }
 
-export function* addHourRemotely (action) {
+export function * addHourRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/add_hour/${action.hour}?token=${token}`
 
@@ -135,7 +137,7 @@ export function* addHourRemotely (action) {
   }
 }
 
-export function* updateTimezoneRemotely (action) {
+export function * updateTimezoneRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscriptions/update_timezone?timezone=${action.timezone}&token=${token}`
 
@@ -147,13 +149,36 @@ export function* updateTimezoneRemotely (action) {
   }
 }
 
-export function* updateGroupByRemotely (action) {
+export function * updateLocaleRemotely (action) {
   const token = yield select(makeSelectToken())
-  const requestURL = `${API_ENDPOINT}/subscriptions/update_group_by?group_by=${action.groupBy}&token=${token}`
+  if (!token) {
+    yield put(repoLoadingError('No token'))
+  }
+  const requestURL = `${API_ENDPOINT}/subscribers/update_language?locale=${action.locale}&token=${token}`
 
   try {
     yield call(request, requestURL)
-    yield put(updateGroupBySuccess(action.groupBy))
+    yield put(changeLocaleSuccess())
+  } catch (err) {
+    yield put(repoLoadingError(err))
+  }
+}
+
+export function * removeAccountRemotely (action) {
+  const token = yield select(makeSelectToken())
+  const requestURL = `${API_ENDPOINT}/subscribers`
+
+  try {
+    yield call(request, requestURL, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: token
+      })
+    })
+    yield put(removeAccountSuccess())
   } catch (err) {
     yield put(repoLoadingError(err))
   }
@@ -162,58 +187,62 @@ export function* updateGroupByRemotely (action) {
 /**
  * Root saga manages watcher lifecycle
  */
-export function* githubData () {
+export function * githubData () {
   const watcher = yield takeLatest(LOAD_REPOS, getRepos)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* removeHourSaga () {
+export function * removeHourSaga () {
   const watcher = yield takeEvery(REMOVE_HOUR, removeHourRemotely)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* removeTopicSaga () {
+export function * removeTopicSaga () {
   yield takeEvery(REMOVE_TOPIC, removeTopicRemotely)
 }
 
-export function* removeDaySaga () {
+export function * removeDaySaga () {
   const watcher = yield takeEvery(REMOVE_DAY, removeDayRemotely)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* addDaySaga () {
+export function * addDaySaga () {
   const watcher = yield takeEvery(ADD_DAY, addDayRemotely)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* addTopicSaga () {
+export function * addTopicSaga () {
   yield takeEvery(ADD_TOPIC, addTopicRemotely)
 }
 
-export function* addHourSaga () {
+export function * addHourSaga () {
   const watcher = yield takeEvery(ADD_HOUR, addHourRemotely)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* updateTimezoneSaga () {
+export function * updateTimezoneSaga () {
   yield takeLatest(UPDATE_TIMEZONE, updateTimezoneRemotely)
 }
 
-export function* updateGroupBySaga () {
-  yield takeLatest(UPDATE_GROUPBY, updateGroupByRemotely)
+export function * updateLocaleSaga () {
+  yield takeLatest(CHANGE_LOCALE, updateLocaleRemotely)
 }
 
-export function* getFeeds () {
+export function * removeAccountSaga () {
+  yield takeLatest(REMOVE_ACCOUNT, removeAccountRemotely)
+}
+
+export function * getFeeds () {
   const requestURL = `${API_ENDPOINT}/feeds/all`
 
   try {
@@ -227,14 +256,14 @@ export function* getFeeds () {
 /**
  * Root saga manages watcher lifecycle
  */
-export function* loadFeedsData () {
+export function * loadFeedsData () {
   const watcher = yield takeLatest(LOAD_FEEDS, getFeeds)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
 }
 
-export function* getUser (action) {
+export function * getUser (action) {
   const requestURL = `${API_ENDPOINT}/subscribers/auth`
 
   try {
@@ -257,7 +286,7 @@ export function* getUser (action) {
 /**
  * Root saga manages watcher lifecycle
  */
-export function* authorizeUser () {
+export function * authorizeUser () {
   const watcher = yield takeLatest(USER_AUTHORIZE, getUser)
 
   yield take(LOCATION_CHANGE)
@@ -275,5 +304,6 @@ export default [
   addTopicSaga,
   authorizeUser,
   updateTimezoneSaga,
-  updateGroupBySaga
+  removeAccountSaga,
+  updateLocaleSaga
 ]

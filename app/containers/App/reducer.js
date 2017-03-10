@@ -33,7 +33,8 @@ import {
   USER_SUCCESS,
   USER_LOGOUT,
   UPDATE_TIMEZONE_SUCCESS,
-  UPDATE_GROUPBY_SUCCESS
+  UPDATE_GROUPBY_SUCCESS,
+  REMOVE_ACCOUNT_SUCCESS
 } from './constants'
 
 // The initial state of the App
@@ -61,6 +62,11 @@ const strToMin = str => {
 
 function appReducer (state = initialState, action) {
   switch (action.type) {
+    case REMOVE_ACCOUNT_SUCCESS:
+      window.localStorage.setItem('token', '')
+      window.location.href = '/signin'
+      return state
+        .set('token', false)
     case USER_LOGOUT:
       window.localStorage.setItem('token', '')
       window.location.href = '/signin'

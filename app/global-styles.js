@@ -30,9 +30,11 @@ injectGlobal`
   
   a {
     color: #41addd;
+    text-decoration: none;
 
     &:hover {
       color: #6cc0e5;
+      text-decoration: underline;
     }  
   }
 `
