@@ -18,11 +18,9 @@ import CenteredSection from './CenteredSection'
 import Section from './Section'
 import messages from './messages'
 import { loadRepos, loadFeeds, addTopic, removeTopic } from '../App/actions'
-import styled from 'styled-components'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
-import { Link } from 'react-router'
 
 export class ChannelsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
