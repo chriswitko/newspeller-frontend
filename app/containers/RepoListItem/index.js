@@ -46,6 +46,7 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
            ) : ''}
           {item.channelName} [{item.language}]
           <br />
+          &raquo;&nbsp;
           {item.sectionName}
         </RepoLink>
         { isSubscribed(item) ? buttonRemove : buttonAdd }

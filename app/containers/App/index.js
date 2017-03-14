@@ -22,7 +22,7 @@ export function App (props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate='%s - The Newspeller'
+        titleTemplate='The Newspeller - %s'
         defaultTitle='The Newspeller'
         meta={[
           { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' }

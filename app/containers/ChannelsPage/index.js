@@ -49,14 +49,6 @@ export class ChannelsPage extends React.PureComponent {
       repos
     }
 
-    const goToHome = () => {
-      browserHistory.push('/home')
-    }
-
-    const goToSettings = () => {
-      browserHistory.push('/settings')
-    }
-
     return (
       <Box fullScreen>
         <Page style={{display: 'flex', flexDirection: 'column'}}>
@@ -81,14 +73,6 @@ export class ChannelsPage extends React.PureComponent {
                       <div>
                         <FormattedMessage {...messages.startProjectMessage} />
                       </div>
-                    </Div>
-                    <Div>
-                      <CenteredSection>
-                        <br />
-                        <ButtonSubmit onClick={goToHome}>My Subscriptions</ButtonSubmit>
-                        &nbsp;&nbsp;
-                        <ButtonSubmit onClick={goToSettings}>Manage schedule</ButtonSubmit>
-                      </CenteredSection>
                     </Div>
                     <Div>
                       <Label>Filter by language</Label>
