@@ -74,9 +74,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   <div>Based on these channels we are generating your personal email with news headlines. Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></div>
                   <CenteredSection>
                     <br />
-                    <ButtonSubmit onClick={goToChannels}>Search channels</ButtonSubmit>
+                    <ButtonSubmit onClick={goToChannels}>Channels</ButtonSubmit>
                     &nbsp;&nbsp;
-                    <ButtonSubmit onClick={goToSettings}>Manage schedule</ButtonSubmit>
+                    <ButtonSubmit onClick={goToSettings}>Settings</ButtonSubmit>
                   </CenteredSection>
                 </div>
               )

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const RemoveButton = styled.button`
-  min-width: 100px;
+  min-width: 90px;
   color: #a8a8a8;
   display: flex;
   align-items: center;

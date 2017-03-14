@@ -45,8 +45,7 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
             <Img style={{marginRight: '5px'}} width='32' src={item.icon} />
            ) : ''}
           {item.channelName} [{item.language}]
-        </RepoLink>
-        <RepoLink href={item.url} target='_blank'>
+          <br />
           {item.sectionName}
         </RepoLink>
         { isSubscribed(item) ? buttonRemove : buttonAdd }

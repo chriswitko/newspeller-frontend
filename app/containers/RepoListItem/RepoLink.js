@@ -4,7 +4,7 @@ import A from 'components/A'
 
 const RepoLink = styled(A)`
   height: 100%;
-  line-height: 15px;
+  line-height: 19px;
   color: black;
   display: flex;
   align-items: center;
