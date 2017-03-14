@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { findDOMNode } from 'react-dom'
 import styled from 'styled-components'
 import arrows from './select_up_down_arrow.svg'
 
@@ -49,8 +48,6 @@ class DropDownPicker extends Component {
     this.state = {
       value: props.defaultValue || props.initialValue
     }
-
-    this.prevValue = this.state.value
   }
 
   render () {

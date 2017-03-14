@@ -20,7 +20,7 @@ const Select = styled.select`
   margin-right: 1em;
   background-color: #fff;
   display: inline-table;
-  float: left;
+  display: block;
   font-family: inherit;
   font-weight: inherit;
   -webkit-appearance: none;

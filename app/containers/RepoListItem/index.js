@@ -15,6 +15,12 @@ import AddButton from './AddButton'
 import RepoLink from './RepoLink'
 import Wrapper from './Wrapper'
 
+import styled from 'styled-components'
+
+const Img = styled.img`
+  border-radius: 3px;
+`
+
 export class RepoListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render () {
     const {item, subscriptions, onRemove, onAdd} = this.props
@@ -29,15 +35,19 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
       return ~allSubscriptions.indexOf(item.code) || item.is_subscribed
     }
 
-    const buttonRemove = <RemoveButton href='#' onClick={() => onRemove(item)}>Remove</RemoveButton>
-    const buttonAdd = <AddButton href='#' onClick={() => onAdd(item)}>Add</AddButton>
+    const buttonRemove = <RemoveButton onClick={() => onRemove(item)}>Remove</RemoveButton>
+    const buttonAdd = <AddButton onClick={() => onAdd(item)}>Add</AddButton>
 
     const content = (
       <Wrapper>
         <RepoLink href={item.url} target='_blank'>
-          <img src='https://logo.clearbit.com/cnn.com?s=20' />
-          &nbsp;&nbsp;
-          {item.name} (PL)
+          {item.icon ? (
+            <Img style={{marginRight: '5px'}} width='32' src={item.icon} />
+           ) : ''}
+          {item.channelName} [{item.language}]
+        </RepoLink>
+        <RepoLink href={item.url} target='_blank'>
+          {item.sectionName}
         </RepoLink>
         { isSubscribed(item) ? buttonRemove : buttonAdd }
       </Wrapper>

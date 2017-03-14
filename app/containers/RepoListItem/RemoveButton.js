@@ -1,13 +1,13 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import A from 'components/A';
-
-const RemoveButton = styled(A)`
-  height: 100%;
-  color: black;
+const RemoveButton = styled.button`
+  min-width: 100px;
+  color: #a8a8a8;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+`
 
-export default RemoveButton;
+export default RemoveButton

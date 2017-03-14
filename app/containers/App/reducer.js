@@ -43,7 +43,7 @@ const initialState = fromJS({
   error: false,
   currentUser: false,
   token: false,
-  channels: false,
+  channels: [],
   userData: {
     nextAt: '',
     timezone: 'Europe/London',
@@ -150,8 +150,12 @@ function appReducer (state = initialState, action) {
         channel.sections.map(section => all.push({
           code: `${channel.code}_${section.code}`,
           name: `${channel.name} / ${section.name}`,
+          channelName: channel.name,
+          sectionName: section.name,
           description: section.description,
           url: section.url,
+          icon: channel.icon,
+          language: channel.language.toUpperCase(),
           is_subscribed: false
         }))
       })
@@ -173,8 +177,12 @@ function appReducer (state = initialState, action) {
         allSubscriptions.push({
           code: `${item.channel.code}_${item.topic.code}`,
           name: `${item.channel.name} / ${item.topic.name}`,
+          channelName: item.channel.name,
+          sectionName: item.topic.name,
           description: item.topic.description,
           url: item.topic.url,
+          icon: item.channel.icon,
+          language: item.channel.language.toUpperCase(),
           is_subscribed: true
         })
       })

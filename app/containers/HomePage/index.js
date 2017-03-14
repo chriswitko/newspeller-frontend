@@ -4,8 +4,6 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-// console.log('process', process.env)
-
 import React from 'react'
 import Helmet from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
@@ -15,8 +13,8 @@ import { createStructuredSelector } from 'reselect'
 import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
+import Alert from 'components/Alert'
 import ReposList from 'components/ReposList'
-import CenteredSection from './CenteredSection'
 import Section from './Section'
 import messages from './messages'
 import { loadRepos, removeTopic, addTopic } from '../App/actions'
@@ -25,8 +23,10 @@ import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
-import { Link } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 import Moment from 'react-moment'
+import ButtonSubmit from 'components/ButtonSubmit'
+import CenteredSection from './CenteredSection'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -51,16 +51,53 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       subscriptions
     }
 
+    const lastTime = new Date(nextAt).getTime()
+    const now = new Date().getTime()
+
     const getNextDelivery = () => {
+      const goToChannels = () => {
+        browserHistory.push('/channels')
+      }
+
+      const goToSettings = () => {
+        browserHistory.push('/settings')
+      }
+
       if (!loading) {
-        if (nextAt) {
-          return <div>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, {timezone}) - <Link to='settings'>Manage schedule</Link></small></div>
-        } else {
-          if (repos.length) {
-            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link></div>
+        if (repos.length) {
+          if (nextAt) {
+            if (lastTime < now) {
+              return ''
+            } else {
+              return (
+                <div>
+                  <div>Based on these channels we are generating your personal email with news headlines. Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></div>
+                  <CenteredSection>
+                    <br />
+                    <ButtonSubmit onClick={goToChannels}>Search channels</ButtonSubmit>
+                    &nbsp;&nbsp;
+                    <ButtonSubmit onClick={goToSettings}>Manage schedule</ButtonSubmit>
+                  </CenteredSection>
+                </div>
+              )
+            }
           } else {
-            return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
+            if (repos.length) {
+              return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link></div>
+            } else {
+              return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
+            }
           }
+        } else {
+          return (
+            <div>
+              Hi! <strong>Looks like you do not subscribe any channel.</strong> Start now by adding your favourite channels to start receiving your email.
+              <div>
+                <br />
+                <ButtonSubmit onClick={goToChannels}>Search for channels</ButtonSubmit>
+              </div>
+            </div>
+          )
         }
       } else {
         return <div>Loading your settings. Please wait...</div>
@@ -83,16 +120,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   ]}
                 />
                 <div>
-                  <CenteredSection>
-                    <H2>
-                      <FormattedMessage {...messages.startProjectHeader} />
-                    </H2>
-                    <p>
-                      <FormattedMessage {...messages.startProjectMessage} />
-                    </p>
-                  </CenteredSection>
+                  <Alert>
+                    We sent you an email with a link to verify your email address. Please click the received link to activate your profile &mdash; <a href=''>Resend</a>
+                  </Alert>
                   <Section>
-                    <H2>
+                    <H2 style={{margin: 0}}>
                       <FormattedMessage {...messages.trymeHeader} />
                     </H2>
                     {getNextDelivery()}
@@ -138,13 +170,9 @@ HomePage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     onAdd: (topic) => {
-      console.log('add topic', topic)
-      // const {item} = topic.props
       dispatch(addTopic(topic))
     },
     onRemove: (topic) => {
-      console.log('remove topic', topic)
-      // const {item} = topic.props
       dispatch(removeTopic(topic))
     },
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),

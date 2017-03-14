@@ -22,7 +22,7 @@ function Footer () {
         <div>
           <FA href='#' target='_blank'>Blog</FA>
           &nbsp;&middot;&nbsp;
-          <FA href='#' target='_blank'>Help</FA>
+          <FA href='mailto:inbox@newspeller.com'>Contact</FA>
           &nbsp;&middot;&nbsp;
           <FA href='/about'>About Newspeller</FA>
           &nbsp;&middot;&nbsp;

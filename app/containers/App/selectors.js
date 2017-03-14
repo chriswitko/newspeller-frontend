@@ -6,6 +6,17 @@ import { createSelector } from 'reselect'
 
 const selectGlobal = (state) => state.get('global')
 
+const selectLanguage = (state) => state.get('language')
+
+/**
+ * Select the language locale
+ */
+
+const makeSelectLocale = () => createSelector(
+  selectLanguage,
+  (languageState) => window.localStorage.getItem('language') || languageState.get('locale') || 'en'
+)
+
 const makeSelectTimezone = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'timezone'])
@@ -102,5 +113,6 @@ export {
   makeSelectToken,
   makeSelectSubscriptions,
   makeSelectTimezone,
-  makeSelectGroupBy
+  makeSelectGroupBy,
+  makeSelectLocale
 }

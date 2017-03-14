@@ -242,8 +242,9 @@ export function * removeAccountSaga () {
   yield takeLatest(REMOVE_ACCOUNT, removeAccountRemotely)
 }
 
-export function * getFeeds () {
-  const requestURL = `${API_ENDPOINT}/feeds/all`
+export function * getFeeds (action) {
+  const { language = 'all' } = action.args
+  const requestURL = `${API_ENDPOINT}/feeds/all?language=${language}`
 
   try {
     const repos = yield call(request, requestURL)
@@ -256,11 +257,11 @@ export function * getFeeds () {
 /**
  * Root saga manages watcher lifecycle
  */
-export function * loadFeedsData () {
-  const watcher = yield takeLatest(LOAD_FEEDS, getFeeds)
+export function * loadFeedsData (action) {
+  yield takeLatest(LOAD_FEEDS, (action) => getFeeds(action))
 
-  yield take(LOCATION_CHANGE)
-  yield cancel(watcher)
+  // yield take(LOCATION_CHANGE)
+  // yield cancel(watcher)
 }
 
 export function * getUser (action) {

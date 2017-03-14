@@ -20,7 +20,7 @@ import DropDownPicker from 'components/DropDownPicker'
 import ButtonSubmit from './ButtonSubmit'
 
 import AtPrefix from './AtPrefix'
-import CenteredSection from './CenteredSection'
+import Div from 'components/Div'
 import Section from './Section'
 import Small from 'components/Small'
 import Form from './Form'
@@ -43,9 +43,16 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
   }
 
   onChangeTime = (type, value) => {
-    const update = {}
-    update[type] = value
-    this.setState(prevState => update)
+    switch (type) {
+      case 'hour':
+        this.setState(() => ({hour: value}))
+        break
+      case 'minute':
+        this.setState(() => ({minute: value}))
+        break
+      default:
+        break
+    }
   }
 
   onChangeHour = (e) => {
@@ -57,14 +64,12 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
   }
 
   componentDidMount () {
-    // if (this.props.time && this.props.time.trim().length > 0) {
     this.props.onLoad()
-    // }
   }
 
   render () {
     const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour, onRemoveAccount, onChangeTimezone } = this.props
-    const { hour, minute, onChangeHour, onChangeMinute } = this.state
+    const { hour, minute } = this.state
 
     const reposDaysProps = {
       onRemoveHour,
@@ -115,13 +120,13 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                 placeholder='HH'
                 defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
                 defaultValue={hour}
-                onChange={onChangeHour}
+                onChange={this.onChangeHour}
               />
               <DropDownPicker
                 placeholder='MM'
                 defaultValues={['MM', '00', '15', '30', '45']}
                 defaultValue={minute}
-                onChange={onChangeMinute}
+                onChange={this.onChangeMinute}
               />
               <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>
             </Form>
@@ -148,14 +153,14 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                   ]}
                 />
                 <div>
-                  <CenteredSection>
-                    <H2>
+                  <Div>
+                    <H2 style={{margin: 0}}>
                       Schedule newsletter delivery
                     </H2>
-                    <p>
+                    <div>
                       <FormattedMessage {...messages.startProjectMessage} />
-                    </p>
-                  </CenteredSection>
+                    </div>
+                  </Div>
                   {page}
                 </div>
               </article>

@@ -10,28 +10,36 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectRepos, makeSelectFeeds, makeSelectLoading, makeSelectError } from 'containers/App/selectors'
+import { makeSelectRepos, makeSelectFeeds, makeSelectLoading, makeSelectError, makeSelectLocale } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
-import ChannelsList from 'components/ChannelsList'
+import Div from 'components/Div'
+import ButtonSubmit from 'components/ButtonSubmit'
 import CenteredSection from './CenteredSection'
+import ChannelsList from 'components/ChannelsList'
 import Section from './Section'
 import messages from './messages'
 import { loadRepos, loadFeeds, addTopic, removeTopic } from '../App/actions'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
+import DropDownObjectPicker from 'components/DropDownObjectPicker'
+import Label from 'components/Label'
+import { browserHistory } from 'react-router'
 
-export class ChannelsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class ChannelsPage extends React.PureComponent {
   /**
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount () {
-    this.props.onReady()
+    const { language } = this.props
+    this.props.onReady({
+      language
+    })
   }
 
   render () {
-    const { loading, error, channels, repos, onRemove, onAdd } = this.props
+    const { loading, error, channels, repos, onRemove, onAdd, onChangeLanguage, language } = this.props
     const reposListProps = {
       onRemove,
       onAdd,
@@ -39,6 +47,14 @@ export class ChannelsPage extends React.PureComponent { // eslint-disable-line r
       error,
       channels,
       repos
+    }
+
+    const goToHome = () => {
+      browserHistory.push('/home')
+    }
+
+    const goToSettings = () => {
+      browserHistory.push('/settings')
     }
 
     return (
@@ -57,19 +73,35 @@ export class ChannelsPage extends React.PureComponent { // eslint-disable-line r
                   ]}
                 />
                 <div>
-                  <CenteredSection>
-                    <H2>
-                      Channels
-                    </H2>
-                    <p>
-                      <FormattedMessage {...messages.startProjectMessage} />
-                    </p>
-                  </CenteredSection>
                   <Section>
-                    <H2>
-                      All Channels
-                    </H2>
-                    <ChannelsList {...reposListProps} />
+                    <Div>
+                      <H2 style={{margin: 0}}>
+                        Channels
+                      </H2>
+                      <div>
+                        <FormattedMessage {...messages.startProjectMessage} />
+                      </div>
+                    </Div>
+                    <Div>
+                      <CenteredSection>
+                        <br />
+                        <ButtonSubmit onClick={goToHome}>My Subscriptions</ButtonSubmit>
+                        &nbsp;&nbsp;
+                        <ButtonSubmit onClick={goToSettings}>Manage schedule</ButtonSubmit>
+                      </CenteredSection>
+                    </Div>
+                    <Div>
+                      <Label>Filter by language</Label>
+                      <DropDownObjectPicker
+                        placeholder='Filter by language'
+                        defaultValues={[{name: 'Select language (All)', value: 'all'}, {name: 'English', value: 'en'}, {name: 'Deutsch', value: 'de'}, {name: 'Polski', value: 'pl'}]}
+                        defaultValue={language}
+                        onChange={onChangeLanguage}
+                      />
+                    </Div>
+                    <Div>
+                      <ChannelsList {...reposListProps} />
+                    </Div>
                   </Section>
                 </div>
               </article>
@@ -103,29 +135,34 @@ ChannelsPage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    onChangeLanguage: (e) => {
+      dispatch(loadFeeds({
+        language: e.target.value
+      }))
+    },
     onAdd: (topic) => {
       dispatch(addTopic(topic))
     },
     onRemove: (topic) => {
       dispatch(removeTopic(topic))
     },
-    onSubmitForm: (evt) => {
-      // if (evt !== undefined && evt.preventDefault) evt.preventDefault()
-      dispatch(loadFeeds())
+    onSubmitForm: (e) => {
+      dispatch(loadFeeds({
+        language: e.target.value
+      }))
     },
     onLoad: () => {
       dispatch(loadRepos())
     },
-    onReady: () => {
-      dispatch(loadFeeds())
+    onReady: (args) => {
+      dispatch(loadFeeds(args))
       dispatch(loadRepos())
-      // dispatch(loadRepos, loadFeeds)
-      // return bindActionCreators(Object.assign({}, loadFeeds, loadRepos), dispatch)
     }
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  language: makeSelectLocale(),
   repos: makeSelectRepos(),
   channels: makeSelectFeeds(),
   loading: makeSelectLoading(),

@@ -5,6 +5,7 @@
  */
 import React from 'react'
 import Helmet from 'react-helmet'
+import { browserHistory } from 'react-router'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -44,6 +45,12 @@ export default class IndexPage extends React.Component { // eslint-disable-line 
   }
 
   render () {
+    const handleActivate = () => {
+      console.log('hello')
+      // window.location.href = '/register'
+      browserHistory.push('/register')
+    }
+
     return (
       <Box fullScreen>
         <Page style={{display: 'flex', flexDirection: 'column'}}>
@@ -66,13 +73,14 @@ export default class IndexPage extends React.Component { // eslint-disable-line 
                     </Column>
                     <Column lg={6} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                       <h1 style={{padding: 0, margin: 0, lineHeight: '1.2em'}}>
-                        Your daily email with headlines from news outlets you like.
+                        Your daily email with headlines from news outlets you read.
                       </h1>
-                      <ul>
-                        <li>Select your favourite sources &amp; topics (<a href='#'>see the list</a>)</li>
-                        <li>Define what day and what time you wish to receive an email</li>
-                        <li>Pause the email when you need to quite down 🌴 a little bit</li>
-                      </ul>
+                      <ol>
+                        <li>Enter your email address</li>
+                        <li>Select your favourite channels</li>
+                        <li>Decide what day and time you wish to receive emails</li>
+                        <li>Get all news headlines in one email</li>
+                      </ol>
                     </Column>
                   </Row>
                   <Row>
@@ -90,18 +98,18 @@ export default class IndexPage extends React.Component { // eslint-disable-line 
                               type='text'
                               placeholder='eg. myemail@website.com'
                               value=''
-                              onChange=''
+                              onChange={() => {}}
                               />
                           </Div>
                           <Div>
-                            <ButtonSubmit type='submit'>Activate my personal email</ButtonSubmit>
+                            <ButtonSubmit type='button' onClick={handleActivate}>Activate my personal email</ButtonSubmit>
                           </Div>
                           <Ul>
                             <li>
                               <Small>&#10003; We promise not to spam you. You can always modify how often you wish to receive an email.</Small>
                             </li>
                             <li>
-                              <Small>&#10003; You can unsubscribe or remove your email address any time.</Small>
+                              <Small>&#10003; You can unsubscribe or remove your email address at any time.</Small>
                             </li>
                             <li>
                               <Small>&#10003; It's FREE 😀. You don't pay single penny.</Small>

@@ -52,9 +52,10 @@ import {
  *
  * @return {object} An action object with a type of LOAD_REPOS
  */
-export function loadFeeds () {
+export function loadFeeds (args = {}) {
   return {
-    type: LOAD_FEEDS
+    type: LOAD_FEEDS,
+    args
   }
 }
 

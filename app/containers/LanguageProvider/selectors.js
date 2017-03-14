@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 
 const DEFAULT_LANG = 'en'
-const availableLanguages = ['en', 'de']
+const availableLanguages = ['en', 'de', 'pl']
 
 const _getInterfaceLanguage = () => {
   let lang = null

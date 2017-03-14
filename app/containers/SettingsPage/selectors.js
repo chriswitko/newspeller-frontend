@@ -16,8 +16,15 @@ const makeSelectHour = () => createSelector(
   (scheduleState) => scheduleState ? scheduleState.get('hour') : 'HH'
 )
 
+const makeSelectMinute = () => createSelector(
+  selectSchedule,
+  (scheduleState) => scheduleState ? scheduleState.get('minute') : 'MM'
+)
+
+
 export {
   selectSchedule,
   makeSelectUsername,
-  makeSelectHour
+  makeSelectHour,
+  makeSelectMinute
 }
