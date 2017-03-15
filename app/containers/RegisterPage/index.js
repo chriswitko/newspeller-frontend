@@ -20,9 +20,9 @@ import Section from './Section'
 import messages from './messages'
 import ButtonSubmit from './ButtonSubmit'
 import Label from './Label'
-import { authorizeUser } from '../App/actions'
-import { changeUsername, changePassword } from './actions'
-import { makeSelectUsername, makeSelectPassword, makeSelectToken } from './selectors'
+import { sendActivationEmail, updateTimezone } from '../App/actions'
+import { makeSelectEmail, makeSelectEmailAgain, makeSelectPassword, makeSelectTimezone } from './selectors'
+import { makeSelectLocale } from '../App/selectors'
 import styled from 'styled-components'
 import { Page, Row, Column } from 'hedron'
 import Logo from 'components/Logo'
@@ -31,7 +31,7 @@ import TimezonePicker from 'components/TimezonePicker'
 const Wrapper = styled.div`
   max-width: calc(368px + 16px * 2);
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -43,20 +43,27 @@ export class RegisterPage extends React.PureComponent {
   /**
    * when initial state username is not null, submit the form to load repos
    */
-  componentDidMount () {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm()
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      email: window.localStorage.getItem('currentUser') || '',
+      emailAgain: '',
+      password: '',
+      timezone: 'Europe/London'
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.token) {
-      window.location.href = '/'
-    }
+  onChange (type, value) {
+    let o = {}
+    o[type] = value
+    this.setState(o)
   }
 
   render () {
-    const { onSubmitForm, username, password } = this.props
+    const { onSubmitForm } = this.props
+    const { email, emailAgain, password, timezone } = this.state
 
     return (
       <Wrapper>
@@ -82,16 +89,17 @@ export class RegisterPage extends React.PureComponent {
                       </div>
                     </CenteredSection>
                     <Section style={{margin: 0, padding: 0}}>
-                      <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
+                      <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
                         <Label htmlFor='username'>
                           <FormattedMessage {...messages.trymeMessage} />
                         </Label>
                         <Input
-                          id='username'
+                          id='email'
                           type='text'
                           placeholder='Your email address'
-                          value={username}
-                          onChange={this.props.onChangeUsername}
+                          value={email}
+                          readonly='true'
+                          onChange={(evt) => this.onChange('email', email)}
                         />
                         <br />
                         <br />
@@ -99,11 +107,11 @@ export class RegisterPage extends React.PureComponent {
                           Enter your email address again
                         </Label>
                         <Input
-                          id='username'
+                          id='emailAgain'
                           type='text'
                           placeholder='Your email address'
-                          value={username}
-                          onChange={this.props.onChangeUsername}
+                          value={emailAgain}
+                          onChange={(evt) => this.onChange('emailAgain', evt.target.value)}
                         />
                         <br />
                         <br />
@@ -114,7 +122,7 @@ export class RegisterPage extends React.PureComponent {
                           id='password'
                           type='password'
                           value={password}
-                          onChange={this.props.onChangePassword}
+                          onChange={(evt) => this.onChange('password', evt.target.value)}
                         />
                         <br />
                         <br />
@@ -123,13 +131,13 @@ export class RegisterPage extends React.PureComponent {
                         </Label>
                         <TimezonePicker
                           placeholder='Select timezone...'
-                          defaultValue=''
-                          onChange={() => {}}
+                          defaultValue={timezone}
+                          onChange={(evt) => this.onChange('timezone', evt.target.value)}
                         />
                         <small>Timezone will help us to deliver your email on time.</small>
                         <br />
                         <br />
-                        <ButtonSubmit type='submit' onClick={onSubmitForm(this.form)}>Next &raquo;</ButtonSubmit>
+                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}>Next &raquo;</ButtonSubmit>
                       </Form>
                     </Section>
                   </div>
@@ -152,29 +160,29 @@ RegisterPage.propTypes = {
   onSubmitForm: React.PropTypes.func,
   username: React.PropTypes.string,
   password: React.PropTypes.string,
-  token: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func
 }
 
 export function mapDispatchToProps (dispatch) {
   return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault()
-      if (evt) {
-        if (evt.target.username.value && evt.target.password.value) {
-          dispatch(authorizeUser(evt.target.username.value, evt.target.password.value))
-        }
-      }
+    onSubmitForm: (data, locale) => {
+      dispatch(sendActivationEmail({
+        email: data.email,
+        password: data.password,
+        timezone: data.timezone,
+        locale: locale
+      }))
+      dispatch(updateTimezone(data.timezone))
     }
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  token: makeSelectToken(),
-  username: makeSelectUsername(),
+  locale: makeSelectLocale(),
+  email: makeSelectEmail(),
+  emailAgain: makeSelectEmailAgain(),
   password: makeSelectPassword(),
+  timezone: makeSelectTimezone(),
   loading: makeSelectLoading(),
   error: makeSelectError()
 })

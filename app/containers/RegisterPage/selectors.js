@@ -7,14 +7,24 @@ import { createSelector } from 'reselect'
 const selectHome = (state) => state.get('home')
 const selectGlobal = (state) => state.get('global')
 
-const makeSelectUsername = () => createSelector(
+const makeSelectEmail = () => createSelector(
   selectHome,
-  (homeState) => homeState.get('username') || window.localStorage.getItem('currentUser') || ''
+  (homeState) => homeState.get('email') || ''
+)
+
+const makeSelectEmailAgain = () => createSelector(
+  selectHome,
+  (homeState) => homeState.get('emailAgain') || ''
 )
 
 const makeSelectPassword = () => createSelector(
   selectHome,
   (homeState) => homeState.get('password') || ''
+)
+
+const makeSelectTimezone = () => createSelector(
+  selectHome,
+  (homeState) => homeState.get('timezone') || ''
 )
 
 const makeSelectToken = () => createSelector(
@@ -24,7 +34,9 @@ const makeSelectToken = () => createSelector(
 
 export {
   selectHome,
-  makeSelectUsername,
+  makeSelectEmail,
+  makeSelectEmailAgain,
   makeSelectPassword,
+  makeSelectTimezone,
   makeSelectToken
 }

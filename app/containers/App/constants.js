@@ -34,6 +34,12 @@ export const UPDATE_TIMEZONE_SUCCESS = 'boilerplate/App/UPDATE_TIMEZONE_SUCCESS'
 export const UPDATE_GROUPBY = 'boilerplate/App/UPDATE_GROUPBY'
 export const UPDATE_GROUPBY_SUCCESS = 'boilerplate/App/UPDATE_GROUPBY_SUCCESS'
 
+export const USER_REGISTER = 'boilerplate/App/USER_REGISTER'
+export const USER_REGISTER_SUCCESS = 'boilerplate/App/USER_REGISTER_SUCCESS'
+
+export const USER_SEND_ACTIVATION = 'boilerplate/App/USER_SEND_ACTIVATION'
+export const USER_SEND_ACTIVATION_SUCCESS = 'boilerplate/App/USER_SEND_ACTIVATION_SUCCESS'
+
 export const USER_AUTHORIZE = 'boilerplate/App/USER_AUTHORIZE'
 export const USER_SUCCESS = 'boilerplate/App/USER_SUCCESS'
 export const USER_ERROR = 'boilerplate/App/USER_AUTHORIZED'

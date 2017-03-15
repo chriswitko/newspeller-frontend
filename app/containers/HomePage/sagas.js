@@ -22,7 +22,9 @@ import {
   USER_AUTHORIZE,
   UPDATE_TIMEZONE,
   REMOVE_ACCOUNT,
-  CHANGE_LOCALE
+  CHANGE_LOCALE,
+  USER_REGISTER,
+  USER_SEND_ACTIVATION
 } from 'containers/App/constants'
 import {
   reposLoaded,
@@ -39,7 +41,9 @@ import {
   authorizeError,
   updateTimezoneSuccess,
   removeAccountSuccess,
-  changeLocaleSuccess
+  changeLocaleSuccess,
+  registerSuccess,
+  sendActivationEmailSuccess
 } from 'containers/App/actions'
 import request from 'utils/request'
 import {
@@ -59,7 +63,17 @@ export function * getRepos () {
 
   try {
     const repos = yield call(request, requestURL)
-    yield put(reposLoaded(repos.subscription.sources, repos.subscription.channels, repos.subscription.timezone, repos.subscription.group_by, repos.subscription.days, repos.subscription.hours, repos.subscription.next_at, username))
+    yield put(reposLoaded({
+      repos: repos.subscription.sources,
+      subscriptions: repos.subscription.channels,
+      timezone: repos.subscription.timezone,
+      groupBy: repos.subscription.group_by,
+      days: repos.subscription.days,
+      hours: repos.subscription.hours,
+      nextAt: repos.subscription.next_at,
+      username: username,
+      confirmed_at: repos.subscriber.confirmed_at
+    }))
   } catch (err) {
     yield put(repoLoadingError(err))
   }
@@ -284,11 +298,74 @@ export function * getUser (action) {
   }
 }
 
+export function * fetchUserRegister (action) {
+  console.log('action', action)
+  const requestURL = `${API_ENDPOINT}/subscribers/new`
+
+  try {
+    const user = yield call(request, requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: action.email
+      })
+    })
+    yield put(registerSuccess(user))
+  } catch (err) {
+    yield put(authorizeError(err))
+  }
+}
+
+export function * fetchUserActivation (action) {
+  console.log('action', action)
+  const requestURL = `${API_ENDPOINT}/subscribers/activation`
+
+  const token = yield select(makeSelectToken())
+  if (!token) {
+    yield put(repoLoadingError('No token'))
+  }
+
+  try {
+    const user = yield call(request, requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: token,
+        email: action.user.email,
+        password: action.user.password,
+        timezone: action.user.timezone,
+        locale: action.user.locale
+      })
+    })
+    yield put(sendActivationEmailSuccess(user))
+  } catch (err) {
+    yield put(authorizeError(err))
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
 export function * authorizeUser () {
   const watcher = yield takeLatest(USER_AUTHORIZE, getUser)
+
+  yield take(LOCATION_CHANGE)
+  yield cancel(watcher)
+}
+
+export function * registerUserSaga () {
+  const watcher = yield takeLatest(USER_REGISTER, fetchUserRegister)
+
+  yield take(LOCATION_CHANGE)
+  yield cancel(watcher)
+}
+
+export function * sendActivationSaga () {
+  const watcher = yield takeLatest(USER_SEND_ACTIVATION, fetchUserActivation)
 
   yield take(LOCATION_CHANGE)
   yield cancel(watcher)
@@ -306,5 +383,7 @@ export default [
   authorizeUser,
   updateTimezoneSaga,
   removeAccountSaga,
-  updateLocaleSaga
+  updateLocaleSaga,
+  registerUserSaga,
+  sendActivationSaga
 ]

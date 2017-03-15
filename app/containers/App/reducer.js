@@ -34,7 +34,9 @@ import {
   USER_LOGOUT,
   UPDATE_TIMEZONE_SUCCESS,
   UPDATE_GROUPBY_SUCCESS,
-  REMOVE_ACCOUNT_SUCCESS
+  REMOVE_ACCOUNT_SUCCESS,
+  USER_REGISTER_SUCCESS,
+  USER_SEND_ACTIVATION_SUCCESS
 } from './constants'
 
 // The initial state of the App
@@ -51,7 +53,8 @@ const initialState = fromJS({
     subscriptions: false,
     repositories: false,
     days: false,
-    hours: false
+    hours: false,
+    confirmed_at: false
   }
 })
 
@@ -61,6 +64,7 @@ const strToMin = str => {
 }
 
 function appReducer (state = initialState, action) {
+  console.log('action', action)
   switch (action.type) {
     case REMOVE_ACCOUNT_SUCCESS:
       window.localStorage.setItem('token', '')
@@ -75,6 +79,16 @@ function appReducer (state = initialState, action) {
     case USER_SUCCESS:
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
+      return state
+        .set('currentUser', action.user.email)
+        .set('token', action.user.token)
+    case USER_SEND_ACTIVATION_SUCCESS:
+      window.location.href = '/'
+      return state
+    case USER_REGISTER_SUCCESS:
+      window.localStorage.setItem('currentUser', action.user.email)
+      window.localStorage.setItem('token', action.user.token)
+      window.location.href = '/register'
       return state
         .set('currentUser', action.user.email)
         .set('token', action.user.token)
@@ -173,7 +187,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'repositories'], false)
     case LOAD_REPOS_SUCCESS:
       let allSubscriptions = []
-      action.subscriptions.map(item => {
+      action.data.subscriptions.map(item => {
         allSubscriptions.push({
           code: `${item.channel.code}_${item.topic.code}`,
           name: `${item.channel.name} / ${item.topic.name}`,
@@ -188,14 +202,15 @@ function appReducer (state = initialState, action) {
       })
       return state
         .setIn(['userData', 'subscriptions'], allSubscriptions)
-        .setIn(['userData', 'repositories'], action.repos)
-        .setIn(['userData', 'days'], action.days)
-        .setIn(['userData', 'hours'], action.hours)
-        .setIn(['userData', 'nextAt'], action.nextAt)
-        .setIn(['userData', 'timezone'], action.timezone)
-        .setIn(['userData', 'groupBy'], action.groupBy)
+        .setIn(['userData', 'repositories'], action.data.repos)
+        .setIn(['userData', 'days'], action.data.days)
+        .setIn(['userData', 'hours'], action.data.hours)
+        .setIn(['userData', 'nextAt'], action.data.nextAt)
+        .setIn(['userData', 'timezone'], action.data.timezone)
+        .setIn(['userData', 'groupBy'], action.data.groupBy)
+        .setIn(['userData', 'confirmed_at'], action.data.confirmed_at)
         .set('loading', false)
-        .set('currentUser', action.username)
+        .set('currentUser', action.data.username)
     case LOAD_REPOS_ERROR:
       return state
         .set('error', action.error)

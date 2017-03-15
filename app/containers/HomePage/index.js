@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone } from 'containers/App/selectors'
+import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone, makeSelectConfirmedAt } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
 import Alert from 'components/Alert'
@@ -39,7 +39,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loading, error, repos, onRemove, onAdd, nextAt, timezone, subscriptions } = this.props
+    const { loading, error, repos, onRemove, onAdd, nextAt, timezone, subscriptions, confirmedAt } = this.props
     const reposListProps = {
       timezone,
       nextAt,
@@ -53,6 +53,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const lastTime = new Date(nextAt).getTime()
     const now = new Date().getTime()
+
+    const showConfirmationAlert = () => {
+      if (!loading && !confirmedAt) {
+        return (
+          <Alert>
+            We sent you an email with a link to verify your email address. Please click the received link to activate your profile &mdash; <a href=''>Resend</a>
+          </Alert>
+        )
+      }
+    }
 
     const getNextDelivery = () => {
       const goToChannels = () => {
@@ -120,9 +130,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   ]}
                 />
                 <div>
-                  <Alert>
-                    We sent you an email with a link to verify your email address. Please click the received link to activate your profile &mdash; <a href=''>Resend</a>
-                  </Alert>
+                  {showConfirmationAlert()}
                   <Section>
                     <H2 style={{margin: 0}}>
                       <FormattedMessage {...messages.trymeHeader} />
@@ -184,6 +192,7 @@ export function mapDispatchToProps (dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  confirmedAt: makeSelectConfirmedAt(),
   timezone: makeSelectTimezone(),
   nextAt: makeSelectNextAt(),
   subscriptions: makeSelectSubscriptions(),

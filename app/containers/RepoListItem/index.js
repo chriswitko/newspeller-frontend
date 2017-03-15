@@ -10,10 +10,9 @@ import { createStructuredSelector } from 'reselect'
 
 import { makeSelectCurrentUser, makeSelectSubscriptions } from 'containers/App/selectors'
 import ListItem from 'components/ListItem'
-import RemoveButton from './RemoveButton'
-import AddButton from './AddButton'
 import RepoLink from './RepoLink'
 import Wrapper from './Wrapper'
+import Switch from 'react-toggle-switch'
 
 import styled from 'styled-components'
 
@@ -21,7 +20,7 @@ const Img = styled.img`
   border-radius: 3px;
 `
 
-export class RepoListItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class RepoListItem extends React.Component {
   render () {
     const {item, subscriptions, onRemove, onAdd} = this.props
 
@@ -32,11 +31,15 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
         }
       })
 
-      return ~allSubscriptions.indexOf(item.code) || item.is_subscribed
+      return allSubscriptions.includes(item.code) || item.is_subscribed
     }
 
-    const buttonRemove = <RemoveButton onClick={() => onRemove(item)}>Remove</RemoveButton>
-    const buttonAdd = <AddButton onClick={() => onAdd(item)}>Add</AddButton>
+    const onSwitch = (item, isSubscribed) => {
+      if (isSubscribed) {
+        return onRemove(item)
+      }
+      return onAdd(item)
+    }
 
     const content = (
       <Wrapper>
@@ -46,10 +49,10 @@ export class RepoListItem extends React.Component { // eslint-disable-line react
            ) : ''}
           {item.channelName} [{item.language}]
           <br />
-          &raquo;&nbsp;
+          &#8627;&nbsp;
           {item.sectionName}
         </RepoLink>
-        { isSubscribed(item) ? buttonRemove : buttonAdd }
+        <Switch on={isSubscribed(item)} onClick={() => onSwitch(item, isSubscribed(item))} />
       </Wrapper>
     )
 

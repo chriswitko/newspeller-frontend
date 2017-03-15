@@ -6,7 +6,10 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { browserHistory } from 'react-router'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 
+import { registerEmail } from '../App/actions'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import Input from 'components/Input'
@@ -37,19 +40,32 @@ const Hr = styled.hr`
   padding: 0;
 `
 
-export default class IndexPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class IndexPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   // Since state and props are static,
   // there's no need to re-render this component
-  shouldComponentUpdate () {
-    return false
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      email: ''
+    }
   }
 
+  // shouldComponentUpdate () {
+  //   return false
+  // }
+
   render () {
-    const handleActivate = () => {
-      console.log('hello')
-      // window.location.href = '/register'
-      browserHistory.push('/register')
+    const { handleActivate } = this.props
+
+    const handleChange = (email) => {
+      this.setState({email: email.target.value})
     }
+
+    // const handleActivate = () => {
+    //   browserHistory.push('/register')
+    // }
 
     return (
       <Box fullScreen>
@@ -94,15 +110,15 @@ export default class IndexPage extends React.Component { // eslint-disable-line 
                               <Small style={{fontWeight: '400'}}>It's simple. All you need to start receiving your personal email is your email address.</Small>
                             </Label>
                             <Input
-                              id='username'
-                              type='text'
-                              placeholder='eg. myemail@website.com'
-                              value=''
-                              onChange={() => {}}
+                              id='email'
+                              type='email'
+                              placeholder='eg. email@website.com'
+                              value={this.email}
+                              onChange={(email) => handleChange(email)}
                               />
                           </Div>
                           <Div>
-                            <ButtonSubmit type='button' onClick={handleActivate}>Activate my personal email</ButtonSubmit>
+                            <ButtonSubmit type='button' onClick={() => handleActivate(this.state.email)}>Activate my personal email</ButtonSubmit>
                           </Div>
                           <Ul>
                             <li>
@@ -187,3 +203,24 @@ export default class IndexPage extends React.Component { // eslint-disable-line 
     )
   }
 }
+
+IndexPage.propTypes = {
+  handleActivate: React.PropTypes.func
+}
+
+export function mapDispatchToProps (dispatch) {
+  return {
+    handleActivate: (email) => {
+      console.log('hello handle', email)
+      // browserHistory.push('/register')
+      dispatch(registerEmail(email))
+    }
+  }
+}
+
+const mapStateToProps = createStructuredSelector({
+
+})
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(IndexPage)

@@ -44,7 +44,11 @@ import {
   UPDATE_GROUPBY_SUCCESS,
   REMOVE_ACCOUNT,
   REMOVE_ACCOUNT_SUCCESS,
-  CHANGE_LOCALE_SUCCESS
+  CHANGE_LOCALE_SUCCESS,
+  USER_REGISTER,
+  USER_REGISTER_SUCCESS,
+  USER_SEND_ACTIVATION,
+  USER_SEND_ACTIVATION_SUCCESS
 } from './constants'
 
 /**
@@ -100,11 +104,39 @@ export function updateGroupBySuccess (groupBy) {
   }
 }
 
+export function registerEmail (email) {
+  console.log('registerEmail', email)
+  return {
+    type: USER_REGISTER,
+    email
+  }
+}
+
+export function sendActivationEmail (user) {
+  return {
+    type: USER_SEND_ACTIVATION,
+    user
+  }
+}
+
+export function sendActivationEmailSuccess () {
+  return {
+    type: USER_SEND_ACTIVATION_SUCCESS
+  }
+}
+
 export function authorizeUser (email, password) {
   return {
     type: USER_AUTHORIZE,
     email,
     password
+  }
+}
+
+export function registerSuccess (user) {
+  return {
+    type: USER_REGISTER_SUCCESS,
+    user
   }
 }
 
@@ -178,17 +210,10 @@ export function addTopicSuccess (topic) {
   }
 }
 
-export function reposLoaded (repos, subscriptions, timezone, groupBy, days, hours, nextAt, username) {
+export function reposLoaded (data) {
   return {
     type: LOAD_REPOS_SUCCESS,
-    repos,
-    subscriptions,
-    timezone,
-    groupBy,
-    days,
-    hours,
-    nextAt,
-    username
+    data
   }
 }
 

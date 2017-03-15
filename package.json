@@ -239,6 +239,8 @@
     "react-router": "3.0.0",
     "react-router-redux": "4.0.6",
     "react-router-scroll": "0.4.1",
+    "react-toggle": "^3.0.1",
+    "react-toggle-switch": "^2.1.3",
     "redux": "3.6.0",
     "redux-immutable": "3.0.8",
     "redux-localstorage": "^1.0.0-rc4",

@@ -54,9 +54,21 @@ export default function createRoutes (store) {
       getComponent (nextState, cb) {
         logPageView()
         verifyAuthedUserRedirect()
-        import('containers/IndexPage')
-          .then(loadModule(cb))
-          .catch(errorLoading)
+
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/IndexPage')
+        ])
+
+        const renderRoute = loadModule(cb)
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('home', reducer.default)
+          injectSagas(sagas.default)
+
+          renderRoute(component)
+        })
       }
     }, {
       path: '/terms',
@@ -178,6 +190,8 @@ export default function createRoutes (store) {
       name: 'register',
       getComponent (nextState, cb) {
         logPageView()
+        verifyAuthedUser()
+
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
