@@ -21,7 +21,7 @@ addLocaleData(plLocaleData)
 
 export const appLocales = [
   'en',
-  'de',
+  // 'de',
   'pl'
 ]
 
@@ -39,6 +39,6 @@ export const formatTranslationMessages = (locale, messages) => {
 
 export const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  de: formatTranslationMessages('de', deTranslationMessages),
+  // de: formatTranslationMessages('de', deTranslationMessages),
   pl: formatTranslationMessages('pl', plTranslationMessages)
 }
