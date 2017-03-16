@@ -14,8 +14,6 @@ import { makeSelectRepos, makeSelectFeeds, makeSelectLoading, makeSelectError, m
 import H2 from 'components/H2'
 import Box from 'components/Box'
 import Div from 'components/Div'
-import ButtonSubmit from 'components/ButtonSubmit'
-import CenteredSection from './CenteredSection'
 import ChannelsList from 'components/ChannelsList'
 import Section from './Section'
 import messages from './messages'
@@ -25,7 +23,6 @@ import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
 import DropDownObjectPicker from 'components/DropDownObjectPicker'
 import Label from 'components/Label'
-import { browserHistory } from 'react-router'
 
 export class ChannelsPage extends React.PureComponent {
   /**
@@ -67,13 +64,14 @@ export class ChannelsPage extends React.PureComponent {
                 <div>
                   <Section>
                     <Div>
-                      <H2 style={{margin: 0}}>
+                      <H2>
                         Channels
                       </H2>
                       <div>
                         <FormattedMessage {...messages.startProjectMessage} />
                       </div>
                     </Div>
+                    <br />
                     <Div>
                       <Label>Filter by language</Label>
                       <DropDownObjectPicker

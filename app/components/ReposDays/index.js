@@ -21,7 +21,7 @@ const Ul = styled.ul`
       padding-right: 0;
     }
 
-    a {
+    button {
       display: inline-flex;
       padding: 0.4em 1.3em;
       min-width: 60px;
@@ -74,7 +74,7 @@ function ReposDays ({ loading, error, days, onRemoveDay, onAddDay }) {
             <li
               key={index}
             >
-              { ~days.indexOf(index + 1) ? <a className='active' href='#' onClick={() => onRemoveDay(index + 1)}><span style={{'fontWeight': ~days.indexOf(index + 1) ? 'bold' : ''}}>{day}</span></a> : <a href='#' onClick={() => onAddDay(index + 1)}><span style={{'fontWeight': ~days.indexOf(index + 1) ? 'bold' : ''}}>{day}</span></a> }
+              { ~days.indexOf(index + 1) ? <button className='active' href='#' onClick={() => onRemoveDay(index + 1)}><span style={{'fontWeight': ~days.indexOf(index + 1) ? 'bold' : ''}}>{day}</span></button> : <button href='#' onClick={() => onAddDay(index + 1)}><span style={{'fontWeight': ~days.indexOf(index + 1) ? 'bold' : ''}}>{day}</span></button> }
             </li>
           ))}
         </Ul>

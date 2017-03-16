@@ -54,7 +54,8 @@ const initialState = fromJS({
     repositories: false,
     days: false,
     hours: false,
-    confirmed_at: false
+    confirmed_at: false,
+    activated_at: false
   }
 })
 
@@ -67,11 +68,15 @@ function appReducer (state = initialState, action) {
   console.log('action', action)
   switch (action.type) {
     case REMOVE_ACCOUNT_SUCCESS:
+      window.localStorage.setItem('activatedAt', '')
+      window.localStorage.setItem('currentUser', '')
       window.localStorage.setItem('token', '')
       window.location.href = '/signin'
       return state
         .set('token', false)
     case USER_LOGOUT:
+      window.localStorage.setItem('activatedAt', '')
+      window.localStorage.setItem('currentUser', '')
       window.localStorage.setItem('token', '')
       window.location.href = '/signin'
       return state
@@ -79,10 +84,12 @@ function appReducer (state = initialState, action) {
     case USER_SUCCESS:
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
+      window.localStorage.setItem('activatedAt', action.user.activated_at ? action.user.activated_at : '')
       return state
         .set('currentUser', action.user.email)
         .set('token', action.user.token)
     case USER_SEND_ACTIVATION_SUCCESS:
+      window.localStorage.setItem('activatedAt', new Date().toISOString())
       window.location.href = '/'
       return state
     case USER_REGISTER_SUCCESS:
@@ -200,6 +207,7 @@ function appReducer (state = initialState, action) {
           is_subscribed: true
         })
       })
+      window.localStorage.setItem('activatedAt', action.data.activated_at ? action.data.activated_at : '')
       return state
         .setIn(['userData', 'subscriptions'], allSubscriptions)
         .setIn(['userData', 'repositories'], action.data.repos)
@@ -209,6 +217,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'timezone'], action.data.timezone)
         .setIn(['userData', 'groupBy'], action.data.groupBy)
         .setIn(['userData', 'confirmed_at'], action.data.confirmed_at)
+        .setIn(['userData', 'activated_at'], action.data.activated_at)
         .set('loading', false)
         .set('currentUser', action.data.username)
     case LOAD_REPOS_ERROR:

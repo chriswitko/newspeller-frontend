@@ -20,7 +20,7 @@ import Section from './Section'
 import messages from './messages'
 import ButtonSubmit from './ButtonSubmit'
 import Label from './Label'
-import { sendActivationEmail, updateTimezone } from '../App/actions'
+import { sendActivationEmail, updateTimezone, removeAccount } from '../App/actions'
 import { makeSelectEmail, makeSelectEmailAgain, makeSelectPassword, makeSelectTimezone } from './selectors'
 import { makeSelectLocale } from '../App/selectors'
 import styled from 'styled-components'
@@ -62,7 +62,7 @@ export class RegisterPage extends React.PureComponent {
   }
 
   render () {
-    const { onSubmitForm } = this.props
+    const { onSubmitForm, onRemoveAccount } = this.props
     const { email, emailAgain, password, timezone } = this.state
 
     return (
@@ -99,6 +99,7 @@ export class RegisterPage extends React.PureComponent {
                           placeholder='Your email address'
                           value={email}
                           readonly='true'
+                          disabled='true'
                           onChange={(evt) => this.onChange('email', email)}
                         />
                         <br />
@@ -137,7 +138,10 @@ export class RegisterPage extends React.PureComponent {
                         <small>Timezone will help us to deliver your email on time.</small>
                         <br />
                         <br />
-                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}>Next &raquo;</ButtonSubmit>
+                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}>Activate my email &raquo;</ButtonSubmit>
+                        <br />
+                        <br />
+                        <a href='#' onClick={onRemoveAccount}>or Cancel</a>
                       </Form>
                     </Section>
                   </div>
@@ -165,6 +169,7 @@ RegisterPage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    onRemoveAccount: () => dispatch(removeAccount()),
     onSubmitForm: (data, locale) => {
       dispatch(sendActivationEmail({
         email: data.email,

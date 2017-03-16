@@ -23,7 +23,7 @@ const Ul = styled.ul`
       padding-right: 0;
     }
 
-    a {
+    button {
       display: inline-flex;
       padding: 0.4em 1.3em;
       min-width: 60px;
@@ -73,7 +73,7 @@ function ReposHours ({ loading, error, hours, onRemoveHour }) {
             <li
               key={index}
             >
-              <a href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<Ionicon icon='ion-ios-trash-outline' fontSize='19px' color='red' /></a>
+              <button href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<Ionicon icon='ion-ios-trash-outline' fontSize='19px' color='red' /></button>
             </li>
           ))}
         </Ul>

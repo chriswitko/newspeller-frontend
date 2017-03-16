@@ -72,7 +72,8 @@ export function * getRepos () {
       hours: repos.subscription.hours,
       nextAt: repos.subscription.next_at,
       username: username,
-      confirmed_at: repos.subscriber.confirmed_at
+      confirmed_at: repos.subscriber.confirmed_at,
+      activated_at: repos.subscriber.activated_at
     }))
   } catch (err) {
     yield put(repoLoadingError(err))

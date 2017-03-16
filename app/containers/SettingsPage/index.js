@@ -21,7 +21,6 @@ import ButtonSubmit from './ButtonSubmit'
 
 import AtPrefix from './AtPrefix'
 import Div from 'components/Div'
-import Section from './Section'
 import Small from 'components/Small'
 import Form from './Form'
 import messages from './messages'
@@ -31,6 +30,7 @@ import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
+import Label from 'components/Label'
 
 export class SettingsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor () {
@@ -82,32 +82,37 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
     }
 
     const page = loading ? <div>Loading your settings. Please wait...</div> : error ? <div>Something went wrong, please try again!</div> : (
-      <Section>
-        <Row>
+      <Div>
+        <Div>
           <Column style={{padding: '0'}}>
-            <H2>
-              What is your time zone?
-            </H2>
+            <div>
+              <Label>What is your time zone?</Label>
+            </div>
             <TimezonePicker
               placeholder='Select timezone...'
               defaultValue={timezone}
               onChange={onChangeTimezone}
             />
           </Column>
-        </Row>
-        <Row>
+        </Div>
+        <br />
+        <Div>
           <Column style={{padding: '0'}}>
-            <H2>
-              When would you like to receive emails...
-            </H2>
+            <div>
+              <Label>When would you like to receive emails...</Label>
+            </div>
             <ReposDays {...reposDaysProps} />
           </Column>
-        </Row>
-        <Row>
+        </Div>
+        <br />
+        <Div>
           <Column style={{padding: '0'}}>
-            <H2>
-              ... and at what time?
-            </H2>
+            <div>
+              <Label>... and at what time?</Label>
+            </div>
+            <Div>
+              <ReposHours {...reposDaysProps} />
+            </Div>
             <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px', display: 'table', width: '100%'}}>
               <div style={{marginBottom: '10px'}}>
                 <label htmlFor='time'>
@@ -130,11 +135,10 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
               />
               <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>
             </Form>
-            <ReposHours {...reposDaysProps} />
             <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
           </Column>
-        </Row>
-      </Section>
+        </Div>
+      </Div>
     )
 
     return (
@@ -154,13 +158,14 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                 />
                 <div>
                   <Div>
-                    <H2 style={{margin: 0}}>
+                    <H2>
                       Schedule newsletter delivery
                     </H2>
                     <div>
                       <FormattedMessage {...messages.startProjectMessage} />
                     </div>
                   </Div>
+                  <br />
                   {page}
                 </div>
               </article>

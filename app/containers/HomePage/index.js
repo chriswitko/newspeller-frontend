@@ -81,7 +81,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             } else {
               return (
                 <div>
-                  <div>Based on these channels we are generating your personal email with news headlines. Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></div>
+                  {confirmedAt ? <div>Based on these channels we are generating your personal email with news headlines. Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></div> : <div>We will start delivering emails when you will confirm your email address first.</div>}
                   <CenteredSection>
                     <br />
                     <ButtonSubmit onClick={goToChannels}>Channels</ButtonSubmit>
@@ -132,7 +132,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 <div>
                   {showConfirmationAlert()}
                   <Section>
-                    <H2 style={{margin: 0}}>
+                    <H2>
                       <FormattedMessage {...messages.trymeHeader} />
                     </H2>
                     {getNextDelivery()}

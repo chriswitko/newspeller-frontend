@@ -38,7 +38,11 @@ const verifyAuthedUserRedirect = () => {
   if (!window.localStorage.getItem('token')) {
     return true
   } else {
-    window.location.href = '/home'
+    if (!window.localStorage.getItem('activatedAt')) {
+      window.location.href = '/register'
+    } else {
+      window.location.href = '/home'
+    }
   }
 }
 
@@ -119,7 +123,7 @@ export default function createRoutes (store) {
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUser()
+        verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -144,7 +148,7 @@ export default function createRoutes (store) {
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUser()
+        verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),

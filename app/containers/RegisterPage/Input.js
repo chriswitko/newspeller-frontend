@@ -25,6 +25,11 @@ const Input = styled.input`
   padding: 0.7rem;
   background: white;
   width: 100%;
+
+  &:disabled {
+    background-color: #d5d5d5;  
+    color: black;
+  }
 `
 
 export default Input

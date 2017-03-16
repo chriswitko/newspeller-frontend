@@ -26,7 +26,6 @@ const _getInterfaceLanguage = () => {
   return DEFAULT_LANG
 }
 
-
 const selectGlobal = (state) => state.get('global')
 
 const selectLanguage = (state) => state.get('language')
@@ -43,6 +42,11 @@ const makeSelectLocale = () => createSelector(
 const makeSelectConfirmedAt = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'confirmed_at'])
+)
+
+const makeSelectActivatedAt = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'activated_at']) || window.localStorage.getItem('activatedAt')
 )
 
 const makeSelectTimezone = () => createSelector(
@@ -143,5 +147,6 @@ export {
   makeSelectTimezone,
   makeSelectGroupBy,
   makeSelectLocale,
-  makeSelectConfirmedAt
+  makeSelectConfirmedAt,
+  makeSelectActivatedAt
 }

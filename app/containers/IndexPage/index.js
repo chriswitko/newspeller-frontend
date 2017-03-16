@@ -5,7 +5,6 @@
  */
 import React from 'react'
 import Helmet from 'react-helmet'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 

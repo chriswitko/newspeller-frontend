@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const H1 = styled.h1`
   font-size: 2em;
   margin-top: 0;
   padding: 0;
   margin-bottom: 0.25em;
-`;
+`
 
-export default H1;
+export default H1
