@@ -46,6 +46,18 @@ const verifyAuthedUserRedirect = () => {
   }
 }
 
+const verifyAuthedUserRedirectHome = () => {
+  if (!window.localStorage.getItem('token')) {
+    return true
+  } else {
+    if (!window.localStorage.getItem('activatedAt')) {
+      window.location.href = '/register'
+    } else {
+      window.location.href = '/home'
+    }
+  }
+}
+
 export default function createRoutes (store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store)
@@ -57,7 +69,7 @@ export default function createRoutes (store) {
       name: 'index',
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUserRedirect()
+        verifyAuthedUserRedirectHome()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
