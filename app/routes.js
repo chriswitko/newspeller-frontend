@@ -41,7 +41,7 @@ const verifyAuthedUserRedirect = () => {
     if (!window.localStorage.getItem('activatedAt')) {
       window.location.href = '/register'
     } else {
-      window.location.href = '/home'
+      return true
     }
   }
 }
