@@ -6,24 +6,21 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.HomePage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds'
+  title: {
+    id: 'newspeller.containers.HomePage.title',
+    defaultMessage: 'My Subscriptions'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices'
+  loading: {
+    id: 'newspeller.containers.HomePage.loading',
+    defaultMessage: 'Loading your settings. Please wait...'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.HomePage.tryme.header',
-    defaultMessage: 'Moje subskrypcje'
+  btnChannels: {
+    id: 'newspeller.containers.HomePage.btnChannels',
+    defaultMessage: 'Add more...'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.HomePage.tryme.message',
-    defaultMessage: 'Show Github repositories by'
+  btnSettings: {
+    id: 'newspeller.containers.HomePage.btnSettings',
+    defaultMessage: 'Settings'
   },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
-    defaultMessage: '@'
-  }
+  
 })

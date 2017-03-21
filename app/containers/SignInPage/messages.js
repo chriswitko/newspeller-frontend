@@ -3,27 +3,27 @@
  *
  * This contains all the text for the HomePage component.
  */
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.HomePage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds',
+  intro: {
+    id: 'newspeller.containers.SignInPage.intro',
+    defaultMessage: 'Sign In to The Newspeller'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices',
+  labelEmail: {
+    id: 'newspeller.containers.SignInPage.labelEmail',
+    defaultMessage: 'Email'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.HomePage.tryme.header',
-    defaultMessage: 'Logowanie',
+  labelPassword: {
+    id: 'newspeller.containers.SignInPage.labelPassword',
+    defaultMessage: 'Email'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.HomePage.tryme.message',
-    defaultMessage: 'Show Github repositories by',
+  btnSignIn: {
+    id: 'newspeller.containers.SignInPage.btnSignIn',
+    defaultMessage: 'Log In'
   },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
-    defaultMessage: '@',
-  },
-});
+  forgotPassword: {
+    id: 'newspeller.containers.SignInPage.forgotPassword',
+    defaultMessage: 'Forgot password?'
+  }
+})

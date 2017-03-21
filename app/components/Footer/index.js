@@ -1,11 +1,11 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
 import Wrapper from './Wrapper'
-import messages from './messages'
 
 const FA = styled(A)`
   text-decoration: none;
@@ -20,17 +20,17 @@ function Footer () {
     <Wrapper>
       <section>
         <div>
-          <FA href='#' target='_blank'>Blog</FA>
+          <FA href='#' target='_blank'><FormattedMessage {...messages.contact} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='mailto:inbox@newspeller.com'>Contact</FA>
+          <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='/about'>About Newspeller</FA>
+          <FA href='/about'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='/terms'>Terms of Use</FA>
+          <FA href='/terms'><FormattedMessage {...messages.terms} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='/privacy'>Privacy Policy</FA>
+          <FA href='/privacy'><FormattedMessage {...messages.privacy} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='/news-publishers'>News Publishers</FA>
+          <FA href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPub} /></FA>
         </div>
         <FormattedMessage {...messages.licenseMessage} />
       </section>

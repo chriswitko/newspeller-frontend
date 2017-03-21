@@ -6,7 +6,7 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -68,7 +68,7 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
   }
 
   render () {
-    const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour, onRemoveAccount, onChangeTimezone } = this.props
+    const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour, onRemoveAccount, onChangeTimezone, intl } = this.props
     const { hour, minute } = this.state
 
     const reposDaysProps = {
@@ -78,15 +78,18 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
       loading,
       error,
       days,
-      hours
+      hours,
+      intl
     }
 
-    const page = loading ? <div>Loading your settings. Please wait...</div> : error ? <div>Something went wrong, please try again!</div> : (
+    const defaultHours = [this.props.intl.formatMessage(messages.hh), '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
+
+    const page = loading ? <div><FormattedMessage {...messages.loading} /></div> : error ? <div>Something went wrong, please try again!</div> : (
       <Div>
         <Div>
           <Column style={{padding: '0'}}>
             <div>
-              <Label>What is your time zone?</Label>
+              <Label><FormattedMessage {...messages.timezone} /></Label>
             </div>
             <TimezonePicker
               placeholder='Select timezone...'
@@ -99,7 +102,7 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
         <Div>
           <Column style={{padding: '0'}}>
             <div>
-              <Label>When would you like to receive emails...</Label>
+              <Label><FormattedMessage {...messages.when} /></Label>
             </div>
             <ReposDays {...reposDaysProps} />
           </Column>
@@ -108,7 +111,7 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
         <Div>
           <Column style={{padding: '0'}}>
             <div>
-              <Label>... and at what time?</Label>
+              <Label><FormattedMessage {...messages.andTime} /></Label>
             </div>
             <Div>
               <ReposHours {...reposDaysProps} />
@@ -117,13 +120,13 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
               <div style={{marginBottom: '10px'}}>
                 <label htmlFor='time'>
                   <AtPrefix>
-                    Wish to receive your newsletter often, just add new time below.
+                    <FormattedMessage {...messages.newTime} />
                   </AtPrefix>
                 </label>
               </div>
               <DropDownPicker
                 placeholder='HH'
-                defaultValues={['HH', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']}
+                defaultValues={defaultHours}
                 defaultValue={hour}
                 onChange={this.onChangeHour}
               />
@@ -133,9 +136,8 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                 defaultValue={minute}
                 onChange={this.onChangeMinute}
               />
-              <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}>Add</ButtonSubmit>
+              <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}><FormattedMessage {...messages.btnAdd} /></ButtonSubmit>
             </Form>
-            <p><small><strong>Tip</strong>: Click above on the selected time to remove.</small></p>
           </Column>
         </Div>
       </Div>
@@ -159,10 +161,12 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
                 <div>
                   <Div>
                     <H2>
-                      Schedule newsletter delivery
+                      <FormattedMessage {...messages.title} />
                     </H2>
                     <div>
-                      <FormattedMessage {...messages.startProjectMessage} />
+                      <p>
+                        <FormattedMessage {...messages.intro} />
+                      </p>
                     </div>
                   </Div>
                   <br />
@@ -172,7 +176,7 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
             </Column>
             {!loading ? (
               <Column>
-                <Small><a href='#' onClick={onRemoveAccount}>Remove my email address from The Newspeller database</a></Small>
+                <Small><a href='#' onClick={onRemoveAccount}><FormattedMessage {...messages.removeLink} /></a></Small>
               </Column>
             ) : ''}
           </Row>
@@ -230,4 +234,4 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SettingsPage))

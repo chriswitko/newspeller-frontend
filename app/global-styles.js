@@ -25,7 +25,7 @@ injectGlobal`
 
   p,
   label {
-    line-height: 1.5em;
+    line-height: 1.4em;
   }
   
   a {

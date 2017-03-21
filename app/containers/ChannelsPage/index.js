@@ -6,7 +6,7 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -46,6 +46,14 @@ export class ChannelsPage extends React.PureComponent {
       repos
     }
 
+    const defaultValues = [{
+      name: this.props.intl.formatMessage(messages.selectAll), value: 'all'
+    }, {
+      name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
+    }, {
+      name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
+    }]
+
     return (
       <Box fullScreen>
         <Page style={{display: 'flex', flexDirection: 'column'}}>
@@ -65,18 +73,20 @@ export class ChannelsPage extends React.PureComponent {
                   <Section>
                     <Div>
                       <H2>
-                        Channels
+                        <FormattedMessage {...messages.title} />
                       </H2>
                       <div>
-                        <FormattedMessage {...messages.startProjectMessage} />
+                        <p>
+                          <FormattedMessage {...messages.intro} />
+                        </p>
                       </div>
                     </Div>
                     <br />
                     <Div>
-                      <Label>Filter by language</Label>
+                      <Label><FormattedMessage {...messages.filterByLang} /></Label>
                       <DropDownObjectPicker
                         placeholder='Filter by language'
-                        defaultValues={[{name: 'Select language (All)', value: 'all'}, {name: 'English', value: 'en'}, {name: 'Deutsch', value: 'de'}, {name: 'Polski', value: 'pl'}]}
+                        defaultValues={defaultValues}
                         defaultValue={language}
                         onChange={onChangeLanguage}
                       />
@@ -152,4 +162,4 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(ChannelsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(ChannelsPage))

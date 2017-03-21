@@ -48,7 +48,11 @@ import {
   USER_REGISTER,
   USER_REGISTER_SUCCESS,
   USER_SEND_ACTIVATION,
-  USER_SEND_ACTIVATION_SUCCESS
+  USER_SEND_ACTIVATION_SUCCESS,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  SAVE_PASSWORD,
+  SAVE_PASSWORD_SUCCESS
 } from './constants'
 
 /**
@@ -119,9 +123,10 @@ export function sendActivationEmail (user) {
   }
 }
 
-export function sendActivationEmailSuccess () {
+export function sendActivationEmailSuccess (user) {
   return {
-    type: USER_SEND_ACTIVATION_SUCCESS
+    type: USER_SEND_ACTIVATION_SUCCESS,
+    user
   }
 }
 
@@ -132,6 +137,34 @@ export function authorizeUser (email, password) {
     password
   }
 }
+
+export function resetPassword (email) {
+  return {
+    type: RESET_PASSWORD,
+    email
+  }
+}
+
+export function resetPasswordSuccess () {
+  return {
+    type: RESET_PASSWORD_SUCCESS
+  }
+}
+
+export function savePassword (password, token) {
+  return {
+    type: SAVE_PASSWORD,
+    password,
+    token
+  }
+}
+
+export function savePasswordSuccess () {
+  return {
+    type: SAVE_PASSWORD_SUCCESS
+  }
+}
+
 
 export function registerSuccess (user) {
   return {

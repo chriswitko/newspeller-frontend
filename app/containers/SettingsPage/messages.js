@@ -6,24 +6,44 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.HomePage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds'
+  title: {
+    id: 'newspeller.containers.SettingsPage.title',
+    defaultMessage: 'Settings'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices'
+  intro: {
+    id: 'newspeller.containers.SettingsPage.intro',
+    defaultMessage: 'Define what days and times you wish to receive emails.'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.HomePage.tryme.header',
-    defaultMessage: 'Ustawienia'
+  loading: {
+    id: 'newspeller.containers.SettingsPage.loading',
+    defaultMessage: 'Loading your settings. Please wait...'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.HomePage.tryme.message',
-    defaultMessage: 'Show Github repositories by'
+  when: {
+    id: 'newspeller.containers.SettingsPage.when',
+    defaultMessage: 'When would you like to receive emails...'
   },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
-    defaultMessage: '@'
+  timezone: {
+    id: 'newspeller.containers.SettingsPage.timezone',
+    defaultMessage: 'What is your time zone?'
+  },
+  andTime: {
+    id: 'newspeller.containers.SettingsPage.andTime',
+    defaultMessage: '... and at what time?'
+  },
+  newTime: {
+    id: 'newspeller.containers.SettingsPage.newTime',
+    defaultMessage: 'Wish to receive your newsletter often, just add new time below.'
+  },
+  btnAdd: {
+    id: 'newspeller.containers.SettingsPage.btnAdd',
+    defaultMessage: 'Add'
+  },
+  removeLink: {
+    id: 'newspeller.containers.SettingsPage.removeLink',
+    defaultMessage: 'Remove my email address from The Newspeller database'
+  },
+  hh: {
+    id: 'newspeller.containers.SettingsPage.hh',
+    defaultMessage: 'HH'
   }
 })

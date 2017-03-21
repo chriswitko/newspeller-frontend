@@ -6,24 +6,24 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  signin: {
-    id: 'boilerplate.components.Header.signin',
-    defaultMessage: 'Sign In'
-  },
   home: {
-    id: 'boilerplate.components.Header.home',
+    id: 'newspeller.components.Header.home',
     defaultMessage: 'Home'
   },
   channels: {
-    id: 'boilerplate.components.Header.channels',
+    id: 'newspeller.components.Header.channels',
     defaultMessage: 'Channels'
   },
-  features: {
-    id: 'boilerplate.components.Header.features',
-    defaultMessage: 'Features'
-  },
-  scheduling: {
-    id: 'boilerplate.components.Header.scheduling',
+  settings: {
+    id: 'newspeller.components.Header.settings',
     defaultMessage: 'Settings'
+  },
+  logout: {
+    id: 'newspeller.components.Header.logout',
+    defaultMessage: 'Log out'
+  },
+  signin: {
+    id: 'newspeller.components.Header.signin',
+    defaultMessage: 'Sign in'
   }
 })

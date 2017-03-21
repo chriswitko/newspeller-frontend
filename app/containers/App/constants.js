@@ -28,6 +28,12 @@ export const ADD_HOUR_SUCCESS = 'boilerplate/App/ADD_HOUR_SUCCESS'
 export const REMOVE_ACCOUNT = 'boilerplate/App/REMOVE_ACCOUNT'
 export const REMOVE_ACCOUNT_SUCCESS = 'boilerplate/App/REMOVE_ACCOUNT_SUCCESS'
 
+export const RESET_PASSWORD = 'boilerplate/App/RESET_PASSWORD'
+export const RESET_PASSWORD_SUCCESS = 'boilerplate/App/RESET_PASSWORD_SUCCESS'
+
+export const SAVE_PASSWORD = 'boilerplate/App/SAVE_PASSWORD'
+export const SAVE_PASSWORD_SUCCESS = 'boilerplate/App/SAVE_PASSWORD_SUCCESS'
+
 export const UPDATE_TIMEZONE = 'boilerplate/App/UPDATE_TIMEZONE'
 export const UPDATE_TIMEZONE_SUCCESS = 'boilerplate/App/UPDATE_TIMEZONE_SUCCESS'
 

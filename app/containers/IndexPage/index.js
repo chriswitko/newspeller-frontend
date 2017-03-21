@@ -5,8 +5,11 @@
  */
 import React from 'react'
 import Helmet from 'react-helmet'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+
+import messages from './messages'
 
 import { registerEmail } from '../App/actions'
 import Header from 'components/Header'
@@ -21,8 +24,10 @@ import { Page, Row, Column } from 'hedron'
 import Box from 'components/Box'
 import Area from 'components/Area'
 import styled from 'styled-components'
+import { Link } from 'react-router'
+import Avatar from 'react-avatar'
 
-import HeroImg from './assets/stsubscribe.png'
+import HeroImg from './assets/email_envelope_letter_mail_message_-93-512.png'
 
 const Ul = styled.ul`
   list-style: none;
@@ -39,10 +44,28 @@ const Hr = styled.hr`
   padding: 0;
 `
 
-export class IndexPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  // Since state and props are static,
-  // there's no need to re-render this component
+const UlLogos = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
 
+  li {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+
+    img {
+      border: 1px solid #d5d5d5;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`
+
+export class IndexPage extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -51,20 +74,21 @@ export class IndexPage extends React.PureComponent { // eslint-disable-line reac
     }
   }
 
-  // shouldComponentUpdate () {
-  //   return false
-  // }
+  numberOfSubscribersLastWeek (d = new Date()) {
+    const onejan = new Date(new Date().getFullYear(), 0, 1)
+    const millisecsInDay = 86400000
+    const start = 2017
+    const approx = 67
+    return approx * (new Date().getFullYear() - start + 1) * Math.ceil((((new Date() - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7)
+  }
 
   render () {
+    console.log('i18n', this.props)
     const { handleActivate } = this.props
 
     const handleChange = (email) => {
       this.setState({email: email.target.value})
     }
-
-    // const handleActivate = () => {
-    //   browserHistory.push('/register')
-    // }
 
     return (
       <Box fullScreen>
@@ -83,18 +107,18 @@ export class IndexPage extends React.PureComponent { // eslint-disable-line reac
                     ]}
                   />
                   <Row>
-                    <Column lg={6} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
-                      <img src={HeroImg} width='100%' />
+                    <Column lg={4} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
+                      <img src={HeroImg} width='100%' style={{padding: '20px'}} />
                     </Column>
-                    <Column lg={6} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
+                    <Column lg={8} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                       <h1 style={{padding: 0, margin: 0, lineHeight: '1.2em'}}>
-                        Your daily email with headlines from news outlets you read.
+                        <FormattedMessage {...messages.headline} />
                       </h1>
                       <ol>
-                        <li>Enter your email address</li>
-                        <li>Select your favourite channels</li>
-                        <li>Decide what day and time you wish to receive emails</li>
-                        <li>Get all news headlines in one email</li>
+                        <li><FormattedMessage {...messages.perks1} /></li>
+                        <li><FormattedMessage {...messages.perks2} /></li>
+                        <li><FormattedMessage {...messages.perks3} /></li>
+                        <li><FormattedMessage {...messages.perks4} /></li>
                       </ol>
                     </Column>
                   </Row>
@@ -104,33 +128,34 @@ export class IndexPage extends React.PureComponent { // eslint-disable-line reac
                         <Area>
                           <Div>
                             <Label htmlFor='username'>
-                              Enter your email address
+                              <FormattedMessage {...messages.regFormEnterEmail} />
                               <br />
-                              <Small style={{fontWeight: '400'}}>It's simple. All you need to start receiving your personal email is your email address.</Small>
+                              <Small style={{fontWeight: '400'}}><FormattedMessage {...messages.regFormEnterEmailMore} /></Small>
                             </Label>
                             <Input
                               id='email'
                               type='email'
-                              placeholder='eg. email@website.com'
+                              placeholder={this.props.intl.formatMessage(messages.inputEmailPlaceholder)}
                               value={this.email}
                               onChange={(email) => handleChange(email)}
                               />
+                            <Small><strong>{this.numberOfSubscribersLastWeek()}</strong> <FormattedMessage {...messages.regFormSubsInfo} /></Small>
                           </Div>
                           <Div>
-                            <ButtonSubmit type='button' onClick={() => handleActivate(this.state.email)}>Activate my personal email</ButtonSubmit>
+                            <ButtonSubmit type='button' onClick={() => handleActivate(this.state.email)}><FormattedMessage {...messages.regFormBtnSubmit} /></ButtonSubmit>
                           </Div>
                           <Ul>
                             <li>
-                              <Small>&#10003; We promise not to spam you. You can always modify how often you wish to receive an email.</Small>
+                              <Small>&#10003; <FormattedMessage {...messages.regFormPromise1} /></Small>
                             </li>
                             <li>
-                              <Small>&#10003; You can unsubscribe or remove your email address at any time.</Small>
+                              <Small>&#10003; <FormattedMessage {...messages.regFormPromise2} /></Small>
                             </li>
                             <li>
-                              <Small>&#10003; It's FREE 😀. You don't pay single penny.</Small>
+                              <Small>&#10003; <FormattedMessage {...messages.regFormPromise3} /></Small>
                             </li>
                             <li>
-                              <Small>&#10003; By activating your personal email from The Newspeller, you agree with <a href='#'>Terms of Service</a> &amp; <a href=''>Privacy Policy</a>.</Small>
+                              <Small>&#10003; <FormattedMessage {...messages.regFormPromise4} /> <Link to='terms'><FormattedMessage {...messages.linkTerms} /></Link> &amp; <Link to='privacy'><FormattedMessage {...messages.linkPrivacy} /></Link>.</Small>
                             </li>
                           </Ul>
                         </Area>
@@ -141,11 +166,23 @@ export class IndexPage extends React.PureComponent { // eslint-disable-line reac
                   <Row>
                     <Column lg={12} style={{paddingTop: 0, paddingBottom: 0}}>
                       <Label>
-                        We currently deliver news headlines from about 78 sources in 5 languages (English, German, French, Spanish, Polish), including:
+                        <FormattedMessage {...messages.newsPubIntro} values={{numOrganizations: <strong>78 <FormattedMessage {...messages.wordNewsOrgs} /></strong>, numLangs: <strong>2 <FormattedMessage {...messages.wordLanguages} /></strong>, langs: <FormattedMessage {...messages.listLanguages} />, numCategories: <strong>11 <FormattedMessage {...messages.wordCategories} /></strong>, categories: <FormattedMessage {...messages.listCategories} />}} />
                       </Label>
-                      <img src='https://www.umass.edu/family/sites/default/files/styles/920x300/public/images/slideshow/logos.jpg?itok=-UMzCKwf' width='100%' style={{display: 'block'}} />
+                      <UlLogos>
+                        <li><Avatar facebookId='10153006084534583' size={75} /></li>
+                        <li><Avatar facebookId='174708585894934' size={75} /></li>
+                        <li><Avatar facebookId='185265414715' size={75} /></li>
+                        <li><Avatar facebookId='165562920151505' size={75} /></li>
+                        <li><Avatar facebookId='266358044374' size={75} /></li>
+                        <li><Avatar facebookId='248281271873597' size={75} /></li>
+                        <li><Avatar facebookId='358261633959' size={75} /></li>
+                        <li><Avatar facebookId='370535546308040' size={75} /></li>
+                        <li><Avatar facebookId='255100403945' size={75} /></li>
+                        <li><Avatar facebookId='486740884701509' size={75} /></li>
+                        <li><Avatar facebookId='113356018705476' size={75} /></li>
+                      </UlLogos>
                       <p>
-                        The Newspeller makes it easy for news organizations and magazines, to distribute headlines in one email. You’ll get valuable metrics on how readers engage with your content. <a href='#'>Sign up as a News Publisher &raquo;</a>
+                        <FormattedMessage {...messages.newsPubMore} /> <a href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPubRegLink} /> &raquo;</a>
                       </p>
                     </Column>
                   </Row>
@@ -153,41 +190,34 @@ export class IndexPage extends React.PureComponent { // eslint-disable-line reac
                   <Row>
                     <Column lg={12} style={{paddingTop: 0}}>
                       <Label>
-                        FAQs:
+                        <FormattedMessage {...messages.faqs} />:
                       </Label>
                       <ul>
                         <li>
-                          <strong>What's Newspeller?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post. Three ways to describe React components which are often used incorrectly — Stateless Components, Stateless Functional Components, and Functional Components.</p>
+                          <strong><FormattedMessage {...messages.faqs1q} /></strong>
+                          <p><FormattedMessage {...messages.faqs1a} /></p>
                         </li>
                         <li>
-                          <strong>Why did we built Newspeller?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
+                          <strong><FormattedMessage {...messages.faqs2q} /></strong>
+                          <p><FormattedMessage {...messages.faqs2a} /></p>
                         </li>
                         <li>
-                          <strong>Who's behind the project?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
+                          <strong><FormattedMessage {...messages.faqs3q} /></strong>
+                          <p><FormattedMessage {...messages.faqs3a} values={{linkChris: <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>, linkWojtek: <a href='mailto:inbox@newspeller.com'>Wojtek Krupa</a>}} /></p>
                         </li>
                         <li>
-                          <strong>How can I join The Newspeller as a News Publisher?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
+                          <strong><FormattedMessage {...messages.faqs4q} /></strong>
+                          <p><FormattedMessage {...messages.faqs4a} /></p>
                         </li>
                         <li>
-                          <strong>How often I will be receiving an email?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
+                          <strong><FormattedMessage {...messages.faqs5q} /></strong>
+                          <p><FormattedMessage {...messages.faqs5a} /></p>
                         </li>
                         <li>
-                          <strong>Do I have to pay for it?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
-                        </li>
-                        <li>
-                          <strong>What sources I can subscribe to?</strong>
-                          <p>Earlier today I read Dan Abramov’s “React Components, Elements, and Instances” article. As always I loved the article but even more than that, this time, I loved Dan’s focus on using proper vocabulary to describe technical topics. That post gave me the idea for this post.</p>
+                          <strong><FormattedMessage {...messages.faqs6q} /></strong>
+                          <p><FormattedMessage {...messages.faqs6a} values={{numOrganizations: <strong>78 <FormattedMessage {...messages.wordNewsOrgs} /></strong>, numLangs: <strong>2 <FormattedMessage {...messages.wordLanguages} /></strong>, langs: <FormattedMessage {...messages.listLanguages} />, numCategories: <strong>11 <FormattedMessage {...messages.wordCategories} /></strong>, categories: <FormattedMessage {...messages.listCategories} />}} /></p>
                         </li>
                       </ul>
-                      <p>
-                        <a href='#'>Visit our blog to find more about us &raquo;</a>
-                      </p>
                     </Column>
                   </Row>
                 </div>
@@ -210,8 +240,6 @@ IndexPage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     handleActivate: (email) => {
-      console.log('hello handle', email)
-      // browserHistory.push('/register')
       dispatch(registerEmail(email))
     }
   }
@@ -222,4 +250,4 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(IndexPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(IndexPage))

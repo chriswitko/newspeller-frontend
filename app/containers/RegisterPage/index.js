@@ -6,9 +6,10 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
 import H2 from 'components/H2'
@@ -17,10 +18,9 @@ import CenteredSection from './CenteredSection'
 import Form from './Form'
 import Input from './Input'
 import Section from './Section'
-import messages from './messages'
 import ButtonSubmit from './ButtonSubmit'
 import Label from './Label'
-import { sendActivationEmail, updateTimezone, removeAccount } from '../App/actions'
+import { sendActivationEmail, logoutUser } from '../App/actions'
 import { makeSelectEmail, makeSelectEmailAgain, makeSelectPassword, makeSelectTimezone } from './selectors'
 import { makeSelectLocale } from '../App/selectors'
 import styled from 'styled-components'
@@ -47,8 +47,10 @@ export class RegisterPage extends React.PureComponent {
   constructor (props) {
     super(props)
 
+    console.log('this.props', this.props)
+
     this.state = {
-      email: window.localStorage.getItem('currentUser') || '',
+      token: this.props.location.query.token,
       emailAgain: '',
       password: '',
       timezone: 'Europe/London'
@@ -62,8 +64,8 @@ export class RegisterPage extends React.PureComponent {
   }
 
   render () {
-    const { onSubmitForm, onRemoveAccount } = this.props
-    const { email, emailAgain, password, timezone } = this.state
+    const { onSubmitForm, onCancel } = this.props
+    const { emailAgain, password, timezone } = this.state
 
     return (
       <Wrapper>
@@ -82,42 +84,28 @@ export class RegisterPage extends React.PureComponent {
                   <div>
                     <CenteredSection>
                       <H2>
-                        Welcome to The Newspeller
+                        <FormattedMessage {...messages.title} />
                       </H2>
                       <div>
-                        Enter your email address again, create password and select your timezone.
+                        <FormattedMessage {...messages.intro} />
                       </div>
                     </CenteredSection>
                     <Section style={{margin: 0, padding: 0}}>
                       <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
                         <Label htmlFor='username'>
-                          <FormattedMessage {...messages.trymeMessage} />
-                        </Label>
-                        <Input
-                          id='email'
-                          type='text'
-                          placeholder='Your email address'
-                          value={email}
-                          readonly='true'
-                          disabled='true'
-                          onChange={(evt) => this.onChange('email', email)}
-                        />
-                        <br />
-                        <br />
-                        <Label htmlFor='username'>
-                          Enter your email address again
+                          <FormattedMessage {...messages.labelEmail} />
                         </Label>
                         <Input
                           id='emailAgain'
                           type='text'
-                          placeholder='Your email address'
+                          placeholder='email@site.com'
                           value={emailAgain}
                           onChange={(evt) => this.onChange('emailAgain', evt.target.value)}
                         />
                         <br />
                         <br />
                         <Label htmlFor='password'>
-                          Password
+                          <FormattedMessage {...messages.labelPassword} />
                         </Label>
                         <Input
                           id='password'
@@ -128,20 +116,19 @@ export class RegisterPage extends React.PureComponent {
                         <br />
                         <br />
                         <Label htmlFor='password'>
-                          Timezone
+                          <FormattedMessage {...messages.labelTimezone} />
                         </Label>
                         <TimezonePicker
                           placeholder='Select timezone...'
                           defaultValue={timezone}
                           onChange={(evt) => this.onChange('timezone', evt.target.value)}
                         />
-                        <small>Timezone will help us to deliver your email on time.</small>
                         <br />
                         <br />
-                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}>Activate my email &raquo;</ButtonSubmit>
+                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
                         <br />
                         <br />
-                        <a href='#' onClick={onRemoveAccount}>or Cancel</a>
+                        <a href='#' onClick={onCancel}><FormattedMessage {...messages.btnCancel} /></a>
                       </Form>
                     </Section>
                   </div>
@@ -169,15 +156,15 @@ RegisterPage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    onRemoveAccount: () => dispatch(removeAccount()),
+    onCancel: () => dispatch(logoutUser()),
     onSubmitForm: (data, locale) => {
       dispatch(sendActivationEmail({
-        email: data.email,
+        token: data.token,
+        email: data.emailAgain,
         password: data.password,
         timezone: data.timezone,
         locale: locale
       }))
-      dispatch(updateTimezone(data.timezone))
     }
   }
 }

@@ -24,7 +24,9 @@ import {
   REMOVE_ACCOUNT,
   CHANGE_LOCALE,
   USER_REGISTER,
-  USER_SEND_ACTIVATION
+  USER_SEND_ACTIVATION,
+  RESET_PASSWORD,
+  SAVE_PASSWORD
 } from 'containers/App/constants'
 import {
   reposLoaded,
@@ -43,7 +45,9 @@ import {
   removeAccountSuccess,
   changeLocaleSuccess,
   registerSuccess,
-  sendActivationEmailSuccess
+  sendActivationEmailSuccess,
+  resetPasswordSuccess,
+  savePasswordSuccess
 } from 'containers/App/actions'
 import request from 'utils/request'
 import {
@@ -323,11 +327,6 @@ export function * fetchUserActivation (action) {
   console.log('action', action)
   const requestURL = `${API_ENDPOINT}/subscribers/activation`
 
-  const token = yield select(makeSelectToken())
-  if (!token) {
-    yield put(repoLoadingError('No token'))
-  }
-
   try {
     const user = yield call(request, requestURL, {
       method: 'POST',
@@ -335,7 +334,7 @@ export function * fetchUserActivation (action) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token: token,
+        token: action.user.token,
         email: action.user.email,
         password: action.user.password,
         timezone: action.user.timezone,
@@ -343,6 +342,45 @@ export function * fetchUserActivation (action) {
       })
     })
     yield put(sendActivationEmailSuccess(user))
+  } catch (err) {
+    yield put(authorizeError(err))
+  }
+}
+
+export function * fetchPasswordReset (action) {
+  const requestURL = `${API_ENDPOINT}/subscribers/reset_password`
+
+  try {
+    yield call(request, requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: action.email
+      })
+    })
+    yield put(resetPasswordSuccess())
+  } catch (err) {
+    yield put(authorizeError(err))
+  }
+}
+
+export function * fetchSavePassword (action) {
+  const requestURL = `${API_ENDPOINT}/subscribers/update_password`
+
+  try {
+    yield call(request, requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: action.token,
+        password: action.password
+      })
+    })
+    yield put(savePasswordSuccess())
   } catch (err) {
     yield put(authorizeError(err))
   }
@@ -372,6 +410,20 @@ export function * sendActivationSaga () {
   yield cancel(watcher)
 }
 
+export function * resetPasswordSaga () {
+  const watcher = yield takeLatest(RESET_PASSWORD, fetchPasswordReset)
+
+  yield take(LOCATION_CHANGE)
+  yield cancel(watcher)
+}
+
+export function * savePasswordSaga () {
+  const watcher = yield takeLatest(SAVE_PASSWORD, fetchSavePassword)
+
+  yield take(LOCATION_CHANGE)
+  yield cancel(watcher)
+}
+
 export default [
   loadFeedsData,
   githubData,
@@ -386,5 +438,7 @@ export default [
   removeAccountSaga,
   updateLocaleSaga,
   registerUserSaga,
-  sendActivationSaga
+  sendActivationSaga,
+  resetPasswordSaga,
+  savePasswordSaga
 ]

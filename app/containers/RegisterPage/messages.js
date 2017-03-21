@@ -3,27 +3,35 @@
  *
  * This contains all the text for the HomePage component.
  */
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.HomePage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds',
+  title: {
+    id: 'newspeller.containers.RegisterPage.title',
+    defaultMessage: 'Welcome to The Newspeller'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices',
+  intro: {
+    id: 'newspeller.containers.RegisterPage.intro',
+    defaultMessage: 'Enter your email address again, create password and select your timezone.'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.HomePage.tryme.header',
-    defaultMessage: 'Logowanie',
+  labelEmail: {
+    id: 'newspeller.containers.RegisterPage.labelEmail',
+    defaultMessage: 'Enter your email address again'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.HomePage.tryme.message',
-    defaultMessage: 'Show Github repositories by',
+  labelPassword: {
+    id: 'newspeller.containers.RegisterPage.labelPassword',
+    defaultMessage: 'Create password'
   },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
-    defaultMessage: '@',
+  labelTimezone: {
+    id: 'newspeller.containers.RegisterPage.labelTimezone',
+    defaultMessage: 'Timezone'
   },
-});
+  btnActivate: {
+    id: 'newspeller.containers.RegisterPage.btnActivate',
+    defaultMessage: 'Activate my email &raquo;'
+  },
+  btnCancel: {
+    id: 'newspeller.containers.RegisterPage.btnCancel',
+    defaultMessage: 'or Cancel'
+  }
+})

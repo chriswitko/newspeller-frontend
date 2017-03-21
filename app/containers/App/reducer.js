@@ -36,11 +36,14 @@ import {
   UPDATE_GROUPBY_SUCCESS,
   REMOVE_ACCOUNT_SUCCESS,
   USER_REGISTER_SUCCESS,
-  USER_SEND_ACTIVATION_SUCCESS
+  USER_SEND_ACTIVATION_SUCCESS,
+  RESET_PASSWORD_SUCCESS,
+  SAVE_PASSWORD_SUCCESS
 } from './constants'
 
 // The initial state of the App
 const initialState = fromJS({
+  reset: false,
   loading: false,
   error: false,
   currentUser: false,
@@ -54,8 +57,7 @@ const initialState = fromJS({
     repositories: false,
     days: false,
     hours: false,
-    confirmed_at: false,
-    activated_at: false
+    confirmed_at: false
   }
 })
 
@@ -67,35 +69,38 @@ const strToMin = str => {
 function appReducer (state = initialState, action) {
   console.log('action', action)
   switch (action.type) {
+    case SAVE_PASSWORD_SUCCESS:
+      window.location.href = '/signin'
+      return state
+    case RESET_PASSWORD_SUCCESS:
+      return state
+        .set('reset', true)
     case REMOVE_ACCOUNT_SUCCESS:
-      window.localStorage.setItem('activatedAt', '')
       window.localStorage.setItem('currentUser', '')
       window.localStorage.setItem('token', '')
       window.location.href = '/signin'
       return state
         .set('token', false)
     case USER_LOGOUT:
-      window.localStorage.setItem('activatedAt', '')
       window.localStorage.setItem('currentUser', '')
       window.localStorage.setItem('token', '')
-      window.location.href = '/signin'
+      window.location.href = '/'
       return state
         .set('token', false)
     case USER_SUCCESS:
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
-      window.localStorage.setItem('activatedAt', action.user.activated_at ? action.user.activated_at : '')
       return state
         .set('currentUser', action.user.email)
         .set('token', action.user.token)
     case USER_SEND_ACTIVATION_SUCCESS:
-      window.localStorage.setItem('activatedAt', new Date().toISOString())
-      window.location.href = '/'
-      return state
-    case USER_REGISTER_SUCCESS:
+      console.log('action2222', action)
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
-      window.location.href = '/register'
+      window.location.href = '/home'
+      return state
+    case USER_REGISTER_SUCCESS:
+      window.location.href = `/register?token=${action.user.token}`
       return state
         .set('currentUser', action.user.email)
         .set('token', action.user.token)
@@ -174,6 +179,8 @@ function appReducer (state = initialState, action) {
           channelName: channel.name,
           sectionName: section.name,
           description: section.description,
+          facebook_id: channel.facebook_id,
+          twitter_id: channel.twitter_id,
           url: section.url,
           icon: channel.icon,
           language: channel.language.toUpperCase(),
@@ -202,12 +209,13 @@ function appReducer (state = initialState, action) {
           sectionName: item.topic.name,
           description: item.topic.description,
           url: item.topic.url,
+          facebook_id: item.channel.facebook_id,
+          twitter_id: item.channel.twitter_id,
           icon: item.channel.icon,
           language: item.channel.language.toUpperCase(),
           is_subscribed: true
         })
       })
-      window.localStorage.setItem('activatedAt', action.data.activated_at ? action.data.activated_at : '')
       return state
         .setIn(['userData', 'subscriptions'], allSubscriptions)
         .setIn(['userData', 'repositories'], action.data.repos)
@@ -217,7 +225,6 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'timezone'], action.data.timezone)
         .setIn(['userData', 'groupBy'], action.data.groupBy)
         .setIn(['userData', 'confirmed_at'], action.data.confirmed_at)
-        .setIn(['userData', 'activated_at'], action.data.activated_at)
         .set('loading', false)
         .set('currentUser', action.data.username)
     case LOAD_REPOS_ERROR:

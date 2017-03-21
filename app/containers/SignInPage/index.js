@@ -9,6 +9,7 @@ import Helmet from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { Link } from 'react-router'
 
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
 import H2 from 'components/H2'
@@ -74,25 +75,25 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
                   <div>
                     <CenteredSection>
                       <H2>
-                        Sign In to adjust time and content of your newsletter
+                        <FormattedMessage {...messages.intro} />
                       </H2>
                     </CenteredSection>
                     <Section style={{margin: 0, padding: 0}}>
                       <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
                         <Label htmlFor='username'>
-                          <FormattedMessage {...messages.trymeMessage} />
+                          <FormattedMessage {...messages.labelEmail} />
                         </Label>
                         <Input
                           id='username'
                           type='text'
-                          placeholder='Your email address'
+                          placeholder='email@site.com'
                           value={username}
                           onChange={this.props.onChangeUsername}
                         />
                         <br />
                         <br />
                         <Label htmlFor='password'>
-                          Password
+                          <FormattedMessage {...messages.labelPassword} />
                         </Label>
                         <Input
                           id='password'
@@ -102,11 +103,11 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
                         />
                         <br />
                         <br />
-                        <ButtonSubmit type='submit' onClick={onSubmitForm(this.form)}>Log in</ButtonSubmit>
+                        <ButtonSubmit type='submit' onClick={onSubmitForm(this.form)}><FormattedMessage {...messages.btnSignIn} /></ButtonSubmit>
                       </Form>
-                      <a href='#'>
-                        Forgot password?
-                      </a>
+                      <Link to='password'>
+                        <FormattedMessage {...messages.forgotPassword} />
+                      </Link>
                     </Section>
                   </div>
                 </article>

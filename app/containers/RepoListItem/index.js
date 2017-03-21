@@ -13,11 +13,17 @@ import ListItem from 'components/ListItem'
 import RepoLink from './RepoLink'
 import Wrapper from './Wrapper'
 import Switch from 'react-toggle-switch'
+import Avatar from 'react-avatar'
 
 import styled from 'styled-components'
 
 const Img = styled.img`
   border-radius: 3px;
+`
+
+const Spacer = styled.div`
+  border-radius: 3px;
+  margin-right: 5px;
 `
 
 export class RepoListItem extends React.Component {
@@ -40,13 +46,23 @@ export class RepoListItem extends React.Component {
       }
       return onAdd(item)
     }
+    
+    const icon = (item) => {
+      let icon = '<div><div>'
+      if (item.facebook_id) {
+        icon = <Avatar facebookId={item.facebook_id} size={32} />
+      } else if (item.twitter_id) {
+        icon = <Avatar twitterId={item.twitter_id} size={32} />
+      } else {
+        icon = <Img width='32' src={item.icon} />
+      }
+      return <Spacer>{icon}</Spacer>
+    }
 
     const content = (
       <Wrapper>
         <RepoLink href={item.url} target='_blank'>
-          {item.icon ? (
-            <Img style={{marginRight: '5px'}} width='32' src={item.icon} />
-           ) : ''}
+          {icon(item)}
           {item.channelName} [{item.language}]
           <br />
           &#8627;&nbsp;

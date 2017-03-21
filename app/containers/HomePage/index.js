@@ -81,12 +81,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             } else {
               return (
                 <div>
-                  {confirmedAt ? <div>Based on these channels we are generating your personal email with news headlines. Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></div> : <div>We will start delivering emails when you will confirm your email address first.</div>}
+                  {confirmedAt ? <p>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></p> : <p>We will start delivering emails when you will confirm your email address first.</p>}
                   <CenteredSection>
                     <br />
-                    <ButtonSubmit onClick={goToChannels}>Channels</ButtonSubmit>
+                    <ButtonSubmit onClick={goToChannels}><FormattedMessage {...messages.btnChannels} /></ButtonSubmit>
                     &nbsp;&nbsp;
-                    <ButtonSubmit onClick={goToSettings}>Settings</ButtonSubmit>
+                    <ButtonSubmit onClick={goToSettings}><FormattedMessage {...messages.btnSettings} /></ButtonSubmit>
                   </CenteredSection>
                 </div>
               )
@@ -110,7 +110,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           )
         }
       } else {
-        return <div>Loading your settings. Please wait...</div>
+        return <p><FormattedMessage {...messages.loading} /></p>
       }
     }
 
@@ -133,7 +133,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   {showConfirmationAlert()}
                   <Section>
                     <H2>
-                      <FormattedMessage {...messages.trymeHeader} />
+                      <FormattedMessage {...messages.title} />
                     </H2>
                     {getNextDelivery()}
                     <br />

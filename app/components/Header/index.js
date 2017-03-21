@@ -3,6 +3,8 @@ import React from 'react'
 import A from './A'
 import { Row, Column } from 'hedron'
 import Link from './Link'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 import { createStructuredSelector } from 'reselect'
 import { makeSelectToken } from 'containers/App/selectors'
 import { connect } from 'react-redux'
@@ -25,7 +27,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     let buttons = (
       <div>
         <Link to='signin'>
-          Sign in
+          <FormattedMessage {...messages.signin} />
         </Link>
       </div>
     )
@@ -33,20 +35,20 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     if (token) {
       buttons = (
         <div>
-          <Link to=''>
-            Home
+          <Link to='home'>
+            <FormattedMessage {...messages.home} />
           </Link>
           &nbsp;&nbsp;&nbsp;
           <Link to='channels'>
-            Channels
+            <FormattedMessage {...messages.channels} />
           </Link>
           &nbsp;&nbsp;&nbsp;
           <Link to='settings'>
-            Settings
+            <FormattedMessage {...messages.settings} />
           </Link>
           &nbsp;&nbsp;&nbsp;
           <A href='#' onClick={handleLogout}>
-            Log out
+            <FormattedMessage {...messages.logout} />
           </A>
         </div>
       )

@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react'
 import List from 'components/List'
 import ListItem from 'components/ListItem'
 import LoadingIndicator from 'components/LoadingIndicator'
+import { injectIntl } from 'react-intl'
+import messages from './messages'
 
 import styled from 'styled-components'
 
@@ -52,8 +54,16 @@ const Ul = styled.ul`
   }
 `
 
-function ReposDays ({ loading, error, days, onRemoveDay, onAddDay }) {
-  const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+function ReposDays ({ loading, error, days, onRemoveDay, onAddDay, intl }) {
+  const daysOfWeek = [
+    intl.formatMessage(messages.shortMonday),
+    intl.formatMessage(messages.shortTuesday),
+    intl.formatMessage(messages.shortWednesday),
+    intl.formatMessage(messages.shortThursday),
+    intl.formatMessage(messages.shortFriday),
+    intl.formatMessage(messages.shortSaturday),
+    intl.formatMessage(messages.shortSunday)
+  ]
 
   if (loading) {
     return <List component={LoadingIndicator} />
@@ -93,4 +103,4 @@ ReposDays.propTypes = {
   onAddDay: PropTypes.func
 }
 
-export default ReposDays
+export default injectIntl(ReposDays)

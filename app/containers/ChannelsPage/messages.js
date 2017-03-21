@@ -6,24 +6,28 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.ChannelsPage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds'
+  title: {
+    id: 'newspeller.containers.ChannelsPage.title',
+    defaultMessage: 'Channels'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.ChannelsPage.start_project.message',
+  intro: {
+    id: 'newspeller.containers.ChannelsPage.intro',
     defaultMessage: 'Here you can find more channels to subscribe to. Each day we are adding new channels.'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.ChannelsPage.tryme.header',
-    defaultMessage: 'Moje subskrypcje'
+  filterByLang: {
+    id: 'newspeller.containers.ChannelsPage.filterByLang',
+    defaultMessage: 'Filter by language'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.ChannelsPage.tryme.message',
-    defaultMessage: 'Show Github repositories by'
+  selectAll: {
+    id: 'newspeller.containers.ChannelsPage.selectAll',
+    defaultMessage: 'Select language (All)'
   },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.ChannelsPage.tryme.atPrefix',
-    defaultMessage: '@'
+  langEnglish: {
+    id: 'newspeller.containers.ChannelsPage.langEnglish',
+    defaultMessage: 'English'
+  },
+  langPolish: {
+    id: 'newspeller.containers.ChannelsPage.langPolish',
+    defaultMessage: 'Polish'
   }
 })

@@ -4,6 +4,7 @@
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors'
 import ReactGA from 'react-ga'
+import { browserHistory } from 'react-router'
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err) // eslint-disable-line no-console
@@ -14,48 +15,31 @@ const loadModule = (cb) => (componentModule) => {
 }
 
 const requireAuth = (nextState, replace) => {
-  if (!window.localStorage.getItem('token')) {
-    replace({
-      pathname: '/signin'
-    })
+  const loggedIn = window.localStorage.getItem('token')
+
+  console.log('nextState', nextState)
+  console.log('nextState.location.pathname', nextState.location.pathname)
+  console.log('nextState.location.state', nextState.location.state)
+  console.log('loggedIn', loggedIn)
+  // if (nextState.location.pathname === '/dashboard') {
+  if (loggedIn) {
+    if (nextState.location.pathname === '/') {
+      browserHistory.push('/home')
+    }
+  } else {
+    console.log('NO NO NO')
+    if (nextState.location.pathname === '/register' && !nextState.location.query.token) {
+      browserHistory.push('/')
+    } else if (nextState.location.pathname === '/register' && nextState.location.query.token) {
+    } else if (nextState.location.pathname !== '/') {
+      browserHistory.push('/signin')
+    }
   }
 }
 
 const logPageView = () => {
   ReactGA.set({ page: window.location.pathname })
   ReactGA.pageview(window.location.pathname)
-}
-
-const verifyAuthedUser = () => {
-  if (!window.localStorage.getItem('token')) {
-    window.location.href = '/signin'
-  } else {
-    return true
-  }
-}
-
-const verifyAuthedUserRedirect = () => {
-  if (!window.localStorage.getItem('token')) {
-    return true
-  } else {
-    if (!window.localStorage.getItem('activatedAt')) {
-      window.location.href = '/register'
-    } else {
-      return true
-    }
-  }
-}
-
-const verifyAuthedUserRedirectHome = () => {
-  if (!window.localStorage.getItem('token')) {
-    return true
-  } else {
-    if (!window.localStorage.getItem('activatedAt')) {
-      window.location.href = '/register'
-    } else {
-      window.location.href = '/home'
-    }
-  }
 }
 
 export default function createRoutes (store) {
@@ -67,9 +51,10 @@ export default function createRoutes (store) {
     {
       path: '/',
       name: 'index',
+      onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUserRedirectHome()
+        // verifyAuthedUserRedirectHome()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -110,7 +95,7 @@ export default function createRoutes (store) {
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUser()
+        // verifyAuthedUser()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -135,7 +120,7 @@ export default function createRoutes (store) {
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUserRedirect()
+        // verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -160,7 +145,7 @@ export default function createRoutes (store) {
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUserRedirect()
+        // verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -184,6 +169,7 @@ export default function createRoutes (store) {
       name: 'signin',
       getComponent (nextState, cb) {
         logPageView()
+
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -202,11 +188,35 @@ export default function createRoutes (store) {
         importModules.catch(errorLoading)
       }
     }, {
-      path: '/register',
-      name: 'register',
+      path: '/password',
+      name: 'password',
       getComponent (nextState, cb) {
         logPageView()
-        verifyAuthedUser()
+
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/PasswordPage')
+        ])
+
+        const renderRoute = loadModule(cb)
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('home', reducer.default)
+          injectSagas(sagas.default)
+
+          renderRoute(component)
+        })
+
+        importModules.catch(errorLoading)
+      }
+    }, {
+      path: '/register',
+      name: 'register',
+      onEnter: requireAuth,
+      getComponent (nextState, cb) {
+        logPageView()
+        // verifyAuthedUser()
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -230,6 +240,7 @@ export default function createRoutes (store) {
       name: 'thankyou',
       getComponent (nextState, cb) {
         logPageView()
+
         import('containers/ThankYouPage')
           .then(loadModule(cb))
           .catch(errorLoading)
@@ -239,6 +250,7 @@ export default function createRoutes (store) {
       name: 'unsubscribed',
       getComponent (nextState, cb) {
         logPageView()
+
         import('containers/UnsubscribedPage')
           .then(loadModule(cb))
           .catch(errorLoading)
@@ -248,6 +260,7 @@ export default function createRoutes (store) {
       name: 'newspublishers',
       getComponent (nextState, cb) {
         logPageView()
+
         import('containers/NewsPublishersPage')
           .then(loadModule(cb))
           .catch(errorLoading)
@@ -257,6 +270,7 @@ export default function createRoutes (store) {
       name: 'notfound',
       getComponent (nextState, cb) {
         logPageView()
+
         import('containers/NotFoundPage')
           .then(loadModule(cb))
           .catch(errorLoading)
