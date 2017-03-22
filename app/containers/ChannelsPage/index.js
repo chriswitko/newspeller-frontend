@@ -52,6 +52,10 @@ export class ChannelsPage extends React.PureComponent {
       name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
     }, {
       name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
+    }, {
+      name: this.props.intl.formatMessage(messages.langGerman), value: 'de'
+    }, {
+      name: this.props.intl.formatMessage(messages.langFrench), value: 'fr'
     }]
 
     return (

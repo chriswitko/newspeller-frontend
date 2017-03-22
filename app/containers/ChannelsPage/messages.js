@@ -29,5 +29,13 @@ export default defineMessages({
   langPolish: {
     id: 'newspeller.containers.ChannelsPage.langPolish',
     defaultMessage: 'Polish'
+  },
+  langGerman: {
+    id: 'newspeller.containers.ChannelsPage.langGerman',
+    defaultMessage: 'Polish'
+  },
+  langFrench: {
+    id: 'newspeller.containers.ChannelsPage.langFrench',
+    defaultMessage: 'Polish'
   }
 })

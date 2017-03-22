@@ -63,6 +63,8 @@
   "newspeller.containers.ChannelsPage.selectAll": "(Wszystkie)",
   "newspeller.containers.ChannelsPage.langEnglish": "Angielski",
   "newspeller.containers.ChannelsPage.langPolish": "Polski",
+  "newspeller.containers.ChannelsPage.langGerman": "Niemiecki",
+  "newspeller.containers.ChannelsPage.langFrench": "Francuski",
   "newspeller.containers.RegisterPage.title": "Witaj na Newspeller",
   "newspeller.containers.RegisterPage.intro": "Wpisz swój adres email ponownie, utwórz hasło i wybierz strefę czasową",
   "newspeller.containers.RegisterPage.labelEmail": "Wpisz ponownie swój adres email",
