@@ -32,10 +32,10 @@ export default defineMessages({
   },
   langGerman: {
     id: 'newspeller.containers.ChannelsPage.langGerman',
-    defaultMessage: 'Polish'
+    defaultMessage: 'German'
   },
   langFrench: {
     id: 'newspeller.containers.ChannelsPage.langFrench',
-    defaultMessage: 'Polish'
+    defaultMessage: 'French'
   }
 })
