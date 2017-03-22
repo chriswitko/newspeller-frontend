@@ -26,7 +26,8 @@ import {
   USER_REGISTER,
   USER_SEND_ACTIVATION,
   RESET_PASSWORD,
-  SAVE_PASSWORD
+  SAVE_PASSWORD,
+  CHANGE_LANGUAGE
 } from 'containers/App/constants'
 import {
   reposLoaded,
@@ -47,7 +48,8 @@ import {
   registerSuccess,
   sendActivationEmailSuccess,
   resetPasswordSuccess,
-  savePasswordSuccess
+  savePasswordSuccess,
+  changeUserLanguageSuccess
 } from 'containers/App/actions'
 import request from 'utils/request'
 import {
@@ -71,6 +73,7 @@ export function * getRepos () {
       repos: repos.subscription.sources,
       subscriptions: repos.subscription.channels,
       timezone: repos.subscription.timezone,
+      language: repos.subscriber.default_language,
       groupBy: repos.subscription.group_by,
       days: repos.subscription.days,
       hours: repos.subscription.hours,
@@ -183,6 +186,21 @@ export function * updateLocaleRemotely (action) {
   }
 }
 
+export function * updateLanguageRemotely (action) {
+  const token = yield select(makeSelectToken())
+  if (!token) {
+    yield put(repoLoadingError('No token'))
+  }
+  const requestURL = `${API_ENDPOINT}/subscribers/update_language?locale=${action.locale}&token=${token}`
+
+  try {
+    yield call(request, requestURL)
+    yield put(changeUserLanguageSuccess())
+  } catch (err) {
+    yield put(repoLoadingError(err))
+  }
+}
+
 export function * removeAccountRemotely (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscribers`
@@ -257,6 +275,10 @@ export function * updateLocaleSaga () {
   yield takeLatest(CHANGE_LOCALE, updateLocaleRemotely)
 }
 
+export function * updateUserLanguageSaga () {
+  yield takeLatest(CHANGE_LANGUAGE, updateLanguageRemotely)
+}
+
 export function * removeAccountSaga () {
   yield takeLatest(REMOVE_ACCOUNT, removeAccountRemotely)
 }
@@ -304,7 +326,6 @@ export function * getUser (action) {
 }
 
 export function * fetchUserRegister (action) {
-  console.log('action', action)
   const requestURL = `${API_ENDPOINT}/subscribers/new`
 
   try {
@@ -324,7 +345,6 @@ export function * fetchUserRegister (action) {
 }
 
 export function * fetchUserActivation (action) {
-  console.log('action', action)
   const requestURL = `${API_ENDPOINT}/subscribers/activation`
 
   try {
@@ -436,9 +456,10 @@ export default [
   authorizeUser,
   updateTimezoneSaga,
   removeAccountSaga,
-  updateLocaleSaga,
+  // updateLocaleSaga,
   registerUserSaga,
   sendActivationSaga,
   resetPasswordSaga,
-  savePasswordSaga
+  savePasswordSaga,
+  updateUserLanguageSaga
 ]

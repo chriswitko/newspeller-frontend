@@ -76,7 +76,6 @@ export class PasswordPage extends React.PureComponent { // eslint-disable-line r
       </Form>
     )
 
-
     const resetForm = (
       <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
         <Label htmlFor='username'>

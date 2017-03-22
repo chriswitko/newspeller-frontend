@@ -25,6 +25,9 @@ export const REMOVE_HOUR_SUCCESS = 'boilerplate/App/REMOVE_HOUR_SUCCESS'
 export const ADD_HOUR = 'boilerplate/App/ADD_HOUR'
 export const ADD_HOUR_SUCCESS = 'boilerplate/App/ADD_HOUR_SUCCESS'
 
+export const CHANGE_LANGUAGE = 'boilerplate/App/CHANGE_LANGUAGE'
+export const CHANGE_LANGUAGE_SUCCESS = 'boilerplate/App/CHANGE_LANGUAGE_SUCCESS'
+
 export const REMOVE_ACCOUNT = 'boilerplate/App/REMOVE_ACCOUNT'
 export const REMOVE_ACCOUNT_SUCCESS = 'boilerplate/App/REMOVE_ACCOUNT_SUCCESS'
 

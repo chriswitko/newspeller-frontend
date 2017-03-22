@@ -38,7 +38,8 @@ import {
   USER_REGISTER_SUCCESS,
   USER_SEND_ACTIVATION_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-  SAVE_PASSWORD_SUCCESS
+  SAVE_PASSWORD_SUCCESS,
+  CHANGE_LANGUAGE_SUCCESS
 } from './constants'
 
 // The initial state of the App
@@ -50,6 +51,7 @@ const initialState = fromJS({
   token: false,
   channels: [],
   userData: {
+    language: 'en',
     nextAt: '',
     timezone: 'Europe/London',
     groupBy: 'channels',
@@ -67,8 +69,10 @@ const strToMin = str => {
 }
 
 function appReducer (state = initialState, action) {
-  console.log('action', action)
   switch (action.type) {
+    case CHANGE_LANGUAGE_SUCCESS:
+      return state
+        .setIn(['userData', 'language'], action.locale)
     case SAVE_PASSWORD_SUCCESS:
       window.location.href = '/signin'
       return state
@@ -94,7 +98,6 @@ function appReducer (state = initialState, action) {
         .set('currentUser', action.user.email)
         .set('token', action.user.token)
     case USER_SEND_ACTIVATION_SUCCESS:
-      console.log('action2222', action)
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
       window.location.href = '/home'
@@ -219,6 +222,7 @@ function appReducer (state = initialState, action) {
       return state
         .setIn(['userData', 'subscriptions'], allSubscriptions)
         .setIn(['userData', 'repositories'], action.data.repos)
+        .setIn(['userData', 'language'], action.data.language)
         .setIn(['userData', 'days'], action.data.days)
         .setIn(['userData', 'hours'], action.data.hours)
         .setIn(['userData', 'nextAt'], action.data.nextAt)

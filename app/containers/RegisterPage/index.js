@@ -8,7 +8,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
@@ -20,13 +20,14 @@ import Input from './Input'
 import Section from './Section'
 import ButtonSubmit from './ButtonSubmit'
 import Label from './Label'
-import { sendActivationEmail, logoutUser } from '../App/actions'
+import { sendActivationEmail, logoutUser, changeUserLanguage } from '../App/actions'
 import { makeSelectEmail, makeSelectEmailAgain, makeSelectPassword, makeSelectTimezone } from './selectors'
 import { makeSelectLocale } from '../App/selectors'
 import styled from 'styled-components'
 import { Page, Row, Column } from 'hedron'
 import Logo from 'components/Logo'
 import TimezonePicker from 'components/TimezonePicker'
+import DropDownObjectPicker from 'components/DropDownObjectPicker'
 
 const Wrapper = styled.div`
   max-width: calc(368px + 16px * 2);
@@ -53,7 +54,8 @@ export class RegisterPage extends React.PureComponent {
       token: this.props.location.query.token,
       emailAgain: '',
       password: '',
-      timezone: 'Europe/London'
+      timezone: 'Europe/London',
+      language: this.props.locale
     }
   }
 
@@ -65,7 +67,13 @@ export class RegisterPage extends React.PureComponent {
 
   render () {
     const { onSubmitForm, onCancel } = this.props
-    const { emailAgain, password, timezone } = this.state
+    const { emailAgain, password, timezone, language } = this.state
+
+    const defaultValues = [{
+      name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
+    }, {
+      name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
+    }]
 
     return (
       <Wrapper>
@@ -115,7 +123,7 @@ export class RegisterPage extends React.PureComponent {
                         />
                         <br />
                         <br />
-                        <Label htmlFor='password'>
+                        <Label htmlFor='timezone'>
                           <FormattedMessage {...messages.labelTimezone} />
                         </Label>
                         <TimezonePicker
@@ -124,8 +132,18 @@ export class RegisterPage extends React.PureComponent {
                           onChange={(evt) => this.onChange('timezone', evt.target.value)}
                         />
                         <br />
+                        <Label>
+                          <FormattedMessage {...messages.filterByLang} />
+                        </Label>
+                        <DropDownObjectPicker
+                          placeholder='Filter by language'
+                          defaultValues={defaultValues}
+                          defaultValue={language}
+                          onChange={(evt) => this.onChange('language', evt.target.value)}
+                        />
                         <br />
-                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state, this.props.locale)}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
+                        <br />
+                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state)}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
                         <br />
                         <br />
                         <a href='#' onClick={onCancel}><FormattedMessage {...messages.btnCancel} /></a>
@@ -157,13 +175,13 @@ RegisterPage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     onCancel: () => dispatch(logoutUser()),
-    onSubmitForm: (data, locale) => {
+    onSubmitForm: (data) => {
       dispatch(sendActivationEmail({
         token: data.token,
         email: data.emailAgain,
         password: data.password,
         timezone: data.timezone,
-        locale: locale
+        locale: data.language
       }))
     }
   }
@@ -180,4 +198,4 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(RegisterPage))

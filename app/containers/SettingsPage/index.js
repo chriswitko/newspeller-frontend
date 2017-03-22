@@ -10,7 +10,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone, makeSelectGroupBy } from 'containers/App/selectors'
+import { makeSelectDays, makeSelectHours, makeSelectLoading, makeSelectError, makeSelectTimezone, makeSelectGroupBy, makeSelectLanguage } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
 import ReposDays from 'components/ReposDays'
@@ -24,13 +24,14 @@ import Div from 'components/Div'
 import Small from 'components/Small'
 import Form from './Form'
 import messages from './messages'
-import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone, removeAccount } from '../App/actions'
+import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone, removeAccount, changeUserLanguage } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
 import Label from 'components/Label'
+import DropDownObjectPicker from 'components/DropDownObjectPicker'
 
 export class SettingsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor () {
@@ -68,7 +69,7 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
   }
 
   render () {
-    const { loading, error, days, hours, timezone, onRemoveDay, onAddDay, onRemoveHour, onRemoveAccount, onChangeTimezone, intl } = this.props
+    const { loading, error, days, hours, timezone, language, onRemoveDay, onAddDay, onRemoveHour, onRemoveAccount, onChangeTimezone, onChangeLanguage, intl } = this.props
     const { hour, minute } = this.state
 
     const reposDaysProps = {
@@ -84,21 +85,14 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
 
     const defaultHours = [this.props.intl.formatMessage(messages.hh), '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
 
+    const defaultValues = [{
+      name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
+    }, {
+      name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
+    }]
+
     const page = loading ? <div><FormattedMessage {...messages.loading} /></div> : error ? <div>Something went wrong, please try again!</div> : (
       <Div>
-        <Div>
-          <Column style={{padding: '0'}}>
-            <div>
-              <Label><FormattedMessage {...messages.timezone} /></Label>
-            </div>
-            <TimezonePicker
-              placeholder='Select timezone...'
-              defaultValue={timezone}
-              onChange={onChangeTimezone}
-            />
-          </Column>
-        </Div>
-        <br />
         <Div>
           <Column style={{padding: '0'}}>
             <div>
@@ -138,6 +132,35 @@ export class SettingsPage extends React.PureComponent { // eslint-disable-line r
               />
               <ButtonSubmit type='button' onClick={() => this.props.onSubmitForm(hour, minute)}><FormattedMessage {...messages.btnAdd} /></ButtonSubmit>
             </Form>
+          </Column>
+        </Div>
+        <br />
+        <Div>
+          <Column style={{padding: '0'}}>
+            <div>
+              <Label><FormattedMessage {...messages.timezone} /></Label>
+            </div>
+            <TimezonePicker
+              placeholder='Select timezone...'
+              defaultValue={timezone}
+              onChange={onChangeTimezone}
+            />
+          </Column>
+        </Div>
+        <br />
+        <Div>
+          <Column style={{padding: '0'}}>
+            <div>
+              <Label><FormattedMessage {...messages.filterByLang} /></Label>
+            </div>
+            <Div>
+              <DropDownObjectPicker
+                placeholder='Filter by language'
+                defaultValues={defaultValues}
+                defaultValue={language}
+                onChange={onChangeLanguage}
+              />
+            </Div>
           </Column>
         </Div>
       </Div>
@@ -212,6 +235,7 @@ SettingsPage.propTypes = {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
+    onChangeLanguage: (evt) => dispatch(changeUserLanguage(evt.target.value)),
     onRemoveAccount: () => dispatch(removeAccount()),
     onRemoveHour: (hour) => dispatch(removeHour(hour)),
     onAddDay: (day) => dispatch(addDay(day)),
@@ -224,6 +248,7 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  language: makeSelectLanguage(),
   groupBy: makeSelectGroupBy(),
   timezone: makeSelectTimezone(),
   days: makeSelectDays(),

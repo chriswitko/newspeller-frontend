@@ -45,6 +45,8 @@ import {
   REMOVE_ACCOUNT,
   REMOVE_ACCOUNT_SUCCESS,
   CHANGE_LOCALE_SUCCESS,
+  CHANGE_LANGUAGE,
+  CHANGE_LANGUAGE_SUCCESS,
   USER_REGISTER,
   USER_REGISTER_SUCCESS,
   USER_SEND_ACTIVATION,
@@ -286,6 +288,19 @@ export function removeAccountSuccess () {
 export function changeLocaleSuccess () {
   return {
     type: CHANGE_LOCALE_SUCCESS
+  }
+}
+
+export function changeUserLanguageSuccess () {
+  return {
+    type: CHANGE_LANGUAGE_SUCCESS
+  }
+}
+
+export function changeUserLanguage (language) {
+  return {
+    type: CHANGE_LANGUAGE,
+    locale: language
   }
 }
 

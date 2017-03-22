@@ -33,5 +33,17 @@ export default defineMessages({
   btnCancel: {
     id: 'newspeller.containers.RegisterPage.btnCancel',
     defaultMessage: 'or Cancel'
+  },
+  filterByLang: {
+    id: 'newspeller.containers.RegisterPage.filterByLang',
+    defaultMessage: 'Select your preferred language '
+  },
+  langEnglish: {
+    id: 'newspeller.containers.RegisterPage.langEnglish',
+    defaultMessage: 'English'
+  },
+  langPolish: {
+    id: 'newspeller.containers.RegisterPage.langPolish',
+    defaultMessage: 'Polish'
   }
 })

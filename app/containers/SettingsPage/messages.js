@@ -45,5 +45,17 @@ export default defineMessages({
   hh: {
     id: 'newspeller.containers.SettingsPage.hh',
     defaultMessage: 'HH'
+  },
+  filterByLang: {
+    id: 'newspeller.containers.SettingsPage.filterByLang',
+    defaultMessage: 'Select your preferred language '
+  },
+  langEnglish: {
+    id: 'newspeller.containers.SettingsPage.langEnglish',
+    defaultMessage: 'English'
+  },
+  langPolish: {
+    id: 'newspeller.containers.SettingsPage.langPolish',
+    defaultMessage: 'Polish'
   }
 })

@@ -54,6 +54,11 @@ const makeSelectTimezone = () => createSelector(
   (globalState) => globalState.getIn(['userData', 'timezone'])
 )
 
+const makeSelectLanguage = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'language'])
+)
+
 const makeSelectGroupBy = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'groupBy'])
@@ -148,5 +153,6 @@ export {
   makeSelectGroupBy,
   makeSelectLocale,
   makeSelectConfirmedAt,
-  makeSelectActivatedAt
+  makeSelectActivatedAt,
+  makeSelectLanguage
 }
