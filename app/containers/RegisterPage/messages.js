@@ -28,7 +28,7 @@ export default defineMessages({
   },
   btnActivate: {
     id: 'newspeller.containers.RegisterPage.btnActivate',
-    defaultMessage: 'Activate my email &raquo;'
+    defaultMessage: 'Activate my email;'
   },
   btnCancel: {
     id: 'newspeller.containers.RegisterPage.btnCancel',

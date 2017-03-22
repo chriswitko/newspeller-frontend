@@ -54,6 +54,7 @@ const initialState = fromJS({
     language: 'en',
     nextAt: '',
     timezone: 'Europe/London',
+    email: '',
     groupBy: 'channels',
     subscriptions: false,
     repositories: false,
@@ -223,6 +224,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'subscriptions'], allSubscriptions)
         .setIn(['userData', 'repositories'], action.data.repos)
         .setIn(['userData', 'language'], action.data.language)
+        .setIn(['userData', 'email'], action.data.email)
         .setIn(['userData', 'days'], action.data.days)
         .setIn(['userData', 'hours'], action.data.hours)
         .setIn(['userData', 'nextAt'], action.data.nextAt)

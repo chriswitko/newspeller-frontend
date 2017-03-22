@@ -44,6 +44,11 @@ const makeSelectConfirmedAt = () => createSelector(
   (globalState) => globalState.getIn(['userData', 'confirmed_at'])
 )
 
+const makeSelectEmail = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userData', 'email'])
+)
+
 const makeSelectActivatedAt = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'activated_at']) || window.localStorage.getItem('activatedAt')
@@ -154,5 +159,6 @@ export {
   makeSelectLocale,
   makeSelectConfirmedAt,
   makeSelectActivatedAt,
-  makeSelectLanguage
+  makeSelectLanguage,
+  makeSelectEmail
 }

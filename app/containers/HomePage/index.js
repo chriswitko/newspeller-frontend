@@ -10,14 +10,14 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone, makeSelectConfirmedAt } from 'containers/App/selectors'
+import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectNextAt, makeSelectSubscriptions, makeSelectTimezone, makeSelectConfirmedAt, makeSelectToken, makeSelectLanguage, makeSelectEmail } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import Box from 'components/Box'
 import Alert from 'components/Alert'
 import ReposList from 'components/ReposList'
 import Section from './Section'
 import messages from './messages'
-import { loadRepos, removeTopic, addTopic } from '../App/actions'
+import { loadRepos, removeTopic, addTopic, resendActivationEmail } from '../App/actions'
 import { changeUsername } from './actions'
 import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
@@ -29,9 +29,13 @@ import ButtonSubmit from 'components/ButtonSubmit'
 import CenteredSection from './CenteredSection'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
+  constructor (props) {
+    super(props)
+    this.state = {
+      resent: false
+    }
+  }
+
   componentDidMount () {
     if (this.props.username && this.props.username.trim().length > 0) {
       this.props.onSubmitForm()
@@ -39,7 +43,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loading, error, repos, onRemove, onAdd, nextAt, timezone, subscriptions, confirmedAt } = this.props
+    const { loading, error, repos, onRemove, onAdd, onResend, nextAt, timezone, subscriptions, token, language, email, confirmedAt } = this.props
     const reposListProps = {
       timezone,
       nextAt,
@@ -53,12 +57,22 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const lastTime = new Date(nextAt).getTime()
     const now = new Date().getTime()
+    const { resent } = this.state
 
     const showConfirmationAlert = () => {
-      if (!loading && !confirmedAt) {
+      if (!loading && !confirmedAt && !resent) {
         return (
           <Alert>
-            We sent you an email with a link to verify your email address. Please click the received link to activate your profile &mdash; <a href=''>Resend</a>
+            <FormattedMessage {...messages.resendMessage} /> &mdash; <a href='#' onClick={() => {
+              console.log('email', email)
+              onResend({
+                token: token,
+                email: email,
+                language: language
+              })
+              this.setState(() => ({resent: true}))
+            }
+            }><FormattedMessage {...messages.btnResend} /></a>
           </Alert>
         )
       }
@@ -81,7 +95,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             } else {
               return (
                 <div>
-                  {confirmedAt ? <p>Next delivery <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, timezone: {timezone})</small></p> : <p>We will start delivering emails when you will confirm your email address first.</p>}
+                  {confirmedAt ? <p><FormattedMessage {...messages.nextDelivery} /> <strong><Moment fromNow tz={timezone}>{nextAt}</Moment></strong> <small>(<Moment format='YYYY/MM/DD HH:mm' tz={timezone}>{nextAt}</Moment>, <FormattedMessage {...messages.yourTimezone} />: {timezone})</small></p> : <p><FormattedMessage {...messages.weWillStart} /></p>}
                   <CenteredSection>
                     <br />
                     <ButtonSubmit onClick={goToChannels}><FormattedMessage {...messages.btnChannels} /></ButtonSubmit>
@@ -93,18 +107,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             }
           } else {
             if (repos.length) {
-              return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link></div>
+              return <div><FormattedMessage {...messages.hi} />Hi! <strong><FormattedMessage {...messages.pleaseSchedule} /></strong> - <Link to='settings'><FormattedMessage {...messages.btnSettings} /></Link></div>
             } else {
-              return <div>Hi! <strong>Please setup your schedule</strong>. You can decide when and what time you wish to receive your newsletter. - <Link to='settings'>Manage schedule</Link>. You can also decide what sources you wish to subscribe to - <Link to='channels'>Add channels</Link></div>
+              return <div><FormattedMessage {...messages.hi} />Hi! <strong><FormattedMessage {...messages.pleaseSchedule} /></strong> - <Link to='settings'><FormattedMessage {...messages.btnSettings} /></Link> / <Link to='channels'><FormattedMessage {...messages.btnChannels} /></Link></div>
             }
           }
         } else {
           return (
             <div>
-              Hi! <strong>Looks like you do not subscribe any channel.</strong> Start now by adding your favourite channels to start receiving your email.
+              <FormattedMessage {...messages.hi} /> <strong><FormattedMessage {...messages.looksLikeNoChannels} /></strong> <FormattedMessage {...messages.startAddingChannels} />
               <div>
                 <br />
-                <ButtonSubmit onClick={goToChannels}>Search for channels</ButtonSubmit>
+                <ButtonSubmit onClick={goToChannels}><FormattedMessage {...messages.btnChannels} /></ButtonSubmit>
               </div>
             </div>
           )
@@ -177,6 +191,13 @@ HomePage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    onResend: (data) => {
+      dispatch(resendActivationEmail({
+        token: data.token,
+        email: data.email,
+        locale: data.language
+      }))
+    },
     onAdd: (topic) => {
       dispatch(addTopic(topic))
     },
@@ -192,6 +213,9 @@ export function mapDispatchToProps (dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  email: makeSelectEmail(),
+  language: makeSelectLanguage(),
+  token: makeSelectToken(),
   confirmedAt: makeSelectConfirmedAt(),
   timezone: makeSelectTimezone(),
   nextAt: makeSelectNextAt(),

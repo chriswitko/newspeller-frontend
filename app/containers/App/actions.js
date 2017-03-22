@@ -51,6 +51,8 @@ import {
   USER_REGISTER_SUCCESS,
   USER_SEND_ACTIVATION,
   USER_SEND_ACTIVATION_SUCCESS,
+  USER_RESEND_ACTIVATION,
+  USER_RESEND_ACTIVATION_SUCCESS,
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   SAVE_PASSWORD,
@@ -125,9 +127,23 @@ export function sendActivationEmail (user) {
   }
 }
 
+export function resendActivationEmail (user) {
+  return {
+    type: USER_RESEND_ACTIVATION,
+    user
+  }
+}
+
 export function sendActivationEmailSuccess (user) {
   return {
     type: USER_SEND_ACTIVATION_SUCCESS,
+    user
+  }
+}
+
+export function resendActivationEmailSuccess (user) {
+  return {
+    type: USER_RESEND_ACTIVATION_SUCCESS,
     user
   }
 }

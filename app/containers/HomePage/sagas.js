@@ -25,6 +25,7 @@ import {
   CHANGE_LOCALE,
   USER_REGISTER,
   USER_SEND_ACTIVATION,
+  USER_RESEND_ACTIVATION,
   RESET_PASSWORD,
   SAVE_PASSWORD,
   CHANGE_LANGUAGE
@@ -47,6 +48,7 @@ import {
   changeLocaleSuccess,
   registerSuccess,
   sendActivationEmailSuccess,
+  resendActivationEmailSuccess,
   resetPasswordSuccess,
   savePasswordSuccess,
   changeUserLanguageSuccess
@@ -74,6 +76,7 @@ export function * getRepos () {
       subscriptions: repos.subscription.channels,
       timezone: repos.subscription.timezone,
       language: repos.subscriber.default_language,
+      email: repos.subscriber._id,
       groupBy: repos.subscription.group_by,
       days: repos.subscription.days,
       hours: repos.subscription.hours,
@@ -367,6 +370,27 @@ export function * fetchUserActivation (action) {
   }
 }
 
+export function * fetchUserReActivation (action) {
+  const requestURL = `${API_ENDPOINT}/subscribers/resendActivationEmail`
+
+  try {
+    const user = yield call(request, requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: action.user.token,
+        email: action.user.email,
+        locale: action.user.locale
+      })
+    })
+    yield put(resendActivationEmailSuccess(user))
+  } catch (err) {
+    yield put(authorizeError(err))
+  }
+}
+
 export function * fetchPasswordReset (action) {
   const requestURL = `${API_ENDPOINT}/subscribers/reset_password`
 
@@ -430,6 +454,13 @@ export function * sendActivationSaga () {
   yield cancel(watcher)
 }
 
+export function * resendActivationSaga () {
+  const watcher = yield takeLatest(USER_RESEND_ACTIVATION, fetchUserReActivation)
+
+  yield take(LOCATION_CHANGE)
+  yield cancel(watcher)
+}
+
 export function * resetPasswordSaga () {
   const watcher = yield takeLatest(RESET_PASSWORD, fetchPasswordReset)
 
@@ -461,5 +492,6 @@ export default [
   sendActivationSaga,
   resetPasswordSaga,
   savePasswordSaga,
-  updateUserLanguageSaga
+  updateUserLanguageSaga,
+  resendActivationSaga
 ]
