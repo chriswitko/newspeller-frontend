@@ -68,7 +68,7 @@ export default defineMessages({
   },
   newsPubIntro: {
     id: 'newspeller.containers.IndexPage.newsPubIntro',
-    defaultMessage: 'We deliver news headlines from about {numOrganizations} in {numLangs} ({langs}) and grouped by {numCategories} ({categories}), including:'
+    defaultMessage: 'We deliver news headlines from news publishers and magazines grouped by categories, including:'
   },
   newsPubMore: {
     id: 'newspeller.containers.IndexPage.newsPubMore',
@@ -128,7 +128,7 @@ export default defineMessages({
   },
   faqs6a: {
     id: 'newspeller.containers.IndexPage.faqs6a',
-    defaultMessage: 'Currently we deliver news headlines from about {numOrganizations} in {numLangs} ({langs}) and grouped by {numCategories} ({categories}). If something is missing you can write us and we will add a suggested source.'
+    defaultMessage: 'Currently we deliver news headlines from about 300 news organizations in different languages grouped by {numCategories} ({categories}). If something is missing you can write us and we will add a suggested source.'
   },
   wordNewsOrgs: {
     id: 'newspeller.containers.IndexPage.wordNewsOrgs',

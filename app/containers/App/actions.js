@@ -183,7 +183,6 @@ export function savePasswordSuccess () {
   }
 }
 
-
 export function registerSuccess (user) {
   return {
     type: USER_REGISTER_SUCCESS,
