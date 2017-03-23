@@ -17,7 +17,7 @@ import Alert from 'components/Alert'
 import ReposList from 'components/ReposList'
 import Section from './Section'
 import messages from './messages'
-import { loadRepos, removeTopic, addTopic, resendActivationEmail } from '../App/actions'
+import { loadUserData, removeTopic, addTopic, resendActivationEmail } from '../App/actions'
 import { changeUsername } from './actions'
 import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
@@ -64,7 +64,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         return (
           <Alert>
             <FormattedMessage {...messages.resendMessage} /> &mdash; <a href='#' onClick={() => {
-              console.log('email', email)
               onResend({
                 token: token,
                 email: email,
@@ -207,7 +206,7 @@ export function mapDispatchToProps (dispatch) {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault()
-      dispatch(loadRepos())
+      dispatch(loadUserData())
     }
   }
 }

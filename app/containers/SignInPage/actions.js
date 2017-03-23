@@ -17,8 +17,12 @@
 
 import {
   CHANGE_USERNAME,
-  CHANGE_PASSWORD
-} from '../HomePage/constants'
+  CHANGE_PASSWORD,
+  USER_AUTHORIZE,
+  USER_SUCCESS,
+  USER_ERROR,
+  FORM_MISSING_FIELDS_ERROR
+} from './constants'
 
 /**
  * Changes the input field of the form
@@ -38,5 +42,34 @@ export function changePassword (password) {
   return {
     type: CHANGE_PASSWORD,
     password
+  }
+}
+
+export function authorizeUser (email, password) {
+  return {
+    type: USER_AUTHORIZE,
+    email,
+    password
+  }
+}
+
+export function authorizeSuccess (user) {
+  return {
+    type: USER_SUCCESS,
+    user
+  }
+}
+
+export function authorizeError (err) {
+  return {
+    type: USER_ERROR,
+    err
+  }
+}
+
+export function missingFields (err) {
+  return {
+    type: FORM_MISSING_FIELDS_ERROR,
+    err
   }
 }

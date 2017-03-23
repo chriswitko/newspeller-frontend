@@ -16,7 +16,7 @@ export default defineMessages({
   },
   labelPassword: {
     id: 'newspeller.containers.SignInPage.labelPassword',
-    defaultMessage: 'Email'
+    defaultMessage: 'Password'
   },
   btnSignIn: {
     id: 'newspeller.containers.SignInPage.btnSignIn',
@@ -25,5 +25,9 @@ export default defineMessages({
   forgotPassword: {
     id: 'newspeller.containers.SignInPage.forgotPassword',
     defaultMessage: 'Forgot password?'
+  },
+  placeholderUsername: {
+    id: 'newspeller.containers.SignInPage.placeholderUsername',
+    defaultMessage: 'eg. email@site.com'
   }
 })

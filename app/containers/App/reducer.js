@@ -13,9 +13,9 @@
 import { fromJS } from 'immutable'
 
 import {
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
+  LOAD_USER_DATA_SUCCESS,
+  LOAD_USER_DATA,
+  LOAD_USER_DATA_ERROR,
   LOAD_FEEDS_SUCCESS,
   LOAD_FEEDS,
   LOAD_FEEDS_ERROR,
@@ -30,7 +30,6 @@ import {
   ADD_HOUR_SUCCESS,
   ADD_TOPIC,
   ADD_TOPIC_SUCCESS,
-  USER_SUCCESS,
   USER_LOGOUT,
   UPDATE_TIMEZONE_SUCCESS,
   UPDATE_GROUPBY_SUCCESS,
@@ -92,12 +91,6 @@ function appReducer (state = initialState, action) {
       window.location.href = '/'
       return state
         .set('token', false)
-    case USER_SUCCESS:
-      window.localStorage.setItem('currentUser', action.user.email)
-      window.localStorage.setItem('token', action.user.token)
-      return state
-        .set('currentUser', action.user.email)
-        .set('token', action.user.token)
     case USER_SEND_ACTIVATION_SUCCESS:
       window.localStorage.setItem('currentUser', action.user.email)
       window.localStorage.setItem('token', action.user.token)
@@ -198,12 +191,12 @@ function appReducer (state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false)
-    case LOAD_REPOS:
+    case LOAD_USER_DATA:
       return state
         .set('loading', true)
         .set('error', false)
         .setIn(['userData', 'repositories'], false)
-    case LOAD_REPOS_SUCCESS:
+    case LOAD_USER_DATA_SUCCESS:
       let allSubscriptions = []
       action.data.subscriptions.map(item => {
         allSubscriptions.push({
@@ -233,7 +226,7 @@ function appReducer (state = initialState, action) {
         .setIn(['userData', 'confirmed_at'], action.data.confirmed_at)
         .set('loading', false)
         .set('currentUser', action.data.username)
-    case LOAD_REPOS_ERROR:
+    case LOAD_USER_DATA_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false)

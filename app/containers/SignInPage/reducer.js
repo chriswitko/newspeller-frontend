@@ -12,23 +12,48 @@
 import { fromJS } from 'immutable'
 
 import {
-  CHANGE_USERNAME
-} from './constants'
+  CHANGE_USERNAME,
+  CHANGE_PASSWORD,
+  USER_SUCCESS,
+  USER_ERROR,
+  FORM_MISSING_FIELDS_ERROR,
+  USER_AUTHORIZE
+ } from './constants'
 
 // The initial state of the App
 const initialState = fromJS({
   username: '',
-  repos: []
+  password: '',
+  loading: false,
+  error: false
 })
 
 function homeReducer (state = initialState, action) {
   switch (action.type) {
+    case USER_AUTHORIZE:
+      return state
+        .set('loading', true)
+    case FORM_MISSING_FIELDS_ERROR:
+      return state
+        .set('error', 'Missing required fields')
+        .set('loading', false)
+    case USER_ERROR:
+      return state
+        .set('error', 'User does not exists')
+        .set('loading', false)
+    case USER_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('currentUser', action.user.email)
+        .set('token', action.user.token)
     case CHANGE_USERNAME:
-      window.localStorage.setItem('currentUser', action.name)
-      // Delete prefixed '@' from the github username
       return state
         .set('username', action.name)
-        // .set('username', action.name.replace(/@/gi, ''));
+        .set('error', '')
+    case CHANGE_PASSWORD:
+      return state
+        .set('password', action.password)
+        .set('error', '')
     default:
       return state
   }

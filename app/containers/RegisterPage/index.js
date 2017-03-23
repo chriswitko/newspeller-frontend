@@ -48,8 +48,6 @@ export class RegisterPage extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    console.log('this.props', this.props)
-
     this.state = {
       token: this.props.location.query.token,
       emailAgain: '',

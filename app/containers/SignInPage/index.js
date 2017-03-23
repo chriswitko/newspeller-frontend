@@ -6,27 +6,31 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Link } from 'react-router'
 
-import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import messages from './messages'
+
+import { makeSelectLoading, makeSelectError, makeSelectToken, makeSelectUsername, makeSelectPassword } from './selectors'
+import { authorizeUser, missingFields, changeUsername, changePassword } from './actions'
+
+import { Page, Row, Column } from 'hedron'
+
 import H2 from 'components/H2'
 import Box from 'components/Box'
 import CenteredSection from './CenteredSection'
 import Form from './Form'
-import Input from './Input'
+import Input from 'components/Input'
 import Section from './Section'
-import messages from './messages'
-import ButtonSubmit from './ButtonSubmit'
-import Label from './Label'
-import { authorizeUser } from '../App/actions'
-import { changeUsername, changePassword } from './actions'
-import { makeSelectUsername, makeSelectPassword, makeSelectToken } from './selectors'
-import styled from 'styled-components'
-import { Page, Row, Column } from 'hedron'
+import ButtonSubmit from 'components/ButtonSubmit'
+import Label from 'components/Label'
 import Logo from 'components/Logo'
+import Alert from 'components/Alert'
+import Div from 'components/Div'
+
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   max-width: calc(368px + 16px * 2);
@@ -39,24 +43,17 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-export class SignInPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-  componentDidMount () {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm()
-    }
-  }
-
+export class SignInPage extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
     if (nextProps.token) {
-      window.location.href = '/'
+      window.localStorage.setItem('currentUser', nextProps.username)
+      window.localStorage.setItem('token', nextProps.token)
+      window.location.href = '/home'
     }
   }
 
   render () {
-    const { onSubmitForm, username, password } = this.props
+    const { onSubmitForm, onChangeUsername, onChangePassword, username, password, error, loading } = this.props
 
     return (
       <Wrapper>
@@ -69,7 +66,7 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
                   <Helmet
                     title='Sing In'
                     meta={[
-                      { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
+                      { name: 'description', content: 'Newspeller.com' }
                     ]}
                   />
                   <div>
@@ -80,15 +77,17 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
                     </CenteredSection>
                     <Section style={{margin: 0, padding: 0}}>
                       <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
+                        { error ? <Div><Alert>{ error }</Alert></Div> : '' }
                         <Label htmlFor='username'>
                           <FormattedMessage {...messages.labelEmail} />
                         </Label>
                         <Input
                           id='username'
                           type='text'
-                          placeholder='email@site.com'
+                          placeholder={this.props.intl.formatMessage(messages.placeholderUsername)}
+                          autoComplete='off'
                           value={username}
-                          onChange={this.props.onChangeUsername}
+                          onChange={onChangeUsername}
                         />
                         <br />
                         <br />
@@ -99,11 +98,17 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
                           id='password'
                           type='password'
                           value={password}
-                          onChange={this.props.onChangePassword}
+                          onChange={onChangePassword}
                         />
                         <br />
                         <br />
-                        <ButtonSubmit type='submit' onClick={onSubmitForm(this.form)}><FormattedMessage {...messages.btnSignIn} /></ButtonSubmit>
+                        <ButtonSubmit
+                          type='submit'
+                          onClick={onSubmitForm(this.form)}
+                          disabled={loading}
+                        >
+                          <FormattedMessage {...messages.btnSignIn} />
+                        </ButtonSubmit>
                       </Form>
                       <Link to='password'>
                         <FormattedMessage {...messages.forgotPassword} />
@@ -123,6 +128,7 @@ export class SignInPage extends React.PureComponent { // eslint-disable-line rea
 SignInPage.propTypes = {
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
+    React.PropTypes.string,
     React.PropTypes.object,
     React.PropTypes.bool
   ]),
@@ -133,7 +139,7 @@ SignInPage.propTypes = {
   onChangeUsername: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch, ownProps) {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
@@ -142,6 +148,8 @@ export function mapDispatchToProps (dispatch) {
       if (evt) {
         if (evt.target.username.value && evt.target.password.value) {
           dispatch(authorizeUser(evt.target.username.value, evt.target.password.value))
+        } else {
+          dispatch(missingFields())
         }
       }
     }
@@ -149,12 +157,12 @@ export function mapDispatchToProps (dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  token: makeSelectToken(),
   username: makeSelectUsername(),
   password: makeSelectPassword(),
+  token: makeSelectToken(),
   loading: makeSelectLoading(),
   error: makeSelectError()
 })
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SignInPage))

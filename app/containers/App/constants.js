@@ -9,9 +9,10 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS'
-export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS'
-export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR'
+export const LOAD_USER_DATA = 'boilerplate/App/LOAD_USER_DATA'
+export const LOAD_USER_DATA_SUCCESS = 'boilerplate/App/LOAD_USER_DATA_SUCCESS'
+export const LOAD_USER_DATA_ERROR = 'boilerplate/App/LOAD_USER_DATA_ERROR'
+
 export const ADD_TOPIC = 'boilerplate/App/ADD_TOPIC'
 export const ADD_TOPIC_SUCCESS = 'boilerplate/App/ADD_TOPIC_SUCCESS'
 export const REMOVE_TOPIC = 'boilerplate/App/REMOVE_TOPIC'
@@ -52,9 +53,6 @@ export const USER_SEND_ACTIVATION_SUCCESS = 'boilerplate/App/USER_SEND_ACTIVATIO
 export const USER_RESEND_ACTIVATION = 'boilerplate/App/USER_RESEND_ACTIVATION'
 export const USER_RESEND_ACTIVATION_SUCCESS = 'boilerplate/App/USER_RESEND_ACTIVATION_SUCCESS'
 
-export const USER_AUTHORIZE = 'boilerplate/App/USER_AUTHORIZE'
-export const USER_SUCCESS = 'boilerplate/App/USER_SUCCESS'
-export const USER_ERROR = 'boilerplate/App/USER_AUTHORIZED'
 export const USER_LOGOUT = 'boilerplate/App/USER_LOGOUT'
 
 export const LOAD_FEEDS = 'boilerplate/App/LOAD_FEEDS'

@@ -16,9 +16,9 @@
  */
 
 import {
-  LOAD_REPOS,
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS_ERROR,
+  LOAD_USER_DATA,
+  LOAD_USER_DATA_SUCCESS,
+  LOAD_USER_DATA_ERROR,
   LOAD_FEEDS,
   LOAD_FEEDS_SUCCESS,
   LOAD_FEEDS_ERROR,
@@ -34,9 +34,6 @@ import {
   REMOVE_HOUR_SUCCESS,
   ADD_HOUR,
   ADD_HOUR_SUCCESS,
-  USER_AUTHORIZE,
-  USER_SUCCESS,
-  USER_ERROR,
   USER_LOGOUT,
   UPDATE_TIMEZONE,
   UPDATE_TIMEZONE_SUCCESS,
@@ -71,9 +68,9 @@ export function loadFeeds (args = {}) {
   }
 }
 
-export function loadRepos () {
+export function loadUserData () {
   return {
-    type: LOAD_REPOS
+    type: LOAD_USER_DATA
   }
 }
 
@@ -113,7 +110,6 @@ export function updateGroupBySuccess (groupBy) {
 }
 
 export function registerEmail (email) {
-  console.log('registerEmail', email)
   return {
     type: USER_REGISTER,
     email
@@ -148,14 +144,6 @@ export function resendActivationEmailSuccess (user) {
   }
 }
 
-export function authorizeUser (email, password) {
-  return {
-    type: USER_AUTHORIZE,
-    email,
-    password
-  }
-}
-
 export function resetPassword (email) {
   return {
     type: RESET_PASSWORD,
@@ -187,20 +175,6 @@ export function registerSuccess (user) {
   return {
     type: USER_REGISTER_SUCCESS,
     user
-  }
-}
-
-export function authorizeSuccess (user) {
-  return {
-    type: USER_SUCCESS,
-    user
-  }
-}
-
-export function authorizeError (err) {
-  return {
-    type: USER_ERROR,
-    err
   }
 }
 
@@ -262,7 +236,7 @@ export function addTopicSuccess (topic) {
 
 export function reposLoaded (data) {
   return {
-    type: LOAD_REPOS_SUCCESS,
+    type: LOAD_USER_DATA_SUCCESS,
     data
   }
 }
@@ -276,7 +250,7 @@ export function reposLoaded (data) {
  */
 export function repoLoadingError (error) {
   return {
-    type: LOAD_REPOS_ERROR,
+    type: LOAD_USER_DATA_ERROR,
     error
   }
 }

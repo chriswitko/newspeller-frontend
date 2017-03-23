@@ -17,17 +17,11 @@ const loadModule = (cb) => (componentModule) => {
 const requireAuth = (nextState, replace) => {
   const loggedIn = window.localStorage.getItem('token')
 
-  console.log('nextState', nextState)
-  console.log('nextState.location.pathname', nextState.location.pathname)
-  console.log('nextState.location.state', nextState.location.state)
-  console.log('loggedIn', loggedIn)
-  // if (nextState.location.pathname === '/dashboard') {
   if (loggedIn) {
     if (nextState.location.pathname === '/') {
       browserHistory.push('/home')
     }
   } else {
-    console.log('NO NO NO')
     if (nextState.location.pathname === '/register' && !nextState.location.query.token) {
       browserHistory.push('/')
     } else if (nextState.location.pathname === '/register' && nextState.location.query.token) {
@@ -58,7 +52,7 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/App/sagas'),
           import('containers/IndexPage')
         ])
 
@@ -99,7 +93,7 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/App/sagas'),
           import('containers/HomePage')
         ])
 
@@ -124,7 +118,7 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/App/sagas'),
           import('containers/SettingsPage')
         ])
 
@@ -149,7 +143,7 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/App/sagas'),
           import('containers/ChannelsPage')
         ])
 
@@ -171,15 +165,15 @@ export default function createRoutes (store) {
         logPageView()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/SignInPage/reducer'),
+          import('containers/SignInPage/sagas'), // replace to local saga
           import('containers/SignInPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('signin', reducer.default) // signin?
           injectSagas(sagas.default)
 
           renderRoute(component)
@@ -195,7 +189,7 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
+          import('containers/App/sagas'),
           import('containers/PasswordPage')
         ])
 
@@ -220,7 +214,6 @@ export default function createRoutes (store) {
 
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
           import('containers/RegisterPage')
         ])
 

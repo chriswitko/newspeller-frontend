@@ -17,14 +17,14 @@ import ReposDays from 'components/ReposDays'
 import ReposHours from 'components/ReposHours'
 import TimezonePicker from 'components/TimezonePicker'
 import DropDownPicker from 'components/DropDownPicker'
-import ButtonSubmit from './ButtonSubmit'
+import ButtonSubmit from 'components/ButtonSubmit'
 
 import AtPrefix from './AtPrefix'
 import Div from 'components/Div'
 import Small from 'components/Small'
 import Form from './Form'
 import messages from './messages'
-import { loadRepos, addNewHour, removeDay, addDay, removeHour, updateTimezone, removeAccount, changeUserLanguage } from '../App/actions'
+import { loadUserData, addNewHour, removeDay, addDay, removeHour, updateTimezone, removeAccount, changeUserLanguage } from '../App/actions'
 import { changeTime } from './actions'
 import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
@@ -243,7 +243,7 @@ export function mapDispatchToProps (dispatch, props) {
     onChangeTimezone: (evt) => dispatch(updateTimezone(evt.target.value)),
     onChangeTime: (evt) => dispatch(changeTime(evt.target.value)),
     onSubmitForm: (hour, minute) => dispatch(addNewHour(`${hour}:${minute}`)),
-    onLoad: () => dispatch(loadRepos())
+    onLoad: () => dispatch(loadUserData())
   }
 }
 

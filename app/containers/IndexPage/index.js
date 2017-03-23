@@ -91,7 +91,6 @@ export class IndexPage extends React.PureComponent {
   }
 
   render () {
-    console.log('i18n', this.props.intl.locale)
     const { handleActivate } = this.props
 
     const promotedChannels = {

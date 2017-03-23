@@ -17,7 +17,7 @@ import Div from 'components/Div'
 import ChannelsList from 'components/ChannelsList'
 import Section from './Section'
 import messages from './messages'
-import { loadRepos, loadFeeds, addTopic, removeTopic } from '../App/actions'
+import { loadUserData, loadFeeds, addTopic, removeTopic } from '../App/actions'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
@@ -47,8 +47,6 @@ export class ChannelsPage extends React.PureComponent {
     }
 
     const defaultValues = [{
-      name: this.props.intl.formatMessage(messages.selectAll), value: 'all'
-    }, {
       name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
     }, {
       name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
@@ -148,11 +146,11 @@ export function mapDispatchToProps (dispatch) {
       }))
     },
     onLoad: () => {
-      dispatch(loadRepos())
+      dispatch(loadUserData())
     },
     onReady: (args) => {
       dispatch(loadFeeds(args))
-      dispatch(loadRepos())
+      dispatch(loadUserData())
     }
   }
 }

@@ -9,5 +9,11 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME'
-export const REMOVE_TOPIC = 'boilerplate/Home/REMOVE_TOPIC'
+export const CHANGE_USERNAME = 'newspeller/SignInPage/CHANGE_USERNAME'
+export const CHANGE_PASSWORD = 'newspeller/SignInPage/CHANGE_PASSWORD'
+
+export const USER_AUTHORIZE = 'newspeller/SignInPage/USER_AUTHORIZE'
+export const USER_SUCCESS = 'newspeller/SignInPage/USER_SUCCESS'
+export const USER_ERROR = 'newspeller/SignInPage/USER_AUTHORIZED'
+
+export const FORM_MISSING_FIELDS_ERROR = 'newspeller/SignInPage/FORM_MISSING_FIELDS_ERROR'

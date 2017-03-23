@@ -28,6 +28,8 @@ function checkStatus (response) {
   throw error
 }
 
+export const API_ENDPOINT = process.env.NODE_ENV === 'development' ? window.location.origin.replace(':3000', ':3100') : 'https://api.newspeller.com'
+
 /**
  * Requests a URL, returning a promise
  *
