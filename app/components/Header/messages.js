@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   home: {
     id: 'newspeller.components.Header.home',
-    defaultMessage: 'Home'
+    defaultMessage: 'My Subscriptions'
   },
   channels: {
     id: 'newspeller.components.Header.channels',

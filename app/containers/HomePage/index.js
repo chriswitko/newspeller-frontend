@@ -21,7 +21,6 @@ import { loadUserData, removeTopic, addTopic, resendActivationEmail } from '../A
 import { changeUsername } from './actions'
 import { makeSelectUsername } from './selectors'
 import Header from 'components/Header'
-import Footer from 'components/Footer'
 import { Page, Row, Column } from 'hedron'
 import { browserHistory, Link } from 'react-router'
 import Moment from 'react-moment'
@@ -155,9 +154,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 </div>
               </article>
             </Column>
-          </Row>
-          <Row alignSelf='flex-start' style={{width: '100%'}}>
-            <Footer />
           </Row>
         </Page>
       </Box>

@@ -16,9 +16,14 @@
  */
 
 import {
-  CHANGE_USERNAME,
-  CHANGE_PASSWORD
-} from '../HomePage/constants'
+  CHANGE_PASSWORD,
+  CHANGE_TIMEZONE,
+  CHANGE_LANGUAGE,
+  USER_SEND_ACTIVATION,
+  USER_SEND_ACTIVATION_SUCCESS,
+  USER_SEND_ACTIVATION_ERROR,
+  FORM_MISSING_FIELDS_ERROR
+} from './constants'
 
 /**
  * Changes the input field of the form
@@ -27,16 +32,52 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeUsername (name) {
-  return {
-    type: CHANGE_USERNAME,
-    name
-  }
-}
 
 export function changePassword (password) {
   return {
     type: CHANGE_PASSWORD,
     password
+  }
+}
+
+export function changeTimezone (timezone) {
+  return {
+    type: CHANGE_TIMEZONE,
+    timezone
+  }
+}
+
+export function changeLocale (language) {
+  return {
+    type: CHANGE_LANGUAGE,
+    language
+  }
+}
+
+export function sendActivationEmail (user) {
+  return {
+    type: USER_SEND_ACTIVATION,
+    user
+  }
+}
+
+export function sendActivationEmailSuccess (user) {
+  return {
+    type: USER_SEND_ACTIVATION_SUCCESS,
+    user
+  }
+}
+
+export function sendActivationEmailError (err) {
+  return {
+    type: USER_SEND_ACTIVATION_ERROR,
+    err
+  }
+}
+
+export function missingFields (err) {
+  return {
+    type: FORM_MISSING_FIELDS_ERROR,
+    err
   }
 }

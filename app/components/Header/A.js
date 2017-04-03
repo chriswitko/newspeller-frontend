@@ -5,11 +5,11 @@ import NormalA from 'components/A'
 const A = styled(NormalA)`
   padding: 2em 0;
   text-decoration: none;
-  color: white;
+  color: #6B788A;
   font-weight: bold;
 
   &:hover {
-    color: white;
+    color: #6B788A;
     text-decoration: underline;
   }
 `

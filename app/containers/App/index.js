@@ -8,19 +8,17 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import styled from 'styled-components'
+
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import SpaceWrapper from 'components/SpaceWrapper'
 
 import withProgressBar from 'components/ProgressBar'
-
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  flex-direction: column;
-`
+import { Container, Row, Col } from 'react-grid-system'
 
 export function App (props) {
   return (
-    <AppWrapper>
+    <div>
       <Helmet
         titleTemplate='The Newspeller - %s'
         defaultTitle='The Newspeller'
@@ -28,8 +26,22 @@ export function App (props) {
           { name: 'description', content: 'The Newspeller is a newsletter, delivered directly to your inbox on-demand. Customize favourites channels and time to your needs.' }
         ]}
       />
-      {React.Children.toArray(props.children)}
-    </AppWrapper>
+      <Container>
+        <SpaceWrapper bg='transparent' color='#6B788A'>
+          <Row>
+            <Col sm={12}>
+              <Header />
+            </Col>
+          </Row>
+        </SpaceWrapper>
+        <Row>
+          <Col sm={12}>
+            {React.Children.toArray(props.children)}
+            <Footer />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   )
 }
 

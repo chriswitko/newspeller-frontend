@@ -1,5 +1,5 @@
 /*
- * HomeReducer
+ * RegisterReducer
  *
  * The reducer takes care of our data. Using actions, we can change our
  * application state.
@@ -12,26 +12,48 @@
 import { fromJS } from 'immutable'
 
 import {
-  CHANGE_USERNAME
-} from './constants'
+  CHANGE_PASSWORD,
+  CHANGE_TIMEZONE,
+  CHANGE_LANGUAGE,
+  FORM_MISSING_FIELDS_ERROR,
+  USER_SEND_ACTIVATION_SUCCESS
+ } from './constants'
 
 // The initial state of the App
 const initialState = fromJS({
-  username: '',
-  repos: []
+  token: '',
+  password: '',
+  timezone: 'Europe/London',
+  language: 'English',
+  loading: false,
+  error: false
 })
 
-function homeReducer (state = initialState, action) {
+function localReducer (state = initialState, action) {
   switch (action.type) {
-    case CHANGE_USERNAME:
-      window.localStorage.setItem('currentUser', action.name)
-      // Delete prefixed '@' from the github username
+    case USER_SEND_ACTIVATION_SUCCESS:
       return state
-        .set('username', action.name)
-        // .set('username', action.name.replace(/@/gi, ''));
+        .set('token', action.user.token)
+        .set('loading', false)
+    case FORM_MISSING_FIELDS_ERROR:
+      return state
+        .set('error', 'errorRequiredFields')
+        .set('loading', false)
+    case CHANGE_TIMEZONE:
+      return state
+        .set('timezone', action.timezone)
+        .set('error', false)
+    case CHANGE_LANGUAGE:
+      return state
+        .set('language', action.language)
+        .set('error', false)
+    case CHANGE_PASSWORD:
+      return state
+        .set('password', action.password)
+        .set('error', false)
     default:
       return state
   }
 }
 
-export default homeReducer
+export default localReducer

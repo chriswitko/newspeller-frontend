@@ -8,11 +8,9 @@ const Select = styled.select`
   background: #fff url(${arrows}) no-repeat right 0.8em center;
   background-size: 0.55em;
   max-width: 100%;
-  border-radius: 0.4rem;
-  border: 1px solid #bfbfbf;
+  border: 1px solid #a8a8a8;
   transition: box-shadow 0.15s ease-in-out;
-  border-radius: 0.4rem;
-  border: 1px solid #bfbfbf;
+  border-radius: 0;
   padding: 0.6rem;
   padding-right: 2.6em;
   margin-right: 1em;

@@ -17,8 +17,13 @@
 
 import {
   CHANGE_USERNAME,
-  CHANGE_PASSWORD
-} from '../HomePage/constants'
+  CHANGE_PASSWORD,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  SAVE_PASSWORD,
+  SAVE_PASSWORD_SUCCESS,
+  REPORT_ERROR
+} from './constants'
 
 /**
  * Changes the input field of the form
@@ -38,5 +43,39 @@ export function changePassword (password) {
   return {
     type: CHANGE_PASSWORD,
     password
+  }
+}
+
+export function resetPassword (email) {
+  return {
+    type: RESET_PASSWORD,
+    email
+  }
+}
+
+export function resetPasswordSuccess () {
+  return {
+    type: RESET_PASSWORD_SUCCESS
+  }
+}
+
+export function savePassword (password, token) {
+  return {
+    type: SAVE_PASSWORD,
+    password,
+    token
+  }
+}
+
+export function savePasswordSuccess () {
+  return {
+    type: SAVE_PASSWORD_SUCCESS
+  }
+}
+
+export function reportError (err) {
+  return {
+    type: REPORT_ERROR,
+    err
   }
 }

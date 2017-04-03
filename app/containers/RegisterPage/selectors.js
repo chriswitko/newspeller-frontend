@@ -1,42 +1,42 @@
-/**
- * Homepage selectors
- */
-
 import { createSelector } from 'reselect'
 
-const selectHome = (state) => state.get('home')
-const selectGlobal = (state) => state.get('global')
-
-const makeSelectEmail = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('email') || ''
-)
-
-const makeSelectEmailAgain = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('emailAgain') || ''
-)
+const selectLocal = (state) => state.get('register')
 
 const makeSelectPassword = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('password') || ''
-)
-
-const makeSelectTimezone = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('timezone') || ''
+  selectLocal,
+  (localState) => localState.get('password')
 )
 
 const makeSelectToken = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('token') || ''
+  selectLocal,
+  (localState) => localState.get('token')
+)
+
+const makeSelectTimezone = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('timezone')
+)
+
+const makeSelectLocale = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('language')
+)
+
+const makeSelectLoading = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('loading')
+)
+
+const makeSelectError = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('error')
 )
 
 export {
-  selectHome,
-  makeSelectEmail,
-  makeSelectEmailAgain,
-  makeSelectPassword,
   makeSelectTimezone,
-  makeSelectToken
+  makeSelectLocale,
+  makeSelectPassword,
+  makeSelectToken,
+  makeSelectLoading,
+  makeSelectError
 }

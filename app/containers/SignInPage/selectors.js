@@ -8,7 +8,7 @@ const selectLocal = (state) => state.get('signin')
 
 const makeSelectUsername = () => createSelector(
   selectLocal,
-  (localState) => localState.get('username') || window.localStorage.getItem('currentUser') || ''
+  (localState) => localState.get('username')
 )
 
 const makeSelectPassword = () => createSelector(

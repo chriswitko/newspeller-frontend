@@ -6,6 +6,7 @@ import LoadingIndicator from 'components/LoadingIndicator'
 
 import styled from 'styled-components'
 import Ionicon from 'react-ionicons'
+import ButtonSubmit from 'components/ButtonSubmit'
 
 const Ul = styled.ul`
   list-style: none;
@@ -21,34 +22,6 @@ const Ul = styled.ul`
 
     &:last-child {
       padding-right: 0;
-    }
-
-    button {
-      display: inline-flex;
-      padding: 0.4em 1.3em;
-      min-width: 60px;
-      text-decoration: none;
-      text-align: center;
-      border-radius: 4px;
-      cursor: pointer;
-      outline: 0;
-      font-weight: bold;
-      font-size: 14px;
-      border-bottom: 3px solid rgba(0, 0, 0, 0.14902);
-      background-color: white;
-      color: black;
-      border-top: 1px solid rgba(0, 0, 0, 0.14902);
-      border-left: 1px solid rgba(0, 0, 0, 0.14902);
-      border-right: 1px solid rgba(0, 0, 0, 0.14902);
-      
-      &:active {
-        background: #2f8d59;
-        color: #FFF;
-      }
-
-      span {
-        font-weight: 100;
-      }
     }
   }
 `
@@ -73,7 +46,7 @@ function ReposHours ({ loading, error, hours, onRemoveHour }) {
             <li
               key={index}
             >
-              <button href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<Ionicon icon='ion-ios-trash-outline' fontSize='19px' color='red' /></button>
+              <ButtonSubmit color='#a8a8a8' minWidth='125px' href='#' onClick={() => onRemoveHour(hour)}>{hour}&nbsp;<Ionicon icon='ion-ios-trash-outline' fontSize='19px' color='red' /></ButtonSubmit>
             </li>
           ))}
         </Ul>

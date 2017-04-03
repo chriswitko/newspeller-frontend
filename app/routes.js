@@ -51,15 +51,15 @@ export default function createRoutes (store) {
         // verifyAuthedUserRedirectHome()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/App/sagas'),
+          import('containers/IndexPage/reducer'),
+          import('containers/IndexPage/sagas'),
           import('containers/IndexPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('index', reducer.default)
           injectSagas(sagas.default)
 
           renderRoute(component)
@@ -84,31 +84,6 @@ export default function createRoutes (store) {
           .catch(errorLoading)
       }
     }, {
-      path: '/home',
-      name: 'home',
-      onEnter: requireAuth,
-      getComponent (nextState, cb) {
-        logPageView()
-        // verifyAuthedUser()
-
-        const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/App/sagas'),
-          import('containers/HomePage')
-        ])
-
-        const renderRoute = loadModule(cb)
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
-          injectSagas(sagas.default)
-
-          renderRoute(component)
-        })
-
-        importModules.catch(errorLoading)
-      }
-    }, {
       path: '/settings',
       name: 'settings',
       onEnter: requireAuth,
@@ -117,15 +92,15 @@ export default function createRoutes (store) {
         // verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/App/sagas'),
+          import('containers/SettingsPage/reducer'),
+          import('containers/SettingsPage/sagas'),
           import('containers/SettingsPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('settings', reducer.default)
           injectSagas(sagas.default)
 
           renderRoute(component)
@@ -134,23 +109,23 @@ export default function createRoutes (store) {
         importModules.catch(errorLoading)
       }
     }, {
-      path: '/channels',
-      name: 'channels',
+      path: '/home',
+      name: 'home',
       onEnter: requireAuth,
       getComponent (nextState, cb) {
         logPageView()
         // verifyAuthedUserRedirect()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/App/sagas'),
+          import('containers/ChannelsPage/reducer'),
+          import('containers/ChannelsPage/sagas'),
           import('containers/ChannelsPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('channels', reducer.default)
           injectSagas(sagas.default)
 
           renderRoute(component)
@@ -188,15 +163,15 @@ export default function createRoutes (store) {
         logPageView()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/App/sagas'),
+          import('containers/PasswordPage/reducer'),
+          import('containers/PasswordPage/sagas'),
           import('containers/PasswordPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('password', reducer.default)
           injectSagas(sagas.default)
 
           renderRoute(component)
@@ -213,14 +188,15 @@ export default function createRoutes (store) {
         // verifyAuthedUser()
 
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
+          import('containers/RegisterPage/reducer'),
+          import('containers/RegisterPage/sagas'),
           import('containers/RegisterPage')
         ])
 
         const renderRoute = loadModule(cb)
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
+          injectReducer('register', reducer.default)
           injectSagas(sagas.default)
 
           renderRoute(component)

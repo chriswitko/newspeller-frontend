@@ -1,11 +1,9 @@
 import { injectGlobal } from 'styled-components'
-import Bg from 'assets/world-map.png'
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
   body {
-    background: rgb(251, 247, 240) url(${Bg}) no-repeat 50% 50%;
-    background-size: cover;
+    background-color: #F5F7FA;
     height: 100%;
     width: 100%;
   }
@@ -29,11 +27,11 @@ injectGlobal`
   }
   
   a {
-    color: #41addd;
+    color: #6B788A;
     text-decoration: none;
 
     &:hover {
-      color: #6cc0e5;
+      color: #6B788A;
       text-decoration: underline;
     }  
   }

@@ -1,5 +1,5 @@
 /*
- * HomePage
+ * PasswordPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
@@ -9,132 +9,140 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { browserHistory } from 'react-router'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
-import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
 import H2 from 'components/H2'
-import Box from 'components/Box'
-import CenteredSection from './CenteredSection'
-import Form from './Form'
-import Input from './Input'
-import Section from './Section'
-import ButtonSubmit from './ButtonSubmit'
-import Label from './Label'
-import { resetPassword, savePassword } from '../App/actions'
-import { changeUsername, changePassword } from './actions'
-import { makeSelectUsername, makeSelectReset, makeSelectPassword } from './selectors'
-import styled from 'styled-components'
-import { Page, Row, Column } from 'hedron'
-import Logo from 'components/Logo'
-
-const Wrapper = styled.div`
-  max-width: calc(368px + 16px * 2);
-  display: flex;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;
-`
+import SpaceWrapper from 'components/SpaceWrapper'
+import CenteredSection from 'components/CenteredSection'
+import Input from 'components/Input'
+import Section from 'components/Section'
+import ButtonSubmit from 'components/ButtonSubmit'
+import Label from 'components/Label'
+import { changeUsername, changePassword, resetPassword, savePassword, reportError } from './actions'
+import { makeSelectUsername, makeSelectReset, makeSelectPassword, makeSelectError, makeSelectLoading, makeSelectUpdated } from './selectors'
+import { Row, Col } from 'react-grid-system'
+import Div from 'components/Div'
+import Alert from 'components/Alert'
 
 export class PasswordPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-  componentDidMount () {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm()
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.updated) {
+      browserHistory.push('/signin')
     }
   }
 
-  render () {
-    const { onSubmitForm, onSubmitPassword, backHome, username, password, reset } = this.props
-    const { token } = this.props.location.query
-
-    const passwordForm = (
-      <Form id='form' onSubmit={this.props.onSubmitPassword} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
-        <Label htmlFor='username'>
-          <FormattedMessage {...messages.labelNewPassword} />
-        </Label>
-        <Input
-          id='token'
-          type='hidden'
-          value={token}
-        />
-        <Input
-          id='password'
-          type='password'
-          placeholder='****'
-          value={password}
-          onChange={this.props.onChangePassword}
-        />
-        <br />
-        <br />
-        <ButtonSubmit type='submit' onClick={() => onSubmitPassword(this.form)}><FormattedMessage {...messages.btnSave} />Save</ButtonSubmit>
-      </Form>
-    )
-
-    const resetForm = (
-      <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
-        <Label htmlFor='username'>
-          <FormattedMessage {...messages.labelEmail} />
-        </Label>
-        <Input
-          id='username'
-          type='text'
-          placeholder='email@site.com'
-          value={username}
-          onChange={this.props.onChangeUsername}
-        />
-        <br />
-        <br />
-        <ButtonSubmit type='submit' onClick={() => onSubmitForm(this.form)}><FormattedMessage {...messages.btnReset} /></ButtonSubmit>
-      </Form>
-    )
-
-    const confirmationForm = (
-      <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
-        <Label htmlFor='username'>
-          <FormattedMessage {...messages.confirmationAboutLink} />
-        </Label>
-        <br />
-        <br />
-        <ButtonSubmit type='button' onClick={backHome}><FormattedMessage {...messages.btnSignIn} /></ButtonSubmit>
-      </Form>
-    )
-
+  passwordForm () {
     return (
-      <Wrapper>
-        <Logo bottomed />
-        <Box centered>
-          <Page>
-            <Row>
-              <Column lg={12}>
-                <article>
-                  <Helmet
-                    title='Sing In'
-                    meta={[
-                      { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-                    ]}
-                  />
-                  <div>
-                    <CenteredSection>
-                      <H2>
-                        <FormattedMessage {...messages.reset} />
-                      </H2>
-                    </CenteredSection>
-                    <Section style={{margin: 0, padding: 0}}>
-                      {token ? passwordForm : (reset ? confirmationForm : resetForm) }
-                    </Section>
-                  </div>
-                </article>
-              </Column>
-            </Row>
-          </Page>
-        </Box>
-      </Wrapper>
+      <form id='formPassword' onSubmit={this.props.onSubmitPassword}>
+        <Div>
+          { this.props.error ? <Div><Alert>{ this.props.intl.formatMessage(messages[this.props.error]) }</Alert></Div> : '' }
+          <Label htmlFor='password'>
+            <FormattedMessage {...messages.labelNewPassword} />
+          </Label>
+          <Input
+            id='token'
+            type='hidden'
+            value={this.props.location.query}
+          />
+          <Input
+            id='password'
+            type='password'
+            placeholder='****'
+            value={this.props.password}
+            autoComplete='off'
+            onChange={this.props.onChangePassword}
+          />
+        </Div>
+        <br />
+        <ButtonSubmit type='submit'
+          disabled={this.props.loading}
+        >
+          <FormattedMessage {...messages.btnSave} />
+        </ButtonSubmit>
+      </form>
+    )
+  }
+
+  resetForm () {
+    return (
+      <form id='formReset' onSubmit={this.props.onSubmitForm}>
+        <Div>
+          { this.props.error ? <Div><Alert>{ this.props.intl.formatMessage(messages[this.props.error]) }</Alert></Div> : '' }
+          <Label htmlFor='username'>
+            <FormattedMessage {...messages.labelEmail} />
+          </Label>
+          <Input
+            id='username'
+            type='text'
+            placeholder={this.props.intl.formatMessage(messages.placeholderUsername)}
+            value={this.props.username}
+            autoComplete='off'
+            onChange={this.props.onChangeUsername}
+          />
+        </Div>
+        <br />
+        <ButtonSubmit
+          type='submit'
+          disabled={this.props.loading}
+        >
+          <FormattedMessage {...messages.btnReset} />
+        </ButtonSubmit>
+      </form>
+    )
+  }
+
+  confirmationForm () {
+    return (
+      <form>
+        <Div>
+          { this.props.error ? <Div><Alert>{ this.props.intl.formatMessage(messages[this.props.error]) }</Alert></Div> : '' }
+          <Label>
+            <FormattedMessage {...messages.confirmationAboutLink} />
+          </Label>
+        </Div>
+        <br />
+        <ButtonSubmit
+          type='button'
+          onClick={() => this.props.onBackHome()}
+          disabled={this.props.loading}
+        >
+          <FormattedMessage {...messages.btnSignIn} />
+        </ButtonSubmit>
+      </form>
+    )
+  }
+
+  renderForm () {
+    const { token } = this.props.location.query
+    return token ? this.passwordForm() : (this.props.reset ? this.confirmationForm() : this.resetForm())
+  }
+
+  render () {
+    return (
+      <div>
+        <Helmet
+          title='Password'
+        />
+        <Row>
+          <Col lg={6} offset={{ lg: 3 }}>
+            <article>
+              <div>
+                <CenteredSection>
+                  <H2>
+                    <FormattedMessage {...messages.reset} />
+                  </H2>
+                </CenteredSection>
+                <Section>
+                  <SpaceWrapper>
+                    { this.renderForm() }
+                  </SpaceWrapper>
+                </Section>
+              </div>
+            </article>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
@@ -142,7 +150,7 @@ export class PasswordPage extends React.PureComponent { // eslint-disable-line r
 PasswordPage.propTypes = {
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
+    React.PropTypes.string,
     React.PropTypes.bool
   ]),
   onSubmitForm: React.PropTypes.func,
@@ -153,11 +161,9 @@ PasswordPage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    backHome: () => {
-      browserHistory.push('/signin')
-    },
+    onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
+    onBackHome: () => browserHistory.push('/signin'),
     onSubmitPassword: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault()
       if (evt) {
@@ -171,6 +177,8 @@ export function mapDispatchToProps (dispatch) {
       if (evt) {
         if (evt.target.username.value) {
           dispatch(resetPassword(evt.target.username.value))
+        } else {
+          dispatch(reportError('errorRequiredEmail'))
         }
       }
     }
@@ -182,8 +190,8 @@ const mapStateToProps = createStructuredSelector({
   password: makeSelectPassword(),
   username: makeSelectUsername(),
   loading: makeSelectLoading(),
-  error: makeSelectError()
+  error: makeSelectError(),
+  updated: makeSelectUpdated()
 })
 
-// Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(PasswordPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(PasswordPage))

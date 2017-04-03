@@ -1,0 +1,5 @@
+export const CHANGE_USERNAME = 'newspeller/IndexPage/CHANGE_USERNAME'
+export const USER_REGISTER = 'newspeller/IndexPage/USER_REGISTER'
+export const USER_REGISTER_SUCCESS = 'newspeller/IndexPage/USER_REGISTER_SUCCESS'
+export const USER_REGISTER_ERROR = 'newspeller/IndexPage/USER_REGISTER_ERROR'
+export const FORM_MISSING_FIELDS_ERROR = 'newspeller/IndexPage/FORM_MISSING_FIELDS_ERROR'

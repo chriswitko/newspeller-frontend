@@ -30,18 +30,9 @@ const selectGlobal = (state) => state.get('global')
 
 const selectLanguage = (state) => state.get('language')
 
-/**
- * Select the language locale
- */
-
 const makeSelectLocale = () => createSelector(
   selectLanguage,
   (languageState) => window.localStorage.getItem('language') || _getInterfaceLanguage() || languageState.get('locale') || 'en'
-)
-
-const makeSelectConfirmedAt = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'confirmed_at'])
 )
 
 const makeSelectEmail = () => createSelector(
@@ -52,21 +43,6 @@ const makeSelectEmail = () => createSelector(
 const makeSelectActivatedAt = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'activated_at']) || window.localStorage.getItem('activatedAt')
-)
-
-const makeSelectTimezone = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'timezone'])
-)
-
-const makeSelectLanguage = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'language'])
-)
-
-const makeSelectGroupBy = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'groupBy'])
 )
 
 const makeSelectToken = () => createSelector(
@@ -109,16 +85,6 @@ const makeSelectSubscriptions = () => createSelector(
   (globalState) => globalState.getIn(['userData', 'subscriptions'])
 )
 
-const makeSelectDays = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'days'])
-)
-
-const makeSelectHours = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'hours'])
-)
-
 const makeSelectFeeds = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['channels'])
@@ -141,24 +107,17 @@ const makeSelectLocationState = () => {
 }
 
 export {
-  selectGlobal,
+  makeSelectFeeds,
   makeSelectCurrentUser,
   makeSelectNextAt,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
-  makeSelectDays,
-  makeSelectHours,
-  makeSelectFeeds,
   makeSelectLocationState,
   makeSelectUserId,
   makeSelectToken,
   makeSelectSubscriptions,
-  makeSelectTimezone,
-  makeSelectGroupBy,
   makeSelectLocale,
-  makeSelectConfirmedAt,
   makeSelectActivatedAt,
-  makeSelectLanguage,
   makeSelectEmail
 }

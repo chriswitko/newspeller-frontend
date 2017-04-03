@@ -6,6 +6,7 @@ import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
 import Wrapper from './Wrapper'
+import { Row, Col } from 'react-grid-system'
 
 const FA = styled(A)`
   text-decoration: none;
@@ -18,8 +19,8 @@ const FA = styled(A)`
 function Footer () {
   return (
     <Wrapper>
-      <section>
-        <div>
+      <Row>
+        <Col lg={8} sm={12}>
           <FA href='#' target='_blank'><FormattedMessage {...messages.contact} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
@@ -31,12 +32,13 @@ function Footer () {
           <FA href='/privacy'><FormattedMessage {...messages.privacy} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPub} /></FA>
-        </div>
-        <FormattedMessage {...messages.licenseMessage} />
-      </section>
-      <section>
-        <LocaleToggle />
-      </section>
+          <br />
+          <FormattedMessage {...messages.licenseMessage} />
+        </Col>
+        <Col lg={4} sm={12}>
+          <LocaleToggle />
+        </Col>
+      </Row>
     </Wrapper>
   )
 }

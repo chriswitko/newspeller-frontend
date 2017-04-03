@@ -12,7 +12,7 @@ export default defineMessages({
   },
   intro: {
     id: 'newspeller.containers.RegisterPage.intro',
-    defaultMessage: 'Enter your email address again, create password and select your timezone.'
+    defaultMessage: 'Create your password and select your timezone.'
   },
   labelEmail: {
     id: 'newspeller.containers.RegisterPage.labelEmail',
@@ -24,11 +24,11 @@ export default defineMessages({
   },
   labelTimezone: {
     id: 'newspeller.containers.RegisterPage.labelTimezone',
-    defaultMessage: 'Timezone'
+    defaultMessage: 'What is your time zone?'
   },
   btnActivate: {
     id: 'newspeller.containers.RegisterPage.btnActivate',
-    defaultMessage: 'Activate my email;'
+    defaultMessage: 'Activate my email'
   },
   btnCancel: {
     id: 'newspeller.containers.RegisterPage.btnCancel',
@@ -45,5 +45,9 @@ export default defineMessages({
   langPolish: {
     id: 'newspeller.containers.RegisterPage.langPolish',
     defaultMessage: 'Polish'
+  },
+  errorRequiredFields: {
+    id: 'newspeller.containers.RegisterPage.errorRequiredFields',
+    defaultMessage: 'Missing required fields'
   }
 })

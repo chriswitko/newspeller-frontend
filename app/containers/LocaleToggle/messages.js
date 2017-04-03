@@ -8,14 +8,14 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   en: {
     id: 'newspeller.containers.LocaleToggle.en',
-    defaultMessage: 'en'
+    defaultMessage: 'English'
   },
   de: {
     id: 'newspeller.containers.LocaleToggle.de',
-    defaultMessage: 'de'
+    defaultMessage: 'German'
   },
   pl: {
     id: 'newspeller.containers.LocaleToggle.pl',
-    defaultMessage: 'pl'
+    defaultMessage: 'Polish'
   }
 })

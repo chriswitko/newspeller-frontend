@@ -8,10 +8,10 @@
 import React, { PropTypes } from 'react'
 
 function Img (props) {
-  const {className, src, alt, width = 150} = props
+  const {className, src, alt} = props
 
   return (
-    <img className={className} src={src} alt={alt} width={width} />
+    <img className={className} src={src} alt={alt} height='100%' />
   )
 }
 

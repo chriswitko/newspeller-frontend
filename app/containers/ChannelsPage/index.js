@@ -1,33 +1,31 @@
 /*
- * HomePage
+ * ChannelsPage
  *
- * This is the first thing users see of our App, at the '/' route
  */
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectRepos, makeSelectFeeds, makeSelectLoading, makeSelectError, makeSelectLocale } from 'containers/App/selectors'
-import H2 from 'components/H2'
-import Box from 'components/Box'
-import Div from 'components/Div'
-import ChannelsList from 'components/ChannelsList'
-import Section from './Section'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
-import { loadUserData, loadFeeds, addTopic, removeTopic } from '../App/actions'
-import Header from 'components/Header'
-import Footer from 'components/Footer'
-import { Page, Row, Column } from 'hedron'
-import DropDownObjectPicker from 'components/DropDownObjectPicker'
+
+import { makeSelectLocale } from 'containers/App/selectors'
+
+import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectToken } from './selectors'
+import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail } from './actions'
+
+import { Row, Col } from 'react-grid-system'
+import H2 from 'components/H2'
+import Div from 'components/Div'
+import Section from 'components/Section'
+import SpaceWrapper from 'components/SpaceWrapper'
 import Label from 'components/Label'
+import ChannelItem from 'components/ChannelItem'
+import ButtonSubmit from 'components/ButtonSubmit'
 
 export class ChannelsPage extends React.PureComponent {
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
   componentDidMount () {
     const { language } = this.props
     this.props.onReady({
@@ -36,76 +34,143 @@ export class ChannelsPage extends React.PureComponent {
   }
 
   render () {
-    const { loading, error, channels, repos, onRemove, onAdd, onChangeLanguage, language } = this.props
-    const reposListProps = {
-      onRemove,
-      onAdd,
-      loading,
-      error,
-      channels,
-      repos
+    const { loading, channels, onRemove, onAdd, onResend, language, token, intl, confirmedAt, resent } = this.props
+
+    const showConfirmationAlert = () => {
+      if (!loading && !confirmedAt && !resent) {
+        return (
+          <SpaceWrapper bg='#ff294c' color='white'>
+            <Div>
+              <FormattedMessage {...messages.resendMessage} />
+            </Div>
+            <ButtonSubmit color='white' href='#' onClick={() => {
+              onResend({
+                token: token
+              })
+            }
+            }><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
+          </SpaceWrapper>
+        )
+      }
     }
 
-    const defaultValues = [{
-      name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
-    }, {
-      name: this.props.intl.formatMessage(messages.langPolish), value: 'pl'
-    }, {
-      name: this.props.intl.formatMessage(messages.langGerman), value: 'de'
-    }, {
-      name: this.props.intl.formatMessage(messages.langFrench), value: 'fr'
-    }]
+    const listProps = {
+      onRemove,
+      onAdd,
+      intl
+    }
+
+    let byLanguage = {
+      'en': {
+        name: 'English',
+        total: 0,
+        channels: [],
+        sections: [],
+        order: 0
+      },
+      'pl': {
+        name: 'Polish',
+        total: 0,
+        channels: [],
+        sections: [],
+        order: 0
+      },
+      'de': {
+        name: 'Gernam',
+        total: 0,
+        channels: [],
+        sections: [],
+        order: 0
+      },
+      'fr': {
+        name: 'French',
+        total: 0,
+        channels: [],
+        sections: [],
+        order: 0
+      },
+      'es': {
+        name: 'Spanish',
+        total: 0,
+        channels: [],
+        sections: [],
+        order: 0
+      }
+    }
+
+    const langsByOrder = () => {
+      const languages = ['en', 'pl', 'es', 'fr', 'de']
+      return Array.from(new Set([language, ...languages]))
+    }
+
+    if (channels) {
+      channels.map(c => byLanguage[c.language.toLowerCase()].channels.push(c))
+    }
+
+    let byChannel = {}
+
+    if (byLanguage) {
+      Object.keys(byLanguage).map(l => {
+        byLanguage[l].channels.map(c => {
+          if (!byChannel.hasOwnProperty(c.channelCode)) {
+            byChannel[c.channelCode] = {
+              channel: c,
+              sections: []
+            }
+          }
+          byLanguage[l].total++
+          byChannel[c.channelCode].sections.push(c)
+        })
+        byLanguage[l].sections = byChannel
+        byChannel = {}
+      })
+    }
 
     return (
-      <Box fullScreen>
-        <Page style={{display: 'flex', flexDirection: 'column'}}>
-          <Row>
-            <Header />
-          </Row>
-          <Row style={{flex: 1}}>
-            <Column>
-              <article>
-                <Helmet
-                  title='Channels'
-                  meta={[
-                    { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-                  ]}
-                />
-                <div>
-                  <Section>
+      <div>
+        <Row>
+          <Col>
+            <article>
+              <Helmet
+                title='Channels'
+              />
+              <div>
+                <Section>
+                  <SpaceWrapper bg='#4745d1' color='white'>
                     <Div>
                       <H2>
                         <FormattedMessage {...messages.title} />
                       </H2>
                       <div>
-                        <p>
-                          <FormattedMessage {...messages.intro} />
-                        </p>
+                        <FormattedMessage {...messages.intro} />
                       </div>
                     </Div>
-                    <br />
-                    <Div>
-                      <Label><FormattedMessage {...messages.filterByLang} /></Label>
-                      <DropDownObjectPicker
-                        placeholder='Filter by language'
-                        defaultValues={defaultValues}
-                        defaultValue={language}
-                        onChange={onChangeLanguage}
-                      />
-                    </Div>
-                    <Div>
-                      <ChannelsList {...reposListProps} />
-                    </Div>
-                  </Section>
-                </div>
-              </article>
-            </Column>
-          </Row>
-          <Row alignSelf='flex-start' style={{width: '100%'}}>
-            <Footer />
-          </Row>
-        </Page>
-      </Box>
+                  </SpaceWrapper>
+                  {showConfirmationAlert()}
+                  {loading ? <SpaceWrapper><FormattedMessage {...messages.loading} /></SpaceWrapper> : (
+                    <div>
+                      {langsByOrder().map(l => {
+                        if (byLanguage[l].total) {
+                          return (
+                            <div key={l} style={{marginBottom: '15px'}}>
+                              <SpaceWrapper bg='black' color='white' header>
+                                <Label>
+                                  {byLanguage[l].name}
+                                </Label>
+                              </SpaceWrapper>
+                              <ChannelItem sections={byLanguage[l].sections} {...listProps} />
+                            </div>
+                          )
+                        }
+                      })}
+                    </div>
+                  )}
+                </Section>
+              </div>
+            </article>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
@@ -129,6 +194,11 @@ ChannelsPage.propTypes = {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    onResend: (data) => {
+      dispatch(resendActivationEmail({
+        token: data.token
+      }))
+    },
     onChangeLanguage: (e) => {
       dispatch(loadFeeds({
         language: e.target.value
@@ -150,18 +220,18 @@ export function mapDispatchToProps (dispatch) {
     },
     onReady: (args) => {
       dispatch(loadFeeds(args))
-      dispatch(loadUserData())
     }
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  resent: makeSelectResent(),
   language: makeSelectLocale(),
-  repos: makeSelectRepos(),
   channels: makeSelectFeeds(),
   loading: makeSelectLoading(),
-  error: makeSelectError()
+  error: makeSelectError(),
+  token: makeSelectToken(),
+  confirmedAt: makeSelectConfirmedAt()
 })
 
-// Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(ChannelsPage))

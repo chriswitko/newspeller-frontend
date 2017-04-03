@@ -28,18 +28,18 @@ const initialState = fromJS({
   error: false
 })
 
-function homeReducer (state = initialState, action) {
+function localReducer (state = initialState, action) {
   switch (action.type) {
     case USER_AUTHORIZE:
       return state
         .set('loading', true)
     case FORM_MISSING_FIELDS_ERROR:
       return state
-        .set('error', 'Missing required fields')
+        .set('error', 'errorRequiredFields')
         .set('loading', false)
     case USER_ERROR:
       return state
-        .set('error', 'User does not exists')
+        .set('error', 'errorMissingUser')
         .set('loading', false)
     case USER_SUCCESS:
       return state
@@ -59,4 +59,4 @@ function homeReducer (state = initialState, action) {
   }
 }
 
-export default homeReducer
+export default localReducer

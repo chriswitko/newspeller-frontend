@@ -8,64 +8,37 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+
 import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
-import { makeSelectLoading, makeSelectError } from 'containers/App/selectors'
+import { changePassword, changeTimezone, changeLocale, sendActivationEmail, missingFields } from './actions'
+import { makeSelectPassword, makeSelectTimezone, makeSelectLocale, makeSelectLoading, makeSelectError, makeSelectToken } from './selectors'
+
+import { Row, Col } from 'react-grid-system'
+
 import H2 from 'components/H2'
-import Box from 'components/Box'
-import CenteredSection from './CenteredSection'
-import Form from './Form'
-import Input from './Input'
-import Section from './Section'
-import ButtonSubmit from './ButtonSubmit'
-import Label from './Label'
-import { sendActivationEmail, logoutUser, changeUserLanguage } from '../App/actions'
-import { makeSelectEmail, makeSelectEmailAgain, makeSelectPassword, makeSelectTimezone } from './selectors'
-import { makeSelectLocale } from '../App/selectors'
-import styled from 'styled-components'
-import { Page, Row, Column } from 'hedron'
-import Logo from 'components/Logo'
+import Div from 'components/Div'
+import CenteredSection from 'components/CenteredSection'
+import Input from 'components/Input'
+import ButtonSubmit from 'components/ButtonSubmit'
+import Label from 'components/Label'
+import SpaceWrapper from 'components/SpaceWrapper'
 import TimezonePicker from 'components/TimezonePicker'
 import DropDownObjectPicker from 'components/DropDownObjectPicker'
-
-const Wrapper = styled.div`
-  max-width: calc(368px + 16px * 2);
-  display: flex;
-  min-height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;
-`
+import Alert from 'components/Alert'
 
 export class RegisterPage extends React.PureComponent {
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      token: this.props.location.query.token,
-      emailAgain: '',
-      password: '',
-      timezone: 'Europe/London',
-      language: this.props.locale
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.token) {
+      window.localStorage.setItem('token', nextProps.token)
+      window.location.href = '/home'
     }
   }
 
-  onChange (type, value) {
-    let o = {}
-    o[type] = value
-    this.setState(o)
-  }
-
   render () {
-    const { onSubmitForm, onCancel } = this.props
-    const { emailAgain, password, timezone, language } = this.state
+    const { onSubmitForm, onChangeLocale, onChangeTimezone, onChangePassword, password, timezone, language, intl, error } = this.props
+    const { token } = this.props.location.query
 
     const defaultValues = [{
       name: this.props.intl.formatMessage(messages.langEnglish), value: 'en'
@@ -74,86 +47,70 @@ export class RegisterPage extends React.PureComponent {
     }]
 
     return (
-      <Wrapper>
-        <Logo bottomed />
-        <Box centered>
-          <Page>
-            <Row>
-              <Column lg={12}>
-                <article>
-                  <Helmet
-                    title='Register'
-                    meta={[
-                      { name: 'description', content: 'A React.js Boilerplate application homepage chris' }
-                    ]}
-                  />
+      <div>
+        <Row>
+          <Col lg={4} offset={{ lg: 4 }}>
+            <Div>
+              <Helmet
+                title='Register'
+              />
+              <div>
+                <CenteredSection>
+                  <Div>
+                    <H2>
+                      <FormattedMessage {...messages.title} />
+                    </H2>
+                  </Div>
                   <div>
-                    <CenteredSection>
-                      <H2>
-                        <FormattedMessage {...messages.title} />
-                      </H2>
-                      <div>
-                        <FormattedMessage {...messages.intro} />
-                      </div>
-                    </CenteredSection>
-                    <Section style={{margin: 0, padding: 0}}>
-                      <Form id='form' style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
-                        <Label htmlFor='username'>
-                          <FormattedMessage {...messages.labelEmail} />
-                        </Label>
-                        <Input
-                          id='emailAgain'
-                          type='text'
-                          placeholder='email@site.com'
-                          value={emailAgain}
-                          onChange={(evt) => this.onChange('emailAgain', evt.target.value)}
-                        />
-                        <br />
-                        <br />
-                        <Label htmlFor='password'>
-                          <FormattedMessage {...messages.labelPassword} />
-                        </Label>
-                        <Input
-                          id='password'
-                          type='password'
-                          value={password}
-                          onChange={(evt) => this.onChange('password', evt.target.value)}
-                        />
-                        <br />
-                        <br />
-                        <Label htmlFor='timezone'>
-                          <FormattedMessage {...messages.labelTimezone} />
-                        </Label>
-                        <TimezonePicker
-                          placeholder='Select timezone...'
-                          defaultValue={timezone}
-                          onChange={(evt) => this.onChange('timezone', evt.target.value)}
-                        />
-                        <br />
-                        <Label>
-                          <FormattedMessage {...messages.filterByLang} />
-                        </Label>
-                        <DropDownObjectPicker
-                          placeholder='Filter by language'
-                          defaultValues={defaultValues}
-                          defaultValue={language}
-                          onChange={(evt) => this.onChange('language', evt.target.value)}
-                        />
-                        <br />
-                        <br />
-                        <ButtonSubmit type='button' onClick={() => onSubmitForm(this.state)}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
-                        <br />
-                        <br />
-                        <a href='#' onClick={onCancel}><FormattedMessage {...messages.btnCancel} /></a>
-                      </Form>
-                    </Section>
+                    <FormattedMessage {...messages.intro} />
                   </div>
-                </article>
-              </Column>
-            </Row>
-          </Page>
-        </Box>
-      </Wrapper>
+                </CenteredSection>
+                <SpaceWrapper>
+                  <form id='form'>
+                    { error ? <Div><Alert>{ intl.formatMessage(messages[error]) }</Alert></Div> : '' }
+                    <Div>
+                      <Label htmlFor='password'>
+                        <FormattedMessage {...messages.labelPassword} />
+                      </Label>
+                      <Input
+                        id='password'
+                        type='password'
+                        value={password}
+                        onChange={onChangePassword}
+                      />
+                    </Div>
+                    <Div>
+                      <Label htmlFor='timezone'>
+                        <FormattedMessage {...messages.labelTimezone} />
+                      </Label>
+                      <TimezonePicker
+                        id='timezone'
+                        placeholder='Select timezone...'
+                        defaultValue={timezone}
+                        onChange={onChangeTimezone}
+                      />
+                    </Div>
+                    <Div>
+                      <Label>
+                        <FormattedMessage {...messages.filterByLang} />
+                      </Label>
+                      <DropDownObjectPicker
+                        id='language'
+                        placeholder='Filter by language'
+                        defaultValues={defaultValues}
+                        defaultValue={language}
+                        onChange={onChangeLocale}
+                      />
+                    </Div>
+                    <br />
+                    <ButtonSubmit type='button' onClick={() => onSubmitForm({token, password, timezone, language})}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
+                  </form>
+                </SpaceWrapper>
+              </div>
+            </Div>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
@@ -161,39 +118,42 @@ export class RegisterPage extends React.PureComponent {
 RegisterPage.propTypes = {
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
+    React.PropTypes.string,
     React.PropTypes.bool
   ]),
   onSubmitForm: React.PropTypes.func,
-  username: React.PropTypes.string,
   password: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func
 }
 
 export function mapDispatchToProps (dispatch) {
   return {
-    onCancel: () => dispatch(logoutUser()),
+    onChangeLocale: (evt) => dispatch(changeLocale(evt.target.value)),
+    onChangeTimezone: (evt) => dispatch(changeTimezone(evt.target.value)),
+    onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),
     onSubmitForm: (data) => {
-      dispatch(sendActivationEmail({
-        token: data.token,
-        email: data.emailAgain,
-        password: data.password,
-        timezone: data.timezone,
-        locale: data.language
-      }))
+      if (data.password) {
+        dispatch(sendActivationEmail({
+          token: data.token,
+          password: data.password,
+          timezone: data.timezone,
+          locale: data.language
+        }))
+      } else {
+        dispatch(missingFields())
+      }
     }
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  token: makeSelectToken(),
   locale: makeSelectLocale(),
-  email: makeSelectEmail(),
-  emailAgain: makeSelectEmailAgain(),
+  language: makeSelectLocale(),
   password: makeSelectPassword(),
   timezone: makeSelectTimezone(),
   loading: makeSelectLoading(),
   error: makeSelectError()
 })
 
-// Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(RegisterPage))

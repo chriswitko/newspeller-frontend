@@ -1,10 +1,8 @@
 /*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
+ * SignInPage
  */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -16,32 +14,17 @@ import messages from './messages'
 import { makeSelectLoading, makeSelectError, makeSelectToken, makeSelectUsername, makeSelectPassword } from './selectors'
 import { authorizeUser, missingFields, changeUsername, changePassword } from './actions'
 
-import { Page, Row, Column } from 'hedron'
+import { Row, Col } from 'react-grid-system'
 
 import H2 from 'components/H2'
-import Box from 'components/Box'
-import CenteredSection from './CenteredSection'
-import Form from './Form'
+import CenteredSection from 'components/CenteredSection'
 import Input from 'components/Input'
-import Section from './Section'
+import Section from 'components/Section'
 import ButtonSubmit from 'components/ButtonSubmit'
 import Label from 'components/Label'
-import Logo from 'components/Logo'
 import Alert from 'components/Alert'
 import Div from 'components/Div'
-
-import styled from 'styled-components'
-
-const Wrapper = styled.div`
-  max-width: calc(368px + 16px * 2);
-  display: flex;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;
-`
+import SpaceWrapper from 'components/SpaceWrapper'
 
 export class SignInPage extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
@@ -53,90 +36,89 @@ export class SignInPage extends React.PureComponent {
   }
 
   render () {
-    const { onSubmitForm, onChangeUsername, onChangePassword, username, password, error, loading } = this.props
+    const { onSubmitForm, onChangeUsername, onChangePassword, username, password, error, loading, intl } = this.props
 
     return (
-      <Wrapper>
-        <Logo bottomed />
-        <Box centered>
-          <Page>
-            <Row>
-              <Column lg={12}>
-                <article>
-                  <Helmet
-                    title='Sing In'
-                    meta={[
-                      { name: 'description', content: 'Newspeller.com' }
-                    ]}
-                  />
-                  <div>
-                    <CenteredSection>
-                      <H2>
-                        <FormattedMessage {...messages.intro} />
-                      </H2>
-                    </CenteredSection>
-                    <Section style={{margin: 0, padding: 0}}>
-                      <Form id='form' onSubmit={this.props.onSubmitForm} style={{backgroundColor: 'rgb(251, 247, 240)', borderRadius: '5px', padding: '20px'}}>
-                        { error ? <Div><Alert>{ error }</Alert></Div> : '' }
-                        <Label htmlFor='username'>
-                          <FormattedMessage {...messages.labelEmail} />
-                        </Label>
-                        <Input
-                          id='username'
-                          type='text'
-                          placeholder={this.props.intl.formatMessage(messages.placeholderUsername)}
-                          autoComplete='off'
-                          value={username}
-                          onChange={onChangeUsername}
-                        />
-                        <br />
-                        <br />
-                        <Label htmlFor='password'>
-                          <FormattedMessage {...messages.labelPassword} />
-                        </Label>
-                        <Input
-                          id='password'
-                          type='password'
-                          value={password}
-                          onChange={onChangePassword}
-                        />
-                        <br />
+      <div>
+        <Helmet
+          title='Sign In'
+          meta={[
+            { name: 'description', content: 'Newspeller.com' }
+          ]}
+        />
+        <Row>
+          <Col lg={6} offset={{ lg: 3 }}>
+            <article>
+              <div>
+                <CenteredSection>
+                  <H2>
+                    <FormattedMessage {...messages.intro} />
+                  </H2>
+                </CenteredSection>
+                <Section>
+                  <SpaceWrapper>
+                    <Div>
+                      <form id='form' onSubmit={onSubmitForm}>
+                        { error ? <Div><Alert>{ intl.formatMessage(messages[error]) }</Alert></Div> : '' }
+                        <Div>
+                          <Label htmlFor='username'>
+                            <FormattedMessage {...messages.labelEmail} />
+                          </Label>
+                          <Input
+                            ref={(input) => { this.username = input }}
+                            id='username'
+                            type='text'
+                            placeholder={intl.formatMessage(messages.placeholderUsername)}
+                            autoComplete='off'
+                            value={username}
+                            onChange={onChangeUsername}
+                          />
+                        </Div>
+                        <Div>
+                          <Label htmlFor='password'>
+                            <FormattedMessage {...messages.labelPassword} />
+                          </Label>
+                          <Input
+                            id='password'
+                            type='password'
+                            value={password}
+                            onChange={onChangePassword}
+                          />
+                        </Div>
                         <br />
                         <ButtonSubmit
                           type='submit'
-                          onClick={onSubmitForm(this.form)}
                           disabled={loading}
                         >
-                          <FormattedMessage {...messages.btnSignIn} />
+                          <FormattedMessage {...loading ? messages.btnPleaseWait : messages.btnSignIn} />
                         </ButtonSubmit>
-                      </Form>
-                      <Link to='password'>
-                        <FormattedMessage {...messages.forgotPassword} />
-                      </Link>
-                    </Section>
-                  </div>
-                </article>
-              </Column>
-            </Row>
-          </Page>
-        </Box>
-      </Wrapper>
+                      </form>
+                    </Div>
+                    <Link to='password'>
+                      <FormattedMessage {...messages.forgotPassword} />
+                    </Link>
+                  </SpaceWrapper>
+                </Section>
+              </div>
+            </article>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
 
 SignInPage.propTypes = {
-  loading: React.PropTypes.bool,
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.object,
-    React.PropTypes.bool
+  username: PropTypes.string,
+  password: PropTypes.string,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
   ]),
-  onSubmitForm: React.PropTypes.func,
-  username: React.PropTypes.string,
-  password: React.PropTypes.string,
-  token: React.PropTypes.string,
-  onChangeUsername: React.PropTypes.func
+  onSubmitForm: PropTypes.func,
+  onChangeUsername: PropTypes.func,
+  onChangePassword: PropTypes.func
 }
 
 export function mapDispatchToProps (dispatch, ownProps) {
@@ -164,5 +146,4 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError()
 })
 
-// Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SignInPage))

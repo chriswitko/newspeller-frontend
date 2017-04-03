@@ -22,12 +22,24 @@ export default defineMessages({
     id: 'newspeller.containers.SignInPage.btnSignIn',
     defaultMessage: 'Log In'
   },
+  btnPleaseWait: {
+    id: 'newspeller.containers.SignInPage.btnPleaseWait',
+    defaultMessage: 'Please wait...'
+  },
   forgotPassword: {
     id: 'newspeller.containers.SignInPage.forgotPassword',
     defaultMessage: 'Forgot password?'
   },
   placeholderUsername: {
-    id: 'newspeller.containers.SignInPage.placeholderUsername',
+    id: 'newspeller.global.placeholderUsername',
     defaultMessage: 'eg. email@site.com'
+  },
+  errorRequiredFields: {
+    id: 'newspeller.containers.SignInPage.errorRequiredFields',
+    defaultMessage: 'Missing required fields'
+  },
+  errorMissingUser: {
+    id: 'newspeller.containers.SignInPage.errorMissingUser',
+    defaultMessage: 'User does not exists'
   }
 })

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 const Alert = styled.div`
   display: block;
   width: 100%;
-  border-radius: 5px;
-  background: #ffc;
+  background: #ff294c;
   border: 1px solid #d5d5d5;
   padding: 10px;
-  font-size: .8em;
+  color: white;
+  maring-bottom: 10px;
 `
 
 export default Alert

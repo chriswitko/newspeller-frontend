@@ -16,7 +16,21 @@
  */
 
 import {
-  CHANGE_USERNAME
+  USER_RESEND_ACTIVATION,
+  USER_RESEND_ACTIVATION_SUCCESS,
+  USER_RESEND_ACTIVATION_ERROR,
+  ADD_TOPIC,
+  ADD_TOPIC_SUCCESS,
+  ADD_TOPIC_ERROR,
+  REMOVE_TOPIC,
+  REMOVE_TOPIC_SUCCESS,
+  REMOVE_TOPIC_ERROR,
+  LOAD_USER_DATA,
+  LOAD_USER_DATA_SUCCESS,
+  LOAD_USER_DATA_ERROR,
+  LOAD_FEEDS,
+  LOAD_FEEDS_SUCCESS,
+  LOAD_FEEDS_ERROR
 } from './constants'
 
 /**
@@ -26,9 +40,106 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeUsername (name) {
+export function resendActivationEmail (user) {
   return {
-    type: CHANGE_USERNAME,
+    type: USER_RESEND_ACTIVATION,
+    user
+  }
+}
+
+export function resendActivationEmailSuccess (user) {
+  return {
+    type: USER_RESEND_ACTIVATION_SUCCESS,
+    user
+  }
+}
+
+export function resendActivationEmailError (user) {
+  return {
+    type: USER_RESEND_ACTIVATION_ERROR,
+    user
+  }
+}
+
+export function addTopic (topic) {
+  return {
+    type: ADD_TOPIC,
+    topic
+  }
+}
+
+export function addTopicSuccess (topic) {
+  return {
+    type: ADD_TOPIC_SUCCESS,
+    topic
+  }
+}
+
+export function addTopicError (err) {
+  return {
+    type: ADD_TOPIC_ERROR,
+    err
+  }
+}
+
+export function removeTopic (name) {
+  return {
+    type: REMOVE_TOPIC,
     name
+  }
+}
+
+export function removeTopicSuccess (topic) {
+  return {
+    type: REMOVE_TOPIC_SUCCESS,
+    topic
+  }
+}
+
+export function removeTopicError (err) {
+  return {
+    type: REMOVE_TOPIC_ERROR,
+    err
+  }
+}
+
+export function loadUserData () {
+  return {
+    type: LOAD_USER_DATA
+  }
+}
+
+export function reposLoaded (data) {
+  return {
+    type: LOAD_USER_DATA_SUCCESS,
+    data
+  }
+}
+
+export function repoLoadingError (error) {
+  return {
+    type: LOAD_USER_DATA_ERROR,
+    error
+  }
+}
+
+export function loadFeeds (args = {}) {
+  return {
+    type: LOAD_FEEDS,
+    args
+  }
+}
+
+export function feedsLoaded (data) {
+  return {
+    type: LOAD_FEEDS_SUCCESS,
+    data
+  }
+}
+
+export function feedLoadingError (error) {
+  return {
+    type: LOAD_FEEDS_ERROR,
+    error
   }
 }

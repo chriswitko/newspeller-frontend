@@ -4,33 +4,49 @@
 
 import { createSelector } from 'reselect'
 
-const selectHome = (state) => state.get('home')
-const selectGlobal = (state) => state.get('global')
+const selectLocal = (state) => state.get('password')
 
 const makeSelectUsername = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('username') || window.localStorage.getItem('currentUser') || ''
+  selectLocal,
+  (localState) => localState.get('username')
 )
 
 const makeSelectPassword = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('password') || ''
+  selectLocal,
+  (localState) => localState.get('password')
+)
+
+const makeSelectLoading = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('loading')
+)
+
+const makeSelectError = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('error')
 )
 
 const makeSelectToken = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('token') || ''
+  selectLocal,
+  (localState) => localState.get('token')
 )
 
 const makeSelectReset = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('reset')
+  selectLocal,
+  (localState) => localState.get('reset')
+)
+
+const makeSelectUpdated = () => createSelector(
+  selectLocal,
+  (localState) => localState.get('updated')
 )
 
 export {
-  selectHome,
   makeSelectUsername,
   makeSelectPassword,
   makeSelectToken,
-  makeSelectReset
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectReset,
+  makeSelectUpdated
 }

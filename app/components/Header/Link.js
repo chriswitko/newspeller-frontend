@@ -4,11 +4,11 @@ import { Link } from 'react-router'
 
 const A = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #6B788A;
   font-weight: bold;
 
   &:hover {
-    color: white;
+    color: #6B788A;
     text-decoration: underline;
   }
 `
