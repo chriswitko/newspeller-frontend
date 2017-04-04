@@ -41,7 +41,7 @@ export class IndexPage extends React.PureComponent {
     const onejan = new Date(new Date().getFullYear(), 0, 1)
     const millisecsInDay = 86400000
     const start = 2017
-    const approx = 67
+    const approx = 17
     return approx * (new Date().getFullYear() - start + 1) * Math.ceil((((new Date() - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7)
   }
 
