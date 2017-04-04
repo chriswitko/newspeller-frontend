@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 const DEFAULT_LANG = 'en'
 const availableLanguages = ['en', 'de', 'pl']
 
-const _getInterfaceLanguage = () => {
+const _getInterfaceLanguage = _ => {
   let lang = null
   if (typeof navigator !== 'undefined' && navigator.languages && typeof navigator.languages !== 'undefined' && navigator.languages[0] && typeof navigator.languages[0] !== 'undefined') {
     lang = navigator.languages[0]
@@ -30,67 +30,67 @@ const selectGlobal = (state) => state.get('global')
 
 const selectLanguage = (state) => state.get('language')
 
-const makeSelectLocale = () => createSelector(
+const makeSelectLocale = _ => createSelector(
   selectLanguage,
   (languageState) => window.localStorage.getItem('language') || _getInterfaceLanguage() || languageState.get('locale') || 'en'
 )
 
-const makeSelectEmail = () => createSelector(
+const makeSelectEmail = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'email'])
 )
 
-const makeSelectActivatedAt = () => createSelector(
+const makeSelectActivatedAt = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'activated_at']) || window.localStorage.getItem('activatedAt')
 )
 
-const makeSelectToken = () => createSelector(
+const makeSelectToken = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.get('token') || window.localStorage.getItem('token')
 )
 
-const makeSelectCurrentUser = () => createSelector(
+const makeSelectCurrentUser = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.get('currentUser') || window.localStorage.getItem('currentUser')
 )
 
-const makeSelectUserId = () => createSelector(
+const makeSelectUserId = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.get('currentUserId') || window.localStorage.getItem('currentUserId')
 )
 
-const makeSelectNextAt = () => createSelector(
+const makeSelectNextAt = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'nextAt'])
 )
 
-const makeSelectLoading = () => createSelector(
+const makeSelectLoading = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.get('loading')
 )
 
-const makeSelectError = () => createSelector(
+const makeSelectError = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.get('error')
 )
 
-const makeSelectRepos = () => createSelector(
+const makeSelectRepos = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'repositories'])
 )
 
-const makeSelectSubscriptions = () => createSelector(
+const makeSelectSubscriptions = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'subscriptions'])
 )
 
-const makeSelectFeeds = () => createSelector(
+const makeSelectFeeds = _ => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['channels'])
 )
 
-const makeSelectLocationState = () => {
+const makeSelectLocationState = _ => {
   let prevRoutingState
   let prevRoutingStateJS
 

@@ -29,7 +29,7 @@ const initialState = fromJS({
   error: false
 })
 
-function localReducer (state = initialState, action) {
+const localReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_SEND_ACTIVATION_SUCCESS:
       return state

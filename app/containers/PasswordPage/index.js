@@ -159,7 +159,7 @@ PasswordPage.propTypes = {
   onChangeUsername: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),

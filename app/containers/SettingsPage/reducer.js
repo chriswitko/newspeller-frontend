@@ -43,7 +43,7 @@ const strToMin = str => {
   return (hours * 60) + minutes
 }
 
-function localReducer (state = initialState, action) {
+const localReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER_DATA:
       return state

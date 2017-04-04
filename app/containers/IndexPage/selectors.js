@@ -6,22 +6,22 @@ import { createSelector } from 'reselect'
 
 const selectLocal = (state) => state.get('index')
 
-const makeSelectUsername = () => createSelector(
+const makeSelectUsername = _ => createSelector(
   selectLocal,
   (localState) => localState.get('username')
 )
 
-const makeSelectToken = () => createSelector(
+const makeSelectToken = _ => createSelector(
   selectLocal,
   (localState) => localState.get('token')
 )
 
-const makeSelectLoading = () => createSelector(
+const makeSelectLoading = _ => createSelector(
   selectLocal,
   (localState) => localState.get('loading')
 )
 
-const makeSelectError = () => createSelector(
+const makeSelectError = _ => createSelector(
   selectLocal,
   (localState) => localState.get('error')
 )

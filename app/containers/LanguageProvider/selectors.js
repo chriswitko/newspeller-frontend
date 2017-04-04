@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 const DEFAULT_LANG = 'en'
 const availableLanguages = ['en', 'de', 'pl']
 
-const _getInterfaceLanguage = () => {
+const _getInterfaceLanguage = _ => {
   let lang = null
   if (typeof navigator !== 'undefined' && navigator.languages && typeof navigator.languages !== 'undefined' && navigator.languages[0] && typeof navigator.languages[0] !== 'undefined') {
     lang = navigator.languages[0]
@@ -31,7 +31,7 @@ const selectLanguage = (state) => state.get('language')
  * Select the language locale
  */
 
-const makeSelectLocale = () => createSelector(
+const makeSelectLocale = _ => createSelector(
   selectLanguage,
   (languageState) => window.localStorage.getItem('language') || _getInterfaceLanguage() || languageState.get('locale') || 'en'
 )

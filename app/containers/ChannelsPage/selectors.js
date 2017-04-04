@@ -2,32 +2,32 @@ import { createSelector } from 'reselect'
 
 const selectLocal = (state) => state.get('channels')
 
-const makeSelectLoading = () => createSelector(
+const makeSelectLoading = _ => createSelector(
   selectLocal,
   (localState) => localState.get('loading')
 )
 
-const makeSelectError = () => createSelector(
+const makeSelectError = _ => createSelector(
   selectLocal,
   (localState) => localState.get('error')
 )
 
-const makeSelectConfirmedAt = () => createSelector(
+const makeSelectConfirmedAt = _ => createSelector(
   selectLocal,
   (localState) => localState.get('confirmedAt')
 )
 
-const makeSelectResent = () => createSelector(
+const makeSelectResent = _ => createSelector(
   selectLocal,
   (localState) => localState.get('resent')
 )
 
-const makeSelectFeeds = () => createSelector(
+const makeSelectFeeds = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['channels'])
 )
 
-const makeSelectToken = () => createSelector(
+const makeSelectToken = _ => createSelector(
   selectLocal,
   (localState) => localState.get('token') || window.localStorage.getItem('token')
 )

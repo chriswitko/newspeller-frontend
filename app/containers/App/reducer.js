@@ -38,7 +38,7 @@ const initialState = fromJS({
   }
 })
 
-function appReducer (state = initialState, action) {
+const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGOUT:
       window.localStorage.setItem('currentUser', '')

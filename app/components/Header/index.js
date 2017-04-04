@@ -34,7 +34,7 @@ class Header extends React.Component {
     return { textAlign: 'left' }
   };
 
-  buttons = () => {
+  buttons = _ => {
     return this.props.token ? (
       <div>
         <Link to='home'>
@@ -87,7 +87,7 @@ Header.propTypes = {
   handleLogout: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     handleLogout: () => {
       dispatch(logoutUser())

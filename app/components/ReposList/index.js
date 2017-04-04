@@ -5,13 +5,13 @@ import ListItem from 'components/ListItem'
 import LoadingIndicator from 'components/LoadingIndicator'
 import RepoListItem from 'containers/RepoListItem'
 
-function ReposList ({ loading, error, subscriptions, onRemove, onAdd }) {
+const ReposList = ({ loading, error, subscriptions, onRemove, onAdd }) => {
   if (loading) {
     return <List component={LoadingIndicator} />
   }
 
   if (error !== false) {
-    const ErrorComponent = () => (
+    const ErrorComponent = _ => (
       <ListItem item={'Something went wrong, please try again!'} />
     )
     return <List component={ErrorComponent} />

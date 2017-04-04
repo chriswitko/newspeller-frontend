@@ -1,3 +1,4 @@
+/* global fetch */
 import 'whatwg-fetch'
 
 /**
@@ -7,7 +8,7 @@ import 'whatwg-fetch'
  *
  * @return {object}          The parsed JSON from the request
  */
-function parseJSON (response) {
+const parseJSON = response => {
   return response.json()
 }
 
@@ -18,7 +19,7 @@ function parseJSON (response) {
  *
  * @return {object|undefined} Returns either the response, or throws an error
  */
-function checkStatus (response) {
+const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return response
   }

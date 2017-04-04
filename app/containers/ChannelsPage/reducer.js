@@ -28,7 +28,7 @@ const initialState = fromJS({
   confirmedAt: false
 })
 
-function localReducer (state = initialState, action) {
+const localReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_RESEND_ACTIVATION_SUCCESS:
       return state

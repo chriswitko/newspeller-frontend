@@ -16,7 +16,7 @@ import SpaceWrapper from 'components/SpaceWrapper'
 import withProgressBar from 'components/ProgressBar'
 import { Container, Row, Col } from 'react-grid-system'
 
-export function App (props) {
+export const App = props => {
   return (
     <div>
       <Helmet

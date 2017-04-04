@@ -121,7 +121,7 @@ SignInPage.propTypes = {
   onChangePassword: PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch, ownProps) {
+export const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onChangePassword: (evt) => dispatch(changePassword(evt.target.value)),

@@ -26,7 +26,7 @@ const routeInitialState = fromJS({
 /**
  * Merge route into the global application state
  */
-function routeReducer (state = routeInitialState, action) {
+const routeReducer = (state = routeInitialState, action) => {
   switch (action.type) {
     /* istanbul ignore next */
     case LOCATION_CHANGE:

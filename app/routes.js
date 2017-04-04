@@ -31,7 +31,7 @@ const requireAuth = (nextState, replace) => {
   }
 }
 
-const logPageView = () => {
+const logPageView = _ => {
   ReactGA.set({ page: window.location.pathname })
   ReactGA.pageview(window.location.pathname)
 }

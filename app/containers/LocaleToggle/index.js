@@ -32,11 +32,9 @@ LocaleToggle.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   locale: makeSelectLocale()
-}
-  // (locale) => ({ locale })
-)
+})
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onLocaleToggle: (evt) => dispatch(changeLocale(evt.target.value)),
     dispatch

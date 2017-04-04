@@ -41,7 +41,7 @@ const icon = (item) => {
   return <div style={{width: '50px', height: '50px', overflow: 'hidden', marginRight: '15px'}}>{icon}</div>
 }
 
-function ChannelItem ({ sections, onAdd, onRemove, intl }) {
+const ChannelItem = ({ sections, onAdd, onRemove, intl }) => {
   return (
     <div>
       {Object.keys(sections).map(s => {

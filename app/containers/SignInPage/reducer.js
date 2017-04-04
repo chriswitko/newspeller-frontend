@@ -28,7 +28,7 @@ const initialState = fromJS({
   error: false
 })
 
-function localReducer (state = initialState, action) {
+const localReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_AUTHORIZE:
       return state

@@ -2,32 +2,32 @@ import { createSelector } from 'reselect'
 
 const selectLocal = (state) => state.get('register')
 
-const makeSelectPassword = () => createSelector(
+const makeSelectPassword = _ => createSelector(
   selectLocal,
   (localState) => localState.get('password')
 )
 
-const makeSelectToken = () => createSelector(
+const makeSelectToken = _ => createSelector(
   selectLocal,
   (localState) => localState.get('token')
 )
 
-const makeSelectTimezone = () => createSelector(
+const makeSelectTimezone = _ => createSelector(
   selectLocal,
   (localState) => localState.get('timezone')
 )
 
-const makeSelectLocale = () => createSelector(
+const makeSelectLocale = _ => createSelector(
   selectLocal,
   (localState) => localState.get('language')
 )
 
-const makeSelectLoading = () => createSelector(
+const makeSelectLoading = _ => createSelector(
   selectLocal,
   (localState) => localState.get('loading')
 )
 
-const makeSelectError = () => createSelector(
+const makeSelectError = _ => createSelector(
   selectLocal,
   (localState) => localState.get('error')
 )

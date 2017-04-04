@@ -17,7 +17,7 @@ const initialState = fromJS({
   locale: DEFAULT_LOCALE
 })
 
-function languageProviderReducer (state = initialState, action) {
+const languageProviderReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_LOCALE:
       window.localStorage.setItem('language', action.locale)

@@ -127,7 +127,7 @@ const validateEmail = (email) => {
   return false
 }
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: (evt) => {

@@ -126,7 +126,7 @@ RegisterPage.propTypes = {
   onChangeUsername: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onChangeLocale: (evt) => dispatch(changeLocale(evt.target.value)),
     onChangeTimezone: (evt) => dispatch(changeTimezone(evt.target.value)),

@@ -6,47 +6,47 @@ import { createSelector } from 'reselect'
 
 const selectLocal = (state) => state.get('settings')
 
-const makeSelectUsername = () => createSelector(
+const makeSelectUsername = _ => createSelector(
   selectLocal,
   (localState) => localState ? localState.get('username') : 'chris.witko@me.com'
 )
 
-const makeSelectHour = () => createSelector(
+const makeSelectHour = _ => createSelector(
   selectLocal,
   (localState) => localState ? localState.get('hour') : 'HH'
 )
 
-const makeSelectMinute = () => createSelector(
+const makeSelectMinute = _ => createSelector(
   selectLocal,
   (localState) => localState ? localState.get('minute') : 'MM'
 )
 
-const makeSelectLoading = () => createSelector(
+const makeSelectLoading = _ => createSelector(
   selectLocal,
   (localState) => localState.get('loading')
 )
 
-const makeSelectError = () => createSelector(
+const makeSelectError = _ => createSelector(
   selectLocal,
   (localState) => localState.get('error')
 )
 
-const makeSelectDays = () => createSelector(
+const makeSelectDays = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['userData', 'days'])
 )
 
-const makeSelectHours = () => createSelector(
+const makeSelectHours = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['userData', 'hours'])
 )
 
-const makeSelectTimezone = () => createSelector(
+const makeSelectTimezone = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['userData', 'timezone'])
 )
 
-const makeSelectLanguage = () => createSelector(
+const makeSelectLanguage = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['userData', 'language'])
 )

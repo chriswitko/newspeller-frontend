@@ -26,13 +26,13 @@ const Ul = styled.ul`
   }
 `
 
-function ReposHours ({ loading, error, hours, onRemoveHour }) {
+const ReposHours = ({ loading, error, hours, onRemoveHour }) => {
   if (loading) {
     return <List component={LoadingIndicator} />
   }
 
   if (error !== false) {
-    const ErrorComponent = () => (
+    const ErrorComponent = _ => (
       <ListItem item={'Something went wrong, please try again!'} />
     )
     return <List component={ErrorComponent} />

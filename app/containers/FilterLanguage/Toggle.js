@@ -9,7 +9,7 @@ import React from 'react'
 import Select from './Select'
 import ToggleOption from './ToggleOption'
 
-function Toggle (props) {
+const Toggle = props => {
   let content = (<option>--</option>)
 
   // If we have items, render them

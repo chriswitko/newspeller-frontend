@@ -27,7 +27,7 @@ const Ul = styled.ul`
   }
 `
 
-function ReposDays ({ loading, error, days, onRemoveDay, onAddDay, intl }) {
+const ReposDays = ({ loading, error, days, onRemoveDay, onAddDay, intl }) => {
   const daysOfWeek = [
     intl.formatMessage(messages.shortMonday),
     intl.formatMessage(messages.shortTuesday),
@@ -43,7 +43,7 @@ function ReposDays ({ loading, error, days, onRemoveDay, onAddDay, intl }) {
   }
 
   if (error !== false) {
-    const ErrorComponent = () => (
+    const ErrorComponent = _ => (
       <ListItem item={'Something went wrong, please try again!'} />
     )
     return <List component={ErrorComponent} />

@@ -36,7 +36,7 @@ export class ChannelsPage extends React.PureComponent {
   render () {
     const { loading, channels, onRemove, onAdd, onResend, language, intl, confirmedAt, resent } = this.props
 
-    const showConfirmationAlert = () => {
+    const showConfirmationAlert = _ => {
       if (!loading && !confirmedAt && !resent) {
         return (
           <SpaceWrapper bg='#ff294c' color='white'>
@@ -93,7 +93,7 @@ export class ChannelsPage extends React.PureComponent {
       }
     }
 
-    const langsByOrder = () => {
+    const langsByOrder = _ => {
       const languages = ['en', 'pl', 'es', 'fr', 'de']
       return Array.from(new Set([language, ...languages]))
     }
@@ -187,7 +187,7 @@ ChannelsPage.propTypes = {
   onAdd: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onResend: (data) => {
       dispatch(resendActivationEmail())

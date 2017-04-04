@@ -16,7 +16,7 @@ const FA = styled(A)`
   }
 `
 
-function Footer () {
+const Footer = _ => {
   return (
     <Wrapper>
       <Row>

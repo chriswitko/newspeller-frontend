@@ -33,169 +33,169 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeTime (time) {
+export const changeTime = time => {
   return {
     type: CHANGE_TIME,
     time
   }
 }
 
-export function addNewHour (hour) {
+export const addNewHour = hour => {
   return {
     type: ADD_HOUR,
     hour
   }
 }
 
-export function addHourSuccess (hour) {
+export const addHourSuccess = hour => {
   return {
     type: ADD_HOUR_SUCCESS,
     hour
   }
 }
 
-export function addHourError (err) {
+export const addHourError = err => {
   return {
     type: ADD_HOUR_ERROR,
     err
   }
 }
 
-export function removeHourSuccess (hour) {
+export const removeHourSuccess = hour => {
   return {
     type: REMOVE_HOUR_SUCCESS,
     hour
   }
 }
 
-export function removeHourError (err) {
+export const removeHourError = err => {
   return {
     type: REMOVE_HOUR_ERROR,
     err
   }
 }
 
-export function removeDaySuccess (day) {
+export const removeDaySuccess = day => {
   return {
     type: REMOVE_DAY_SUCCESS,
     day
   }
 }
 
-export function removeDayError (err) {
+export const removeDayError = err => {
   return {
     type: REMOVE_DAY_ERROR,
     err
   }
 }
 
-export function addDaySuccess (day) {
+export const addDaySuccess = day => {
   return {
     type: ADD_DAY_SUCCESS,
     day
   }
 }
 
-export function addDayError (day) {
+export const addDayError = day => {
   return {
     type: ADD_DAY_ERROR,
     day
   }
 }
 
-export function removeDay (day) {
+export const removeDay = day => {
   return {
     type: REMOVE_DAY,
     day
   }
 }
 
-export function addDay (day) {
+export const addDay = day => {
   return {
     type: ADD_DAY,
     day
   }
 }
 
-export function removeHour (hour) {
+export const removeHour = hour => {
   return {
     type: REMOVE_HOUR,
     hour
   }
 }
 
-export function updateTimezoneSuccess (timezone) {
+export const updateTimezoneSuccess = timezone => {
   return {
     type: UPDATE_TIMEZONE_SUCCESS,
     timezone
   }
 }
 
-export function updateTimezoneError (err) {
+export const updateTimezoneError = err => {
   return {
     type: UPDATE_TIMEZONE_ERROR,
     err
   }
 }
 
-export function updateTimezone (timezone) {
+export const updateTimezone = timezone => {
   return {
     type: UPDATE_TIMEZONE,
     timezone
   }
 }
 
-export function removeAccount () {
+export const removeAccount = _ => {
   return {
     type: REMOVE_ACCOUNT
   }
 }
 
-export function removeAccountSuccess () {
+export const removeAccountSuccess = _ => {
   return {
     type: REMOVE_ACCOUNT_SUCCESS
   }
 }
 
-export function removeAccountError () {
+export const removeAccountError = _ => {
   return {
     type: REMOVE_ACCOUNT_ERROR
   }
 }
 
-export function changeUserLanguageSuccess () {
+export const changeUserLanguageSuccess = _ => {
   return {
     type: CHANGE_LANGUAGE_SUCCESS
   }
 }
 
-export function changeUserLanguageError () {
+export const changeUserLanguageError = _ => {
   return {
     type: CHANGE_LANGUAGE_ERROR
   }
 }
 
-export function changeUserLanguage (language) {
+export const changeUserLanguage = language => {
   return {
     type: CHANGE_LANGUAGE,
     locale: language
   }
 }
 
-export function loadUserData () {
+export const loadUserData = _ => {
   return {
     type: LOAD_USER_DATA
   }
 }
 
-export function userLoaded (data) {
+export const userLoaded = data => {
   return {
     type: LOAD_USER_DATA_SUCCESS,
     data
   }
 }
 
-export function userError (error) {
+export const userError = error => {
   return {
     type: LOAD_USER_DATA_ERROR,
     error

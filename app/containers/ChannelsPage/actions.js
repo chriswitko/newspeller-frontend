@@ -1,20 +1,3 @@
-/*
- * Home Actions
- *
- * Actions change things in your application
- * Since this boilerplate uses a uni-directional data flow, specifically redux,
- * we have these actions which are the only way your application interacts with
- * your application state. This guarantees that your state is up to date and nobody
- * messes it up weirdly somewhere.
- *
- * To add a new Action:
- * 1) Import your constant
- * 2) Add a function like this:
- *    export function yourAction(var) {
- *        return { type: YOUR_ACTION_CONSTANT, var: var }
- *    }
- */
-
 import {
   USER_RESEND_ACTIVATION,
   USER_RESEND_ACTIVATION_SUCCESS,
@@ -40,104 +23,104 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function resendActivationEmail (user) {
+export const resendActivationEmail = (user) => {
   return {
     type: USER_RESEND_ACTIVATION,
     user
   }
 }
 
-export function resendActivationEmailSuccess (user) {
+export const resendActivationEmailSuccess = (user) => {
   return {
     type: USER_RESEND_ACTIVATION_SUCCESS,
     user
   }
 }
 
-export function resendActivationEmailError (user) {
+export const resendActivationEmailError = (user) => {
   return {
     type: USER_RESEND_ACTIVATION_ERROR,
     user
   }
 }
 
-export function addTopic (topic) {
+export const addTopic = (topic) => {
   return {
     type: ADD_TOPIC,
     topic
   }
 }
 
-export function addTopicSuccess (topic) {
+export const addTopicSuccess = (topic) => {
   return {
     type: ADD_TOPIC_SUCCESS,
     topic
   }
 }
 
-export function addTopicError (err) {
+export const addTopicError = (err) => {
   return {
     type: ADD_TOPIC_ERROR,
     err
   }
 }
 
-export function removeTopic (name) {
+export const removeTopic = (name) => {
   return {
     type: REMOVE_TOPIC,
     name
   }
 }
 
-export function removeTopicSuccess (topic) {
+export const removeTopicSuccess = (topic) => {
   return {
     type: REMOVE_TOPIC_SUCCESS,
     topic
   }
 }
 
-export function removeTopicError (err) {
+export const removeTopicError = (err) => {
   return {
     type: REMOVE_TOPIC_ERROR,
     err
   }
 }
 
-export function loadUserData () {
+export const loadUserData = _ => {
   return {
     type: LOAD_USER_DATA
   }
 }
 
-export function reposLoaded (data) {
+export const reposLoaded = (data) => {
   return {
     type: LOAD_USER_DATA_SUCCESS,
     data
   }
 }
 
-export function repoLoadingError (error) {
+export const repoLoadingError = (error) => {
   return {
     type: LOAD_USER_DATA_ERROR,
     error
   }
 }
 
-export function loadFeeds (args = {}) {
+export const loadFeeds = (args = {}) => {
   return {
     type: LOAD_FEEDS,
     args
   }
 }
 
-export function feedsLoaded (data) {
+export const feedsLoaded = (data) => {
   return {
     type: LOAD_FEEDS_SUCCESS,
     data
   }
 }
 
-export function feedLoadingError (error) {
+export const feedLoadingError = (error) => {
   return {
     type: LOAD_FEEDS_ERROR,
     error

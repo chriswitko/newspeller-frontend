@@ -7,7 +7,7 @@
 
 import React, { PropTypes } from 'react'
 
-function Img (props) {
+const Img = props => {
   const {className, src, alt} = props
 
   return (

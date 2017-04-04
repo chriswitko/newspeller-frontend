@@ -29,7 +29,7 @@ const initialState = fromJS({
   loading: false
 })
 
-function localReducer (state = initialState, action) {
+const localReducer = (state = initialState, action) => {
   switch (action.type) {
     case REPORT_ERROR:
       return state

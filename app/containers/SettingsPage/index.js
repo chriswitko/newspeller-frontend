@@ -224,7 +224,7 @@ SettingsPage.propTypes = {
   onChangeTime: React.PropTypes.func
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export const mapDispatchToProps = (dispatch, props) => {
   return {
     onChangeLanguage: (evt) => dispatch(changeUserLanguage(evt.target.value)),
     onRemoveAccount: () => dispatch(removeAccount()),
