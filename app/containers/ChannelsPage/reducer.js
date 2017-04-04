@@ -5,7 +5,8 @@ import {
   REMOVE_TOPIC_SUCCESS,
   LOAD_FEEDS,
   LOAD_FEEDS_SUCCESS,
-  LOAD_FEEDS_ERROR
+  LOAD_FEEDS_ERROR,
+  USER_RESEND_ACTIVATION_SUCCESS
 } from './constants'
 
 const initialState = fromJS({
@@ -29,6 +30,9 @@ const initialState = fromJS({
 
 function localReducer (state = initialState, action) {
   switch (action.type) {
+    case USER_RESEND_ACTIVATION_SUCCESS:
+      return state
+        .set('resent', true)
     case LOAD_FEEDS:
       return state
         .set('loading', true)

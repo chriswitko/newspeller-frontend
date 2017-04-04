@@ -8,23 +8,27 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   headline: {
     id: 'newspeller.containers.IndexPage.headline',
-    defaultMessage: 'The news headlines delivered to your inbox'
+    defaultMessage: 'All the news you want. All in your inbox.'
+  },
+  subline: {
+    id: 'newspeller.containers.IndexPage.subline',
+    defaultMessage: 'Subscribe to your favourite magazines and newspapers directly from your inbox.'
   },
   perks1: {
     id: 'newspeller.containers.IndexPage.perks1',
-    defaultMessage: 'Enter your email address'
+    defaultMessage: 'Read your favourite magazines and newspapers'
   },
   perks2: {
     id: 'newspeller.containers.IndexPage.perks2',
-    defaultMessage: 'Select your favourite channels'
+    defaultMessage: 'See what\'s happening in the world'
   },
   perks3: {
     id: 'newspeller.containers.IndexPage.perks3',
-    defaultMessage: 'Decide what day and time you wish to receive emails'
+    defaultMessage: 'Stay up-to-date on breaking news'
   },
   perks4: {
     id: 'newspeller.containers.IndexPage.perks4',
-    defaultMessage: 'Get all news headlines in one email'
+    defaultMessage: 'Adjust time of delivery to your needs'
   },
   regFormEnterEmail: {
     id: 'newspeller.containers.IndexPage.regFormEnterEmail',

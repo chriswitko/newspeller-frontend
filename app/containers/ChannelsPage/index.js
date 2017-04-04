@@ -13,7 +13,7 @@ import messages from './messages'
 
 import { makeSelectLocale } from 'containers/App/selectors'
 
-import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectToken } from './selectors'
+import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds } from './selectors'
 import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail } from './actions'
 
 import { Row, Col } from 'react-grid-system'
@@ -34,7 +34,7 @@ export class ChannelsPage extends React.PureComponent {
   }
 
   render () {
-    const { loading, channels, onRemove, onAdd, onResend, language, token, intl, confirmedAt, resent } = this.props
+    const { loading, channels, onRemove, onAdd, onResend, language, intl, confirmedAt, resent } = this.props
 
     const showConfirmationAlert = () => {
       if (!loading && !confirmedAt && !resent) {
@@ -43,12 +43,7 @@ export class ChannelsPage extends React.PureComponent {
             <Div>
               <FormattedMessage {...messages.resendMessage} />
             </Div>
-            <ButtonSubmit color='white' href='#' onClick={() => {
-              onResend({
-                token: token
-              })
-            }
-            }><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
+            <ButtonSubmit type='button' color='white' onClick={onResend}><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
           </SpaceWrapper>
         )
       }
@@ -195,9 +190,7 @@ ChannelsPage.propTypes = {
 export function mapDispatchToProps (dispatch) {
   return {
     onResend: (data) => {
-      dispatch(resendActivationEmail({
-        token: data.token
-      }))
+      dispatch(resendActivationEmail())
     },
     onChangeLanguage: (e) => {
       dispatch(loadFeeds({
@@ -230,7 +223,6 @@ const mapStateToProps = createStructuredSelector({
   channels: makeSelectFeeds(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  token: makeSelectToken(),
   confirmedAt: makeSelectConfirmedAt()
 })
 

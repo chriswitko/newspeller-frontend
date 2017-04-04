@@ -12,7 +12,7 @@ export default defineMessages({
   },
   intro: {
     id: 'newspeller.containers.ChannelsPage.intro',
-    defaultMessage: 'Here you can find more channels to subscribe to. Each day we are adding new channels.'
+    defaultMessage: 'Here you can find all magazines and newspapers you can subscribe. Each day we are adding new sources.'
   },
   filterByLang: {
     id: 'newspeller.containers.ChannelsPage.filterByLang',

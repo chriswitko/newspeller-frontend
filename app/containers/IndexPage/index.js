@@ -69,6 +69,7 @@ export class IndexPage extends React.PureComponent {
                       <h1 style={{padding: 0, margin: 0, lineHeight: '1.2em'}}>
                         <FormattedMessage {...messages.headline} />
                       </h1>
+                      <p><FormattedMessage {...messages.subline} /></p>
                       <ol>
                         <li><FormattedMessage {...messages.perks1} /></li>
                         <li><FormattedMessage {...messages.perks2} /></li>
@@ -115,7 +116,7 @@ IndexPage.propTypes = {
 }
 
 const validateEmail = (email) => {
-  if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+  if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
     return true
   }
   return false

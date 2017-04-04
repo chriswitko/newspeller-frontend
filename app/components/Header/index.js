@@ -13,6 +13,7 @@ import { Row, Col, ScreenClassRender } from 'react-grid-system'
 import A from './A'
 import Link from './Link'
 import Logo from 'components/Logo'
+import Icon from 'assets/n_logo_r.png'
 
 class Header extends React.Component {
   styleActions = (screenClass) => {
@@ -61,12 +62,17 @@ class Header extends React.Component {
     return (
       <div>
         <Row>
-          <Col lg={4} sm={12}>
+          <Col lg={5} sm={12}>
             <ScreenClassRender style={this.styleLogo}>
-              <Logo black />
+              <div style={{display: 'block', width: '100%'}}>
+                <div style={{float: 'left', marginRight: '15px'}}>
+                  <img src={Icon} height='50' />
+                </div>
+                <Logo black style={{float: 'left'}} />
+              </div>
             </ScreenClassRender>
           </Col>
-          <Col lg={8} sm={12}>
+          <Col lg={7} sm={12}>
             <ScreenClassRender style={this.styleActions}>
               {this.buttons()}
             </ScreenClassRender>

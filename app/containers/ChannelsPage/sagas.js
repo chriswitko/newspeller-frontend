@@ -32,6 +32,7 @@ import {
 import request, {API_ENDPOINT} from 'utils/request'
 
 export function * fetchUserReActivation (action) {
+  const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/subscribers/resendActivationEmail`
 
   try {
@@ -41,7 +42,7 @@ export function * fetchUserReActivation (action) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token: action.user.token
+        token: token
       })
     })
     yield put(resendActivationEmailSuccess(user))
@@ -108,5 +109,6 @@ export function * resendActivationSaga () {
 export default [
   removeTopicSaga,
   addTopicSaga,
-  loadFeedsDataSaga
+  loadFeedsDataSaga,
+  resendActivationSaga
 ]

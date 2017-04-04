@@ -5,7 +5,6 @@ import messages from './messages'
 
 import SpaceWrapper from 'components/SpaceWrapper'
 import Label from 'components/Label'
-import { Row, Col } from 'react-grid-system'
 import Avatar from 'react-avatar'
 import UlLogos from './components/UlLogos'
 
@@ -62,20 +61,18 @@ const promotedChannels = {
 const Faqs = ({intl}) => {
   return (
     <div>
-      <SpaceWrapper shadow bg='#183f63' color='#afffcc'>
-        <Row>
-          <Col lg={12}>
-            <Label>
-              <FormattedMessage {...messages.newsPubIntro} values={{numOrganizations: <strong>78 <FormattedMessage {...messages.wordNewsOrgs} /></strong>, numLangs: <strong>2 <FormattedMessage {...messages.wordLanguages} /></strong>, langs: <FormattedMessage {...messages.listLanguages} />, numCategories: <strong>11 <FormattedMessage {...messages.wordCategories} /></strong>, categories: <FormattedMessage {...messages.listCategories} />}} />
-            </Label>
-            <UlLogos>
-              {promotedChannels[intl.locale].map(channel => <li key={channel}><Avatar facebookId={channel} size={65} /></li>)}
-            </UlLogos>
-            <p>
-              <FormattedMessage {...messages.newsPubMore} /> <a href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPubRegLink} /> &raquo;</a>
-            </p>
-          </Col>
-        </Row>
+      <SpaceWrapper header>
+        <Label>
+          <FormattedMessage {...messages.newsPubIntro} values={{numOrganizations: <strong>78 <FormattedMessage {...messages.wordNewsOrgs} /></strong>, numLangs: <strong>2 <FormattedMessage {...messages.wordLanguages} /></strong>, langs: <FormattedMessage {...messages.listLanguages} />, numCategories: <strong>11 <FormattedMessage {...messages.wordCategories} /></strong>, categories: <FormattedMessage {...messages.listCategories} />}} />
+        </Label>
+      </SpaceWrapper>
+      <SpaceWrapper>
+        <UlLogos>
+          {promotedChannels[intl.locale].map(channel => <li key={channel}><Avatar facebookId={channel} size={65} /></li>)}
+        </UlLogos>
+        <div>
+          <FormattedMessage {...messages.newsPubMore} /> <a href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPubRegLink} /> &raquo;</a>
+        </div>
       </SpaceWrapper>
     </div>
   )

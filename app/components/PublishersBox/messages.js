@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   newsPubIntro: {
     id: 'newspeller.components.PublishersBox.newsPubIntro',
-    defaultMessage: 'We deliver news headlines from news publishers and magazines grouped by categories, including:'
+    defaultMessage: 'We deliver news headlines from newspapers and magazines grouped by categories, including:'
   },
   newsPubMore: {
     id: 'newspeller.components.PublishersBox.newsPubMore',

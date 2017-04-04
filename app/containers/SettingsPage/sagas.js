@@ -145,12 +145,9 @@ export function * getUserDataRemotely () {
   try {
     const repos = yield call(request, requestURL)
     yield put(userLoaded({
-      repos: repos.subscription.sources,
       subscriptions: repos.subscription.channels,
       timezone: repos.subscription.timezone,
       language: repos.subscriber.default_language,
-      email: repos.subscriber._id,
-      groupBy: repos.subscription.group_by,
       days: repos.subscription.days,
       hours: repos.subscription.hours,
       nextAt: repos.subscription.next_at,
