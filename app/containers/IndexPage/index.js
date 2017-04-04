@@ -53,7 +53,12 @@ export class IndexPage extends React.PureComponent {
         <Helmet
           title='Welcome'
           meta={[
-            { name: 'description', content: 'Newspeller.com' }
+            { name: 'description', content: 'Newspeller.com' },
+            {'name': 'description', 'content': 'Subscribe to your favourite magazines and newspapers directly to your inbox.'},
+            {'property': 'og:type', 'content': 'website'}
+          ]}
+          link={[
+            {'rel': 'canonical', 'href': 'https://newspeller.com'}
           ]}
         />
         <div>
