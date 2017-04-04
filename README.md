@@ -1,1 +1,1 @@
-The Newspeller (newspeller.com) - Source Code (React / Redux / Styled-Components)
+The Newspeller (https://newspeller.com) - Source Code (React / Redux / Styled-Components)
