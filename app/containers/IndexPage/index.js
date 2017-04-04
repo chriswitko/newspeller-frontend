@@ -65,7 +65,7 @@ export class IndexPage extends React.PureComponent {
           <Row>
             <Col sm={12}>
               <div>
-                <SpaceWrapper shadow bg='#4745d1' color='white'>
+                <SpaceWrapper shadow bg='linear-gradient(135deg, #b93fe5, #549eff)' color='white'>
                   <Row>
                     <Col lg={4} xs={12} style={{textAlign: 'center'}}>
                       <ImgLogo src={HeroImg} width='100%' style={{padding: '20px'}} />

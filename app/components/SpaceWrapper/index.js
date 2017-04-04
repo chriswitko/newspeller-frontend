@@ -63,13 +63,13 @@ const background = (bg = '#ffffff', color = '') => {
     `
   } else if (bg === 'white' || bg === '#fff' || bg === '#ffffff') {
     return `
-      background-color: ${bg};
+      background: ${bg};
       padding: 15px;
       margin-bottom: 15px;
     `
   } else {
     return `
-      background-color: ${bg};
+      background: ${bg};
       padding: 15px;
       margin-bottom: 15px;
     `
