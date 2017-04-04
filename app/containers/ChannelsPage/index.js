@@ -31,23 +31,28 @@ export class ChannelsPage extends React.PureComponent {
     this.props.onReady({
       language
     })
+
+    this.showConfirmationAlert = this.showConfirmationAlert.bind(this)
+  }
+
+
+  showConfirmationAlert = _ => {
+    const { loading, onResend, confirmedAt, resent } = this.props
+
+    if (!loading && !confirmedAt && !resent) {
+      return (
+        <SpaceWrapper bg='#ff294c' color='white'>
+          <Div>
+            <FormattedMessage {...messages.resendMessage} />
+          </Div>
+          <ButtonSubmit type='button' color='white' onClick={onResend}><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
+        </SpaceWrapper>
+      )
+    }
   }
 
   render () {
-    const { loading, channels, onRemove, onAdd, onResend, language, intl, confirmedAt, resent } = this.props
-
-    const showConfirmationAlert = _ => {
-      if (!loading && !confirmedAt && !resent) {
-        return (
-          <SpaceWrapper bg='#ff294c' color='white'>
-            <Div>
-              <FormattedMessage {...messages.resendMessage} />
-            </Div>
-            <ButtonSubmit type='button' color='white' onClick={onResend}><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
-          </SpaceWrapper>
-        )
-      }
-    }
+    const { loading, channels, onRemove, onAdd, language, intl } = this.props
 
     const listProps = {
       onRemove,
@@ -141,7 +146,7 @@ export class ChannelsPage extends React.PureComponent {
                       </div>
                     </Div>
                   </SpaceWrapper>
-                  {showConfirmationAlert()}
+                  {this.showConfirmationAlert()}
                   {loading ? <SpaceWrapper><FormattedMessage {...messages.loading} /></SpaceWrapper> : (
                     <div>
                       {langsByOrder().map(l => {
