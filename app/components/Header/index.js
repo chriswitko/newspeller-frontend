@@ -20,8 +20,8 @@ class Header extends React.Component {
     if (screenClass === 'xl') return { textAlign: 'right' }
     if (screenClass === 'lg') return { textAlign: 'right' }
     if (screenClass === 'md') return { textAlign: 'right' }
-    if (screenClass === 'sm') return { textAlign: 'center' }
-    if (screenClass === 'xs') return { textAlign: 'center' }
+    if (screenClass === 'sm') return { textAlign: 'center', paddingTop: '20px' }
+    if (screenClass === 'xs') return { textAlign: 'center', paddingTop: '20px' }
     return { textAlign: 'right' }
   };
 

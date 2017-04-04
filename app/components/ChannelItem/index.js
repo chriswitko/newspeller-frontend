@@ -38,7 +38,7 @@ const icon = (item) => {
     // icon = <img width='50' src={item.icon} />
     icon = <Avatar name={item.channelName} size={50} textSizeRatio={1.75} />
   }
-  return <div style={{width: '50px', height: '50px', overflow: 'hidden'}}>{icon}</div>
+  return <div style={{width: '50px', height: '50px', overflow: 'hidden', marginRight: '15px'}}>{icon}</div>
 }
 
 function ChannelItem ({ sections, onAdd, onRemove, intl }) {
@@ -49,10 +49,8 @@ function ChannelItem ({ sections, onAdd, onRemove, intl }) {
           <div key={s}>
             <SpaceWrapper bg='#e6e6e6' color='black' header>
               <Row style={{display: 'flex'}}>
-                <Col lg={1} xs={2} style={{display: 'flex', alignItems: 'center'}}>
+                <Col lg={12} xs={12} style={{display: 'flex', alignItems: 'center'}}>
                   {icon(sections[s].channel)}
-                </Col>
-                <Col lg={11} xs={10} style={{display: 'flex', alignItems: 'center'}}>
                   <h3 style={{margin: 0, padding: 0}}>{sections[s].channel.channelName}</h3>
                 </Col>
               </Row>
