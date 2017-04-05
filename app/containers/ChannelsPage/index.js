@@ -163,6 +163,9 @@ export class ChannelsPage extends React.PureComponent {
                           )
                         }
                       })}
+                      <SpaceWrapper>
+                        <strong><FormattedMessage {...messages.cantsee} /></strong>
+                      </SpaceWrapper>
                     </div>
                   )}
                 </Section>

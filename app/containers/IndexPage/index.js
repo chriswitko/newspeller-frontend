@@ -8,7 +8,8 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Link } from 'react-router'
-import { Row, Col } from 'react-grid-system'
+
+import CookieBanner from 'react-cookie-banner'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
@@ -16,6 +17,7 @@ import messages from './messages'
 import { makeSelectLoading, makeSelectError, makeSelectUsername, makeSelectToken } from './selectors'
 import { registerEmail, missingFields, changeUsername } from './actions'
 
+import { Row, Col } from 'react-grid-system'
 import Input from 'components/Input'
 import Label from 'components/Label'
 import ButtonSubmit from 'components/ButtonSubmit'
@@ -61,6 +63,10 @@ export class IndexPage extends React.PureComponent {
             {'rel': 'canonical', 'href': 'https://newspeller.com'}
           ]}
         />
+        <CookieBanner
+          message={intl.formatMessage(messages.cookies)}
+          onAccept={() => {}}
+          cookie='user-has-accepted-cookies' />
         <div>
           <Row>
             <Col sm={12}>
@@ -90,7 +96,7 @@ export class IndexPage extends React.PureComponent {
                           <Input
                             id='username'
                             type='username'
-                            placeholder={this.props.intl.formatMessage(messages.inputEmailPlaceholder)}
+                            placeholder={intl.formatMessage(messages.inputEmailPlaceholder)}
                             value={username}
                             onChange={onChangeUsername}
                             />
@@ -104,8 +110,8 @@ export class IndexPage extends React.PureComponent {
                     </Col>
                   </Row>
                 </SpaceWrapper>
-                <OurPromise {...intl} />
                 <PublishersBox {...intl} />
+                <OurPromise {...intl} />
                 <Faqs {...intl} />
               </div>
             </Col>

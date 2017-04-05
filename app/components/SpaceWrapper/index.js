@@ -30,6 +30,7 @@ const header = (header) => {
       text-width: 600;
       margin-bottom: 0px;
       border-bottom: 1px solid #d5d5d5;
+      font-weight: bold;
     `
   }
 }

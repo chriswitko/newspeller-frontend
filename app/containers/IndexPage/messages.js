@@ -14,6 +14,10 @@ export default defineMessages({
     id: 'newspeller.containers.IndexPage.subline',
     defaultMessage: 'Subscribe to your favourite magazines and newspapers directly from to inbox.'
   },
+  cookies: {
+    id: 'newspeller.containers.IndexPage.cookies',
+    defaultMessage: 'We use cookies to ensure that we give you the best experience on our website.'
+  },
   perks1: {
     id: 'newspeller.containers.IndexPage.perks1',
     defaultMessage: 'Read your favourite magazines and newspapers'

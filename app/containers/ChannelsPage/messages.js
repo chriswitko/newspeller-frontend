@@ -85,5 +85,9 @@ export default defineMessages({
   startAddingChannels: {
     id: 'newspeller.containers.ChannelsPage.startAddingChannels',
     defaultMessage: 'Start now by adding your favourite channels to start receiving your email.'
+  },
+  cantsee: {
+    id: 'newspeller.containers.ChannelsPage.cantsee',
+    defaultMessage: 'Can\'t see the one you want? Send us an email request (inbox@newspeller.com) and we can probably add it.'
   }
 })

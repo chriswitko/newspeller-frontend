@@ -2,11 +2,13 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
+import { Row, Col } from 'react-grid-system'
 import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
 import Wrapper from './Wrapper'
-import { Row, Col } from 'react-grid-system'
+
+import Racoo from 'assets/racoo.png'
 
 const FA = styled(A)`
   text-decoration: none;
@@ -33,10 +35,17 @@ const Footer = _ => {
           &nbsp;&middot;&nbsp;
           <FA href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPub} /></FA>
           <br />
-          <FormattedMessage {...messages.licenseMessage} />
         </Col>
         <Col lg={4} sm={12}>
           <LocaleToggle />
+        </Col>
+      </Row>
+      <Row>
+        <Col style={{textAlign: 'center', padding: '10px'}}>
+          <img src={Racoo} width='50' />
+        </Col>
+        <Col style={{textAlign: 'center', paddingBottom: '20px'}}>
+          <FormattedMessage {...messages.licenseMessage} />
         </Col>
       </Row>
     </Wrapper>
