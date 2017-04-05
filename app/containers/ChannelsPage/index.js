@@ -35,7 +35,6 @@ export class ChannelsPage extends React.PureComponent {
     this.showConfirmationAlert = this.showConfirmationAlert.bind(this)
   }
 
-
   showConfirmationAlert = _ => {
     const { loading, onResend, confirmedAt, resent } = this.props
 

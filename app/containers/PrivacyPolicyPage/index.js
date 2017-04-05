@@ -80,7 +80,7 @@ export default class PrivacyPolicyPage extends React.Component { // eslint-disab
                   <p>
                     The User's Personal Data may be used for legal purposes by the Data Controller, in Court or in the stages leading to possible legal action arising from improper use of this Application or the related services.
 
-                    The User declares to be aware that the Data Controller may be required to reveal personal data upon request of public authorities.                  
+                    The User declares to be aware that the Data Controller may be required to reveal personal data upon request of public authorities.
                   </p>
                   <H2>Additional information about User's Personal Data</H2>
                   <p>In addition to the information contained in this privacy policy, this Application may provide the User with additional and contextual information concerning particular services or the collection and processing of Personal Data upon request.</p>
@@ -94,7 +94,7 @@ export default class PrivacyPolicyPage extends React.Component { // eslint-disab
 
                     This Application does not support “Do Not Track” requests.
 
-                    To determine whether any of the third party services it uses honor the “Do Not Track” requests, please read their privacy policies.                  
+                    To determine whether any of the third party services it uses honor the “Do Not Track” requests, please read their privacy policies.
                   </p>
                   <H2>Changes to this privacy policy</H2>
                   <p>The Data Controller reserves the right to make changes to this privacy policy at any time by giving notice to its Users on this page. It is strongly recommended to check this page often, referring to the date of the last modification listed at the bottom. If a User objects to any of the changes to the Policy, the User must cease using this Application and can request that the Data Controller remove the Personal Data. Unless stated otherwise, the then-current privacy policy applies to all Personal Data the Data Controller has about Users.</p>
@@ -118,7 +118,7 @@ export default class PrivacyPolicyPage extends React.Component { // eslint-disab
                   <p>
                     Notice to European Users: this privacy statement has been prepared in fulfillment of the obligations under Art. 10 of EC Directive n. 95/46/EC, and under the provisions of Directive 2002/58/EC, as revised by Directive 2009/136/EC, on the subject of Cookies.
 
-                    This privacy policy relates solely to this Application.                  
+                    This privacy policy relates solely to this Application.
                   </p>
                 </SpaceWrapper>
               </div>

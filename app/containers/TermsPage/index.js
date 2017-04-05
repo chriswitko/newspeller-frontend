@@ -41,7 +41,7 @@ export default class TermsPage extends React.Component { // eslint-disable-line 
                     attempt to decompile or reverse engineer any software contained on The Newspeller's website;
                     remove any copyright or other proprietary notations from the materials; or
                     transfer the materials to another person or "mirror" the materials on any other server.
-                    This license shall automatically terminate if you violate any of these restrictions and may be terminated by The Newspeller at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.                  
+                    This license shall automatically terminate if you violate any of these restrictions and may be terminated by The Newspeller at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
                   </p>
                   <H2>3. Disclaimer</H2>
                   <p>The materials on The Newspeller's website are provided on an 'as is' basis. The Newspeller makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
