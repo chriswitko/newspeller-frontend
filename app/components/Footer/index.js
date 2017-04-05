@@ -7,6 +7,7 @@ import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
 import Wrapper from './Wrapper'
+import Small from 'components/Small'
 
 import Racoo from 'assets/racoo.png'
 
@@ -47,7 +48,7 @@ const Footer = _ => {
         <Col style={{textAlign: 'center', paddingBottom: '20px'}}>
           <FormattedMessage {...messages.licenseMessage} />
           <br />
-          Created & maintained by <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>.
+          <Small>Created & maintained by <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>. Selected data powered by <a href='https://newsapi.org' traget='_blank'>NewsAPI.org</a></Small>
         </Col>
       </Row>
     </Wrapper>
