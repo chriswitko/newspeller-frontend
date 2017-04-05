@@ -46,6 +46,8 @@ const Footer = _ => {
         </Col>
         <Col style={{textAlign: 'center', paddingBottom: '20px'}}>
           <FormattedMessage {...messages.licenseMessage} />
+          <br />
+          Created & maintained by <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>.
         </Col>
       </Row>
     </Wrapper>
