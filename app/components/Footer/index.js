@@ -6,7 +6,6 @@ import { Row, Col } from 'react-grid-system'
 import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
-import SpaceWrapper from 'components/SpaceWrapper'
 import Small from 'components/Small'
 
 import Racoo from 'assets/racoo.png'

@@ -51,7 +51,7 @@ export default defineMessages({
   },
   'category_fashion_design': {
     id: 'newspeller.containers.ChannelsPage.category_fashion_design',
-    defaultMessage: 'Fashion& Design'
+    defaultMessage: 'Fashion & Design'
   },
   'category_health_living': {
     id: 'newspeller.containers.ChannelsPage.category_health_living',
