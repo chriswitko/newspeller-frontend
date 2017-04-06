@@ -6,7 +6,7 @@ import { Row, Col } from 'react-grid-system'
 import A from 'components/A'
 import styled from 'styled-components'
 import LocaleToggle from 'containers/LocaleToggle'
-import Wrapper from './Wrapper'
+import SpaceWrapper from 'components/SpaceWrapper'
 import Small from 'components/Small'
 
 import Racoo from 'assets/racoo.png'
@@ -21,14 +21,12 @@ const FA = styled(A)`
 
 const Footer = _ => {
   return (
-    <Wrapper>
+    <div>
       <Row>
         <Col lg={8} sm={12}>
-          <FA href='#' target='_blank'><FormattedMessage {...messages.contact} /></FA>
+          <FA href='/about'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
-          &nbsp;&middot;&nbsp;
-          <FA href='/about'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='/terms'><FormattedMessage {...messages.terms} /></FA>
           &nbsp;&middot;&nbsp;
@@ -42,16 +40,19 @@ const Footer = _ => {
         </Col>
       </Row>
       <Row>
-        <Col style={{textAlign: 'center', padding: '10px'}}>
-          <img src={Racoo} width='50' />
-        </Col>
-        <Col style={{textAlign: 'center', paddingBottom: '20px'}}>
-          <FormattedMessage {...messages.licenseMessage} />
-          <br />
-          <Small>Created & maintained by <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>. Selected data powered by <a href='https://newsapi.org' traget='_blank'>NewsAPI.org</a></Small>
+        <Col>
+          <small><FormattedMessage {...messages.licenseMessage} /></small>. <Small>Created & maintained by <a href='https://twitter.com/chris_witko' target='_blank'>Chris Witko</a>. Selected data powered by <a href='https://newsapi.org' target='_blank'>NewsAPI.org</a></Small>
         </Col>
       </Row>
-    </Wrapper>
+      <Row>
+        <Col style={{textAlign: 'center', padding: '10px'}}>
+          <div style={{display: 'block', width: '100%', marginBottom: '5px'}}>
+            <img src={Racoo} width='50' />
+          </div>
+          <small>We <span style={{color: 'red'}}>❤️</span> Raccoons</small>
+        </Col>
+      </Row>
+    </div>
   )
 }
 

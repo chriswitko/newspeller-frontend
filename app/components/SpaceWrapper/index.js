@@ -77,6 +77,39 @@ const background = (bg = '#ffffff', color = '') => {
   }
 }
 
+const dynamic = (dynamic, bg = '#f8f8f8', color = '') => {
+  if (dynamic) {
+    return `
+      cursor: pointer;
+
+      &:hover {
+        background: ${bg};
+        color: ${color};
+
+        span.arrow {
+          display: inline-block;
+        }
+      }
+    `
+  }
+}
+
+const active = (active) => {
+  if (active) {
+    return `
+      span.arrow {
+        display: inline-block;
+      }
+    `
+  } else {
+    return `
+      span.arrow {
+        display: none;
+      }
+    `
+  }
+}
+
 const SpaceWrapper = styled.div`
   ${props => background(props.bg, props.color)}
   ${props => header(props.header)}
@@ -84,8 +117,14 @@ const SpaceWrapper = styled.div`
   ${props => border(props.border)}
   ${props => color(props.color || props.bg || props.border)}
   ${props => shadow(props.shadow)}
+  ${props => dynamic(props.dynamic)}
+  ${props => active(props.active)}
   display: table;
   width: 100%;
+
+  span.arrow {
+    float: right;
+  }
 `
 
 export default SpaceWrapper

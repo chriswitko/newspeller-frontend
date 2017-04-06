@@ -14,7 +14,7 @@ import {
 } from '../App/constants'
 
 const initialState = fromJS({
-  locale: DEFAULT_LOCALE
+  locale: window.localStorage.getItem('language') || DEFAULT_LOCALE
 })
 
 const languageProviderReducer = (state = initialState, action) => {

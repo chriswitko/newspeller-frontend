@@ -22,9 +22,19 @@ const makeSelectResent = _ => createSelector(
   (localState) => localState.get('resent')
 )
 
+const makeSelectCategory = _ => createSelector(
+  selectLocal,
+  (localState) => localState.get('selectedCategory')
+)
+
 const makeSelectFeeds = _ => createSelector(
   selectLocal,
   (localState) => localState.getIn(['channels'])
+)
+
+const makeSelectChannels = _ => createSelector(
+  selectLocal,
+  (localState) => localState.getIn(['displayedChannels'])
 )
 
 const makeSelectToken = _ => createSelector(
@@ -33,6 +43,8 @@ const makeSelectToken = _ => createSelector(
 )
 
 export {
+  makeSelectChannels,
+  makeSelectCategory,
   makeSelectToken,
   makeSelectFeeds,
   makeSelectResent,

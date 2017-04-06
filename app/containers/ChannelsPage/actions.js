@@ -13,16 +13,17 @@ import {
   LOAD_USER_DATA_ERROR,
   LOAD_FEEDS,
   LOAD_FEEDS_SUCCESS,
-  LOAD_FEEDS_ERROR
+  LOAD_FEEDS_ERROR,
+  FILTER_CHANNELS
 } from './constants'
 
-/**
- * Changes the input field of the form
- *
- * @param  {name} name The new text of the input field
- *
- * @return {object}    An action object with a type of CHANGE_USERNAME
- */
+export const filterChannels = code => {
+  return {
+    type: FILTER_CHANNELS,
+    code
+  }
+}
+
 export const resendActivationEmail = (user) => {
   return {
     type: USER_RESEND_ACTIVATION,
@@ -65,10 +66,10 @@ export const addTopicError = (err) => {
   }
 }
 
-export const removeTopic = (name) => {
+export const removeTopic = (topic) => {
   return {
     type: REMOVE_TOPIC,
-    name
+    topic
   }
 }
 

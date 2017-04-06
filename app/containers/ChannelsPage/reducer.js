@@ -1,15 +1,20 @@
 import { fromJS } from 'immutable'
 
 import {
+  ADD_TOPIC,
   ADD_TOPIC_SUCCESS,
+  REMOVE_TOPIC,
   REMOVE_TOPIC_SUCCESS,
   LOAD_FEEDS,
   LOAD_FEEDS_SUCCESS,
   LOAD_FEEDS_ERROR,
-  USER_RESEND_ACTIVATION_SUCCESS
+  USER_RESEND_ACTIVATION_SUCCESS,
+  FILTER_CHANNELS
 } from './constants'
 
 const initialState = fromJS({
+  selectedCategory: 'news',
+  displayedChannels: [],
   resent: false,
   reset: false,
   loading: false,
@@ -28,8 +33,16 @@ const initialState = fromJS({
   confirmedAt: false
 })
 
+// const filterChannels = (channels = [], code = 'news') => {
+//   return channels.filter(c => c.sectionCategory === code)
+// }
+
 const localReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FILTER_CHANNELS:
+      return state
+        .set('selectedCategory', action.code)
+        .setIn(['displayedChannels'], state.getIn(['channels']).filter(c => c.sectionCategory === action.code))
     case USER_RESEND_ACTIVATION_SUCCESS:
       return state
         .set('resent', true)
@@ -47,6 +60,7 @@ const localReducer = (state = initialState, action) => {
           channelCode: channel.code,
           channelName: channel.name,
           sectionName: section.name,
+          sectionCategory: section.category,
           description: section.description,
           facebook_id: channel.facebook_id,
           twitter_id: channel.twitter_id,
@@ -58,24 +72,27 @@ const localReducer = (state = initialState, action) => {
       })
       return state
         .setIn(['channels'], all)
+        .setIn(['displayedChannels'], all.filter(c => c.sectionCategory === state.get('selectedCategory')))
         .set('confirmedAt', action.data.subscriptions.confirmed_at)
         .set('loading', false)
     case LOAD_FEEDS_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false)
+    case ADD_TOPIC:
     case ADD_TOPIC_SUCCESS:
       return state
-        .setIn(['channels'], state.getIn(['channels']).map(item => {
+        .setIn(['displayedChannels'], state.getIn(['displayedChannels']).map(item => {
           if (item.code === action.topic.code) {
             return Object.assign({}, item, {is_subscribed: true})
           } else {
             return item
           }
         }))
+    case REMOVE_TOPIC:
     case REMOVE_TOPIC_SUCCESS:
       return state
-        .setIn(['channels'], state.getIn(['channels']).map(item => {
+        .setIn(['displayedChannels'], state.getIn(['displayedChannels']).map(item => {
           if (item.code === action.topic.code) {
             return Object.assign({}, item, {is_subscribed: false})
           } else {

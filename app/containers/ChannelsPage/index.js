@@ -13,15 +13,14 @@ import messages from './messages'
 
 import { makeSelectLocale } from 'containers/App/selectors'
 
-import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds } from './selectors'
-import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail } from './actions'
+import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectCategory, makeSelectChannels } from './selectors'
+import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail, filterChannels } from './actions'
 
 import { Row, Col } from 'react-grid-system'
 import H2 from 'components/H2'
 import Div from 'components/Div'
 import Section from 'components/Section'
 import SpaceWrapper from 'components/SpaceWrapper'
-import Label from 'components/Label'
 import ChannelItem from 'components/ChannelItem'
 import ButtonSubmit from 'components/ButtonSubmit'
 
@@ -51,7 +50,7 @@ export class ChannelsPage extends React.PureComponent {
   }
 
   render () {
-    const { loading, channels, onRemove, onAdd, language, intl } = this.props
+    const { loading, onRemove, onAdd, onFilterChannels, selectedCategory, selectedChannels, intl } = this.props
 
     const listProps = {
       onRemove,
@@ -59,80 +58,29 @@ export class ChannelsPage extends React.PureComponent {
       intl
     }
 
-    let byLanguage = {
-      'en': {
-        name: 'English',
-        total: 0,
-        channels: [],
-        sections: [],
-        order: 0
-      },
-      'pl': {
-        name: 'Polish',
-        total: 0,
-        channels: [],
-        sections: [],
-        order: 0
-      },
-      'de': {
-        name: 'Gernam',
-        total: 0,
-        channels: [],
-        sections: [],
-        order: 0
-      },
-      'fr': {
-        name: 'French',
-        total: 0,
-        channels: [],
-        sections: [],
-        order: 0
-      },
-      'es': {
-        name: 'Spanish',
-        total: 0,
-        channels: [],
-        sections: [],
-        order: 0
-      }
-    }
-
-    const langsByOrder = _ => {
-      const languages = ['en', 'pl', 'es', 'fr', 'de']
-      return Array.from(new Set([language, ...languages]))
-    }
-
-    if (channels) {
-      channels.map(c => byLanguage[c.language.toLowerCase()].channels.push(c))
-    }
-
-    let byChannel = {}
-
-    if (byLanguage) {
-      Object.keys(byLanguage).map(l => {
-        byLanguage[l].channels.map(c => {
-          if (!byChannel.hasOwnProperty(c.channelCode)) {
-            byChannel[c.channelCode] = {
-              channel: c,
-              sections: []
-            }
-          }
-          byLanguage[l].total++
-          byChannel[c.channelCode].sections.push(c)
-        })
-        byLanguage[l].sections = byChannel
-        byChannel = {}
-      })
-    }
+    let categories = [
+      {name: 'News', code: 'news', totalSubscribed: 0},
+      {name: 'Sport', code: 'sport', totalSubscribed: 0},
+      {name: 'Science & Technology', code: 'science_technology', totalSubscribed: 0},
+      {name: 'Politics', code: 'politics', totalSubscribed: 0},
+      {name: 'Business', code: 'business', totalSubscribed: 0},
+      {name: 'Art & Entertainment', code: 'art_entertainment', totalSubscribed: 0},
+      {name: 'Travel', code: 'travel', totalSubscribed: 0},
+      {name: 'Food', code: 'food', totalSubscribed: 0},
+      {name: 'Moto', code: 'moto', totalSubscribed: 0},
+      {name: 'Movies', code: 'movies', totalSubscribed: 0},
+      {name: 'Fashion & Design', code: 'fashion_design', totalSubscribed: 0},
+      {name: 'Health & Living', code: 'health_living', totalSubscribed: 0}
+    ]
 
     return (
       <div>
+        <Helmet
+          title='Channels'
+        />
         <Row>
           <Col>
             <article>
-              <Helmet
-                title='Channels'
-              />
               <div>
                 <Section>
                   <SpaceWrapper bg='#4745d1' color='white'>
@@ -146,27 +94,36 @@ export class ChannelsPage extends React.PureComponent {
                     </Div>
                   </SpaceWrapper>
                   {this.showConfirmationAlert()}
-                  {loading ? <SpaceWrapper><FormattedMessage {...messages.loading} /></SpaceWrapper> : (
-                    <div>
-                      {langsByOrder().map(l => {
-                        if (byLanguage[l].total) {
-                          return (
-                            <div key={l} style={{marginBottom: '15px'}}>
-                              <SpaceWrapper bg='black' color='white' header>
-                                <Label>
-                                  {byLanguage[l].name}
-                                </Label>
-                              </SpaceWrapper>
-                              <ChannelItem sections={byLanguage[l].sections} {...listProps} />
-                            </div>
-                          )
-                        }
-                      })}
-                      <SpaceWrapper>
-                        <strong><FormattedMessage {...messages.cantsee} /></strong>
-                      </SpaceWrapper>
-                    </div>
-                  )}
+                  <div>
+                    <Row>
+                      <Col lg={4} xs={12}>
+                        <Div>
+                          <SpaceWrapper bg='black' color='white' header>
+                            <FormattedMessage {...messages.categories} />
+                          </SpaceWrapper>
+                          {categories.map(c => (
+                            <SpaceWrapper header dynamic active={selectedCategory === c.code} key={c.code} onClick={() => onFilterChannels(c.code)}>
+                              {intl.formatMessage(messages['category_' + c.code])}
+                              <span className='arrow'>&rarr;</span>
+                            </SpaceWrapper>
+                          ))}
+                        </Div>
+                      </Col>
+                      <Col lg={8} xs={12}>
+                        {loading ? <SpaceWrapper><FormattedMessage {...messages.loading} /></SpaceWrapper> : (
+                          <div>
+                            <SpaceWrapper bg='black' color='white' header>
+                              <FormattedMessage {...messages.header} />
+                            </SpaceWrapper>
+                            <ChannelItem sections={selectedChannels} {...listProps} />
+                            <SpaceWrapper>
+                              <FormattedMessage {...messages.cantsee} />
+                            </SpaceWrapper>
+                          </div>
+                        )}
+                      </Col>
+                    </Row>
+                  </div>
                 </Section>
               </div>
             </article>
@@ -220,11 +177,14 @@ export const mapDispatchToProps = dispatch => {
     },
     onReady: (args) => {
       dispatch(loadFeeds(args))
-    }
+    },
+    onFilterChannels: (code) => dispatch(filterChannels(code))
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  selectedChannels: makeSelectChannels(),
+  selectedCategory: makeSelectCategory(),
   resent: makeSelectResent(),
   language: makeSelectLocale(),
   channels: makeSelectFeeds(),

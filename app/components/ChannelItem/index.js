@@ -7,27 +7,6 @@ import { Row, Col } from 'react-grid-system'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
-const printSections = (sections, onAdd, onRemove, intl) => {
-  return (
-    <div>
-      {sections.map(s => {
-        return (
-          <SpaceWrapper header key={s.code}>
-            <Row style={{display: 'flex'}}>
-              <Col lg={10} xs={7} style={{display: 'flex', alignItems: 'center'}}>
-                <div>{s.sectionName}</div>
-              </Col>
-              <Col lg={2} xs={5} style={{textAlign: 'right'}}>
-                {s.is_subscribed ? <ButtonSubmit minWidth='100%' onClick={() => onRemove(s)} color='#a8a8a8'><FormattedMessage {...messages.btnUnfollow} /></ButtonSubmit> : <ButtonSubmit minWidth='100%' onClick={() => onAdd(s)}><FormattedMessage {...messages.btnFollow} /></ButtonSubmit>}
-              </Col>
-            </Row>
-          </SpaceWrapper>
-        )
-      })}
-    </div>
-  )
-}
-
 const icon = (item) => {
   let icon = '<div><div>'
   if (item.facebook_id) {
@@ -44,20 +23,31 @@ const icon = (item) => {
 const ChannelItem = ({ sections, onAdd, onRemove, intl }) => {
   return (
     <div>
-      {Object.keys(sections).map(s => {
+      {sections.map(s => {
         return (
-          <div key={s}>
+          <div key={s.code}>
             <SpaceWrapper bg='#e6e6e6' color='black' header>
               <Row style={{display: 'flex'}}>
-                <Col lg={12} xs={12} style={{display: 'flex', alignItems: 'center'}}>
-                  {icon(sections[s].channel)}
-                  <h3 style={{margin: 0, padding: 0}}>{sections[s].channel.channelName}</h3>
+                <Col lg={9} xs={7}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          {icon(s)}
+                        </td>
+                        <td>
+                          <a href={s.url} target='_blank'><h3 style={{margin: 0, padding: 0}}>{s.channelName}</h3></a>
+                          <div style={{fontWeight: 400}}><small>{s.language} &middot; {intl.formatMessage(messages['category_' + s.sectionCategory])}</small></div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Col>
+                <Col lg={3} xs={5} style={{textAlign: 'right', display: 'flex', alignItems: 'center'}}>
+                  {s.is_subscribed ? <ButtonSubmit minWidth='100%' onClick={() => onRemove(s)} color='#a8a8a8'><FormattedMessage {...messages.btnUnfollow} /></ButtonSubmit> : <ButtonSubmit minWidth='100%' onClick={() => onAdd(s)}><FormattedMessage {...messages.btnFollow} /></ButtonSubmit>}
                 </Col>
               </Row>
             </SpaceWrapper>
-            <div style={{marginBottom: '15px'}}>
-              {printSections(sections[s].sections, onAdd, onRemove, intl)}
-            </div>
           </div>
         )
       })}
@@ -67,7 +57,10 @@ const ChannelItem = ({ sections, onAdd, onRemove, intl }) => {
 
 ChannelItem.propTypes = {
   intl: PropTypes.object,
-  sections: PropTypes.object,
+  sections: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   onRemoveDay: PropTypes.func,
   onAddDay: PropTypes.func
 }

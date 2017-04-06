@@ -53,11 +53,11 @@ export function * fetchUserReActivation (action) {
 
 export function * removeTopicRemotely (action) {
   const token = yield select(makeSelectToken())
-  const requestURL = `${API_ENDPOINT}/subscriptions/remove_topic/${action.name.code}?token=${token}`
+  const requestURL = `${API_ENDPOINT}/subscriptions/remove_topic/${action.topic.code}?token=${token}`
 
   try {
     yield call(request, requestURL)
-    yield put(removeTopicSuccess(action.name))
+    yield put(removeTopicSuccess(action.topic))
   } catch (err) {
     yield put(removeTopicError(err))
   }

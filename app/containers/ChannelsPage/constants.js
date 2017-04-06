@@ -17,3 +17,5 @@ export const LOAD_FEEDS_ERROR = 'newspeller/ChannelsPage/LOAD_FEEDS_ERROR'
 export const LOAD_USER_DATA = 'newspeller/ChannelsPage/LOAD_USER_DATA'
 export const LOAD_USER_DATA_SUCCESS = 'newspeller/ChannelsPage/LOAD_USER_DATA_SUCCESS'
 export const LOAD_USER_DATA_ERROR = 'newspeller/ChannelsPage/LOAD_USER_DATA_ERROR'
+
+export const FILTER_CHANNELS = 'newspeller/ChannelsPage/FILTER_CHANNELS'
