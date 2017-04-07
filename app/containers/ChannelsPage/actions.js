@@ -14,8 +14,29 @@ import {
   LOAD_FEEDS,
   LOAD_FEEDS_SUCCESS,
   LOAD_FEEDS_ERROR,
-  FILTER_CHANNELS
+  FILTER_CHANNELS,
+  ACCEPT_CUSTOM_SCHEDULE,
+  ACCEPT_CUSTOM_SCHEDULE_SUCCESS,
+  ACCEPT_CUSTOM_SCHEDULE_ERROR
 } from './constants'
+
+export const acceptCustomSchedule = args => {
+  return {
+    type: ACCEPT_CUSTOM_SCHEDULE
+  }
+}
+
+export const acceptCustomScheduleSuccess = args => {
+  return {
+    type: ACCEPT_CUSTOM_SCHEDULE_SUCCESS
+  }
+}
+
+export const acceptCustomScheduleError = args => {
+  return {
+    type: ACCEPT_CUSTOM_SCHEDULE_ERROR
+  }
+}
 
 export const filterChannels = code => {
   return {

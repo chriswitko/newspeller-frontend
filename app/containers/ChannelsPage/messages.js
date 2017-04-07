@@ -12,7 +12,7 @@ export default defineMessages({
   },
   intro: {
     id: 'newspeller.containers.ChannelsPage.intro',
-    defaultMessage: 'Here you can find all magazines and newspapers you can subscribe. Each day we are adding new sources.'
+    defaultMessage: 'Here you can find all magazines and newspapers you can subscribe to. We are adding new sources each day.'
   },
   filterByLang: {
     id: 'newspeller.containers.ChannelsPage.filterByLang',
@@ -145,5 +145,17 @@ export default defineMessages({
   'category_health_living': {
     id: 'newspeller.containers.ChannelsPage.category_health_living',
     defaultMessage: 'Health & Living'
+  },
+  'customScheduleMsg': {
+    id: 'newspeller.containers.ChannelsPage.customScheduleMsg',
+    defaultMessage: 'Hi. Thank you for activating your account. You account is now ready. Verify your default settings and adjust time of delivery to your needs.'
+  },
+  'btnAccept': {
+    id: 'newspeller.containers.ChannelsPage.btnAccept',
+    defaultMessage: 'Accept'
+  },
+  'btnGoToSettings': {
+    id: 'newspeller.containers.ChannelsPage.btnGoToSettings',
+    defaultMessage: 'Go to Settings'
   }
 })

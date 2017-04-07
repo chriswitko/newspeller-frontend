@@ -6,6 +6,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -13,8 +14,8 @@ import messages from './messages'
 
 import { makeSelectLocale } from 'containers/App/selectors'
 
-import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectCategory, makeSelectChannels } from './selectors'
-import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail, filterChannels } from './actions'
+import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectCategory, makeSelectChannels, makeSelectHasCustomSchedule } from './selectors'
+import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail, filterChannels, acceptCustomSchedule } from './actions'
 
 import { Row, Col } from 'react-grid-system'
 import H2 from 'components/H2'
@@ -32,6 +33,7 @@ export class ChannelsPage extends React.PureComponent {
     })
 
     this.showConfirmationAlert = this.showConfirmationAlert.bind(this)
+    this.showCustomScheduleAlert = this.showCustomScheduleAlert.bind(this)
   }
 
   showConfirmationAlert = _ => {
@@ -44,6 +46,21 @@ export class ChannelsPage extends React.PureComponent {
             <FormattedMessage {...messages.resendMessage} />
           </Div>
           <ButtonSubmit type='button' color='white' onClick={onResend}><FormattedMessage {...messages.btnResend} /></ButtonSubmit>
+        </SpaceWrapper>
+      )
+    }
+  }
+
+  showCustomScheduleAlert = _ => {
+    const { loading, onGoToSettings, confirmedAt, hasCustomeSchedule } = this.props
+
+    if (!loading && confirmedAt && !hasCustomeSchedule) {
+      return (
+        <SpaceWrapper bg='#ff294c' color='white'>
+          <Div>
+            <FormattedMessage {...messages.customScheduleMsg} />
+          </Div>
+          <ButtonSubmit type='button' color='white' onClick={onGoToSettings}><FormattedMessage {...messages.btnGoToSettings} /></ButtonSubmit>
         </SpaceWrapper>
       )
     }
@@ -85,15 +102,18 @@ export class ChannelsPage extends React.PureComponent {
                 <Section>
                   <SpaceWrapper bg='#4745d1' color='white'>
                     <Div>
-                      <H2>
-                        <FormattedMessage {...messages.title} />
-                      </H2>
-                      <div>
+                      <Div>
+                        <H2>
+                          <FormattedMessage {...messages.title} />
+                        </H2>
+                      </Div>
+                      <div className='intro'>
                         <FormattedMessage {...messages.intro} />
                       </div>
                     </Div>
                   </SpaceWrapper>
                   {this.showConfirmationAlert()}
+                  {this.showCustomScheduleAlert()}
                   <div>
                     <Row>
                       <Col lg={4} xs={12}>
@@ -178,11 +198,19 @@ export const mapDispatchToProps = dispatch => {
     onReady: (args) => {
       dispatch(loadFeeds(args))
     },
-    onFilterChannels: (code) => dispatch(filterChannels(code))
+    onFilterChannels: (code) => dispatch(filterChannels(code)),
+    onGoToSettings: () => {
+      dispatch(acceptCustomSchedule())
+      browserHistory.push('/settings')
+    },
+    onAcceptCustomSchedule: (args) => {
+      dispatch(acceptCustomSchedule(args))
+    }
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  hasCustomeSchedule: makeSelectHasCustomSchedule(),
   selectedChannels: makeSelectChannels(),
   selectedCategory: makeSelectCategory(),
   resent: makeSelectResent(),

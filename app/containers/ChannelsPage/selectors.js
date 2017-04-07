@@ -17,6 +17,11 @@ const makeSelectConfirmedAt = _ => createSelector(
   (localState) => localState.get('confirmedAt')
 )
 
+const makeSelectHasCustomSchedule = _ => createSelector(
+  selectLocal,
+  (localState) => localState.get('hasCustomSchedule')
+)
+
 const makeSelectResent = _ => createSelector(
   selectLocal,
   (localState) => localState.get('resent')
@@ -43,6 +48,7 @@ const makeSelectToken = _ => createSelector(
 )
 
 export {
+  makeSelectHasCustomSchedule,
   makeSelectChannels,
   makeSelectCategory,
   makeSelectToken,

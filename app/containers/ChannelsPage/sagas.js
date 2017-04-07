@@ -14,7 +14,8 @@ import {
   USER_RESEND_ACTIVATION,
   ADD_TOPIC,
   REMOVE_TOPIC,
-  LOAD_FEEDS
+  LOAD_FEEDS,
+  ACCEPT_CUSTOM_SCHEDULE
 } from './constants'
 import {
   resendActivationEmailSuccess,
@@ -24,7 +25,9 @@ import {
   addTopicSuccess,
   addTopicError,
   feedsLoaded,
-  feedLoadingError
+  feedLoadingError,
+  acceptCustomScheduleSuccess,
+  acceptCustomScheduleError
 } from './actions'
 import {
   makeSelectToken
@@ -75,6 +78,18 @@ export function * addTopicRemotely (action) {
   }
 }
 
+export function * acceptCustomSchedule (action) {
+  const token = yield select(makeSelectToken())
+  const requestURL = `${API_ENDPOINT}/subscriptions/update_custom_schedule?token=${token}`
+
+  try {
+    yield call(request, requestURL)
+    yield put(acceptCustomScheduleSuccess())
+  } catch (err) {
+    yield put(acceptCustomScheduleError(err))
+  }
+}
+
 export function * getFeeds (action) {
   const token = yield select(makeSelectToken())
   const requestURL = `${API_ENDPOINT}/feeds/all?token=${token}` // ?language=${language}
@@ -99,6 +114,10 @@ export function * addTopicSaga () {
   yield takeEvery(ADD_TOPIC, addTopicRemotely)
 }
 
+export function * acceptCustomScheduleSaga () {
+  yield takeEvery(ACCEPT_CUSTOM_SCHEDULE, acceptCustomSchedule)
+}
+
 export function * resendActivationSaga () {
   const watcher = yield takeLatest(USER_RESEND_ACTIVATION, fetchUserReActivation)
 
@@ -107,6 +126,7 @@ export function * resendActivationSaga () {
 }
 
 export default [
+  acceptCustomScheduleSaga,
   removeTopicSaga,
   addTopicSaga,
   loadFeedsDataSaga,

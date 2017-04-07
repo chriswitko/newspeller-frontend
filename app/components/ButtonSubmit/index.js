@@ -27,16 +27,8 @@ const disabled = (disabled = false, color = '#4745d1') => {
   }
 }
 
-const minWidth = (minWidth) => {
-  if (minWidth) {
-    return `
-      min-width: ${minWidth};
-    `
-  }
-}
-
 export default styled.button`
-  padding: ${props => props.lg ? '1em 1.5em' : '0.65em 1.5em'};
+  padding: ${props => props.lg ? '1em 1.5em' : '0.65em 1em'};
   text-decoration: none;
   cursor: pointer;
   outline: 0;
@@ -46,6 +38,5 @@ export default styled.button`
   border-style: solid;
   border-width: 2px;
 
-  ${props => minWidth(props.minWidth)};
   ${props => disabled(props.disabled, props.color)};
 `

@@ -9,7 +9,8 @@ import {
   LOAD_FEEDS_SUCCESS,
   LOAD_FEEDS_ERROR,
   USER_RESEND_ACTIVATION_SUCCESS,
-  FILTER_CHANNELS
+  FILTER_CHANNELS,
+  ACCEPT_CUSTOM_SCHEDULE_SUCCESS
 } from './constants'
 
 const initialState = fromJS({
@@ -30,7 +31,8 @@ const initialState = fromJS({
   subscriptions: false,
   days: false,
   hours: false,
-  confirmedAt: false
+  confirmedAt: false,
+  hasCustomSchedule: false
 })
 
 // const filterChannels = (channels = [], code = 'news') => {
@@ -39,6 +41,9 @@ const initialState = fromJS({
 
 const localReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACCEPT_CUSTOM_SCHEDULE_SUCCESS:
+      return state
+        .set('hasCustomSchedule', true)
     case FILTER_CHANNELS:
       return state
         .set('selectedCategory', action.code)
@@ -74,6 +79,7 @@ const localReducer = (state = initialState, action) => {
         .setIn(['channels'], all)
         .setIn(['displayedChannels'], all.filter(c => c.sectionCategory === state.get('selectedCategory')))
         .set('confirmedAt', action.data.subscriptions.confirmed_at)
+        .set('hasCustomSchedule', action.data.subscriptions.has_custom_schedule)
         .set('loading', false)
     case LOAD_FEEDS_ERROR:
       return state

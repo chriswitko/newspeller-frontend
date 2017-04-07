@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import SpaceWrapper from 'components/SpaceWrapper'
 import Avatar from 'react-avatar'
 import ButtonSubmit from 'components/ButtonSubmit'
-import { Row, Col } from 'react-grid-system'
+import { Row, Col, Visible } from 'react-grid-system'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
@@ -28,7 +28,7 @@ const ChannelItem = ({ sections, onAdd, onRemove, intl }) => {
           <div key={s.code}>
             <SpaceWrapper bg='#e6e6e6' color='black' header>
               <Row style={{display: 'flex'}}>
-                <Col lg={9} xs={7}>
+                <Col lg={9} xs={9}>
                   <table>
                     <tbody>
                       <tr>
@@ -36,15 +36,20 @@ const ChannelItem = ({ sections, onAdd, onRemove, intl }) => {
                           {icon(s)}
                         </td>
                         <td>
-                          <a href={s.url} target='_blank'><h3 style={{margin: 0, padding: 0}}>{s.channelName}</h3></a>
+                          <a href={s.url} target='_blank'><h3 style={{margin: 0, padding: 0, fontSize: '1em', lineHeight: '1em'}}>{s.channelName}</h3></a>
                           <div style={{fontWeight: 400}}><small>{s.language} &middot; {intl.formatMessage(messages['category_' + s.sectionCategory])}</small></div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </Col>
-                <Col lg={3} xs={5} style={{textAlign: 'right', display: 'flex', alignItems: 'center'}}>
-                  {s.is_subscribed ? <ButtonSubmit minWidth='100%' onClick={() => onRemove(s)} color='#a8a8a8'><FormattedMessage {...messages.btnUnfollow} /></ButtonSubmit> : <ButtonSubmit minWidth='100%' onClick={() => onAdd(s)}><FormattedMessage {...messages.btnFollow} /></ButtonSubmit>}
+                <Col lg={3} xs={3} style={{textAlign: 'right', display: 'flex', alignItems: 'center'}}>
+                  <Visible xl lg md sm>
+                    {s.is_subscribed ? <ButtonSubmit minWidth='100%' style={{width: '100%'}} onClick={() => onRemove(s)} color='#a8a8a8'><FormattedMessage {...messages.btnUnfollow} /></ButtonSubmit> : <ButtonSubmit style={{width: '100%'}} minWidth='100%' onClick={() => onAdd(s)}><FormattedMessage {...messages.btnFollow} /></ButtonSubmit>}
+                  </Visible>
+                  <Visible xs>
+                    {s.is_subscribed ? <ButtonSubmit minWidth='20px' style={{width: '100%'}} onClick={() => onRemove(s)} color='#a8a8a8'>&minus;</ButtonSubmit> : <ButtonSubmit style={{width: '100%'}} minWidth='20px' onClick={() => onAdd(s)}>&#43;</ButtonSubmit>}
+                  </Visible>
                 </Col>
               </Row>
             </SpaceWrapper>

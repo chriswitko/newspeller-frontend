@@ -125,6 +125,10 @@ const SpaceWrapper = styled.div`
   span.arrow {
     float: right;
   }
+
+  .intro {
+    line-height: 1.2em;
+  }
 `
 
 export default SpaceWrapper

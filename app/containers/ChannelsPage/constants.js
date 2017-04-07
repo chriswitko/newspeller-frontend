@@ -19,3 +19,7 @@ export const LOAD_USER_DATA_SUCCESS = 'newspeller/ChannelsPage/LOAD_USER_DATA_SU
 export const LOAD_USER_DATA_ERROR = 'newspeller/ChannelsPage/LOAD_USER_DATA_ERROR'
 
 export const FILTER_CHANNELS = 'newspeller/ChannelsPage/FILTER_CHANNELS'
+
+export const ACCEPT_CUSTOM_SCHEDULE = 'newspeller/ChannelsPage/ACCEPT_CUSTOM_SCHEDULE'
+export const ACCEPT_CUSTOM_SCHEDULE_SUCCESS = 'newspeller/ChannelsPage/ACCEPT_CUSTOM_SCHEDULE_SUCCESS'
+export const ACCEPT_CUSTOM_SCHEDULE_ERROR = 'newspeller/ChannelsPage/ACCEPT_CUSTOM_SCHEDULE_ERROR'
