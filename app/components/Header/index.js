@@ -13,6 +13,7 @@ import { Row, Col, ScreenClassRender } from 'react-grid-system'
 import A from './A'
 import Link from './Link'
 import Logo from 'components/Logo'
+import ButtonLink from 'components/ButtonLink'
 import Icon from 'assets/n_logo_r.png'
 
 class Header extends React.Component {
@@ -51,9 +52,9 @@ class Header extends React.Component {
       </div>
       ) : (
         <div>
-          <Link to='signin'>
+          <ButtonLink to='signin'>
             <FormattedMessage {...messages.signin} />
-          </Link>
+          </ButtonLink>
         </div>
     )
   }

@@ -1,7 +1,5 @@
 import styled from 'styled-components'
-
-// border-bottom: 3px solid rgba(0, 0, 0, 0.14902);
-  // background-color: ${props => props.disabled ? '#d5d5d5' : 'rgb(0, 136, 201)'};
+import { Link } from 'react-router'
 
 const disabled = (disabled = false, color = '#4745d1') => {
   if (disabled) {
@@ -19,15 +17,27 @@ const disabled = (disabled = false, color = '#4745d1') => {
       color: ${color};
       border-color: ${color};
 
+      span {
+        color: ${color};
+      }
+
       &:active {
         background: ${color};
         color: white;
+
+        span {
+          color: white;
+        }
+      }
+
+      &:hover {
+        text-decoration: none;
       }
     `
   }
 }
 
-export default styled.button`
+export default styled(Link)`
   padding: ${props => props.lg ? '1em 1.5em' : '0.65em 1em'};
   text-decoration: none;
   cursor: pointer;
