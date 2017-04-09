@@ -12,7 +12,7 @@ export default defineMessages({
   },
   intro: {
     id: 'newspeller.containers.SettingsPage.intro',
-    defaultMessage: 'Define what days and times you wish to receive emails.'
+    defaultMessage: 'Define what days and hours you wish to receive emails.'
   },
   loading: {
     id: 'newspeller.containers.SettingsPage.loading',

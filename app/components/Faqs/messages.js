@@ -11,7 +11,7 @@ export default defineMessages({
   },
   faqs1a: {
     id: 'newspeller.components.Faqs.faqs1a',
-    defaultMessage: 'The Newspeller is an on-demand email service delivering news headlines. In one email you will receive all top headlines from sources you will to subscribe to, and on time to choose.'
+    defaultMessage: 'The Newspeller is an on-demand email service delivering news headlines. In one email you will receive all top headlines from sources you will subscribe to, and on time to choose.'
   },
   faqs2q: {
     id: 'newspeller.components.Faqs.faqs2q',
@@ -19,7 +19,7 @@ export default defineMessages({
   },
   faqs2a: {
     id: 'newspeller.components.Faqs.faqs2a',
-    defaultMessage: 'We are spending too much time for searching news from different sites. We decide it to create a simple tool that will improve the way we read news. That\'s why we build The Newspeller, a single source to read news.'
+    defaultMessage: 'We are spending too much time for searching news from different sites. We decide it create a simple tool that will improve the way we read the news. That\'s why we build The Newspeller, a single source to read the news.'
   },
   faqs3q: {
     id: 'newspeller.components.Faqs.faqs3q',
@@ -51,11 +51,11 @@ export default defineMessages({
   },
   faqs6a: {
     id: 'newspeller.components.Faqs.faqs6a',
-    defaultMessage: 'Currently we deliver news headlines from about 300 news organizations in different languages grouped by {numCategories} ({categories}). If something is missing you can write us and we will add a suggested source.'
+    defaultMessage: 'Currently, we deliver news headlines from about 300 news organisations in different languages grouped by {numCategories} ({categories}). If something is missing you can write us and we will add a suggested source.'
   },
   wordNewsOrgs: {
     id: 'newspeller.components.Faqs.wordNewsOrgs',
-    defaultMessage: 'news organizations and magazines'
+    defaultMessage: 'news organisations and magazines'
   },
   wordLanguages: {
     id: 'newspeller.components.Faqs.wordLanguages',

@@ -7,7 +7,7 @@ export default defineMessages({
   },
   newsPubMore: {
     id: 'newspeller.components.PublishersBox.newsPubMore',
-    defaultMessage: 'The Newspeller makes it easy for news organizations and magazines, to distribute headlines in one email. You’ll get valuable metrics on how readers engage with your content.'
+    defaultMessage: 'The Newspeller makes it easy for news organisations and magazines, to distribute headlines in one email. You’ll get valuable metrics on how readers engage with your content.'
   },
   newsPubRegLink: {
     id: 'newspeller.components.PublishersBox.newsPubRegLink',
@@ -15,7 +15,7 @@ export default defineMessages({
   },
   wordNewsOrgs: {
     id: 'newspeller.components.PublishersBox.wordNewsOrgs',
-    defaultMessage: 'news organizations and magazines'
+    defaultMessage: 'news organisations and magazines'
   },
   wordLanguages: {
     id: 'newspeller.components.PublishersBox.wordLanguages',
