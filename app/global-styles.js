@@ -21,6 +21,11 @@ injectGlobal`
     min-width: 100%;
   }
 
+  .highlight {
+    background-color: #faf785;
+    padding: 1px 2px    
+  }
+
   p,
   label {
     line-height: 1.4em;

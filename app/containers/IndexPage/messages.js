@@ -12,7 +12,7 @@ export default defineMessages({
   },
   subline: {
     id: 'newspeller.containers.IndexPage.subline',
-    defaultMessage: 'Subscribe to your favourite magazines and newspapers directly from to inbox.'
+    defaultMessage: 'Subscribe your favourite magazines and newspapers directly to your inbox.'
   },
   cookies: {
     id: 'newspeller.containers.IndexPage.cookies',

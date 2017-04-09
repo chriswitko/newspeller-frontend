@@ -13,8 +13,9 @@ const icon = (item) => {
     icon = <Avatar facebookId={item.facebook_id} size={50} />
   } else if (item.twitter_id) {
     icon = <Avatar twitterId={item.twitter_id} size={50} />
+  } else if (item.icon) {
+    icon = <img width='50' src={item.icon} />
   } else {
-    // icon = <img width='50' src={item.icon} />
     icon = <Avatar name={item.channelName} size={50} textSizeRatio={1.75} />
   }
   return <div style={{width: '50px', height: '50px', overflow: 'hidden', marginRight: '15px'}}>{icon}</div>
