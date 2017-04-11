@@ -24,7 +24,7 @@ const initialState = fromJS({
   token: '',
   password: '',
   timezone: 'Europe/London',
-  language: 'English',
+  language: 'en',
   loading: false,
   error: false
 })
