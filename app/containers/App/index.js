@@ -34,9 +34,6 @@ export const App = props => {
             </Col>
           </Row>
         </SpaceWrapper>
-        <SpaceWrapper bg='#faf785' color='black'>
-          We're experiencing an issue w/ network connectivity from our hosting provider @DigitalOcean. Sorry for the incovienince. More on <a href='http://status.digitalocean.com' target='blank'>http://status.digitalocean.com</a>.
-        </SpaceWrapper>
         <Row>
           <Col sm={12}>
             {React.Children.toArray(props.children)}
