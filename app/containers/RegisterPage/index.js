@@ -37,7 +37,7 @@ export class RegisterPage extends React.PureComponent {
   }
 
   render () {
-    const { onSubmitForm, onChangeLocale, onChangeTimezone, onChangePassword, password, timezone, language, intl, error } = this.props
+    const { onSubmitForm, onChangeLocale, onChangeTimezone, onChangePassword, password, timezone, language, intl, error, loading } = this.props
     const { token } = this.props.location.query
 
     const defaultValues = [{
@@ -103,7 +103,10 @@ export class RegisterPage extends React.PureComponent {
                       />
                     </Div>
                     <br />
-                    <ButtonSubmit type='button' onClick={() => onSubmitForm({token, password, timezone, language})}><FormattedMessage {...messages.btnActivate} /></ButtonSubmit>
+                    <ButtonSubmit
+                      type='button'
+                      disabled={loading}
+                      onClick={() => onSubmitForm({token, password, timezone, language})}><FormattedMessage {...loading ? messages.btnPleaseWait : messages.btnActivate} /></ButtonSubmit>
                   </form>
                 </SpaceWrapper>
               </div>

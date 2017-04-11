@@ -48,7 +48,7 @@ export class IndexPage extends React.PureComponent {
   }
 
   render () {
-    const { intl, error, onSubmitForm, onChangeUsername, username } = this.props
+    const { intl, error, loading, onSubmitForm, onChangeUsername, username } = this.props
 
     return (
       <div>
@@ -103,7 +103,7 @@ export class IndexPage extends React.PureComponent {
                           <Small><strong>{this.numberOfSubscribersLastWeek()}</strong> <FormattedMessage {...messages.regFormSubsInfo} /></Small>
                         </Div>
                         <Div>
-                          <ButtonSubmit lg color='white' type='submit'><FormattedMessage {...messages.regFormBtnSubmit} /></ButtonSubmit>
+                          <ButtonSubmit lg color='white' disabled={loading} type='submit'><FormattedMessage {...loading ? messages.btnPleaseWait : messages.regFormBtnSubmit} /></ButtonSubmit>
                         </Div>
                         <Div><Small><FormattedMessage {...messages.regFormPromise4} /> <Link to='terms'><FormattedMessage {...messages.linkTerms} /></Link> &amp; <Link to='privacy'><FormattedMessage {...messages.linkPrivacy} /></Link>.</Small></Div>
                       </form>

@@ -49,5 +49,9 @@ export default defineMessages({
   errorRequiredFields: {
     id: 'newspeller.containers.RegisterPage.errorRequiredFields',
     defaultMessage: 'Missing required fields'
+  },
+  btnPleaseWait: {
+    id: 'newspeller.containers.RegisterPage.btnPleaseWait',
+    defaultMessage: 'Please wait ...'
   }
 })

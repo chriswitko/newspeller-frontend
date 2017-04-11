@@ -16,6 +16,7 @@ import {
   CHANGE_TIMEZONE,
   CHANGE_LANGUAGE,
   FORM_MISSING_FIELDS_ERROR,
+  USER_SEND_ACTIVATION,
   USER_SEND_ACTIVATION_SUCCESS
  } from './constants'
 
@@ -31,6 +32,9 @@ const initialState = fromJS({
 
 const localReducer = (state = initialState, action) => {
   switch (action.type) {
+    case USER_SEND_ACTIVATION:
+      return state
+        .set('loading', true)
     case USER_SEND_ACTIVATION_SUCCESS:
       return state
         .set('token', action.user.token)

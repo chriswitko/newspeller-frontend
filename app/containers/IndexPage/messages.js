@@ -73,5 +73,9 @@ export default defineMessages({
   errorUserExists: {
     id: 'newspeller.containers.IndexPage.errorUserExists',
     defaultMessage: 'Email is already registered in our database. Try sign in.'
+  },
+  btnPleaseWait: {
+    id: 'newspeller.containers.IndexPage.btnPleaseWait',
+    defaultMessage: 'Please wait'
   }
 })
