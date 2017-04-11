@@ -27,12 +27,15 @@ export const App = props => {
         ]}
       />
       <Container>
-        <SpaceWrapper bg='transparent' color='#6B788A'>
+        <SpaceWrapper shadow bg='transparent' color='#6B788A'>
           <Row>
             <Col sm={12}>
               <Header />
             </Col>
           </Row>
+        </SpaceWrapper>
+        <SpaceWrapper bg='#faf785' color='black'>
+          We're experiencing an issue w/ network connectivity from our hosting provider @DigitalOcean. Sorry for the incovienince. More on <a href='http://status.digitalocean.com' target='blank'>http://status.digitalocean.com</a>.
         </SpaceWrapper>
         <Row>
           <Col sm={12}>
