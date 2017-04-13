@@ -99,10 +99,24 @@ const localReducer = (state = initialState, action) => {
             return item
           }
         }))
+        .setIn(['displayedTopics'], state.getIn(['displayedTopics']).map(item => {
+          if (item.code === action.topic.code) {
+            return Object.assign({}, item, {is_subscribed: true})
+          } else {
+            return item
+          }
+        }))
     case REMOVE_TOPIC:
     case REMOVE_TOPIC_SUCCESS:
       return state
         .setIn(['displayedChannels'], state.getIn(['displayedChannels']).map(item => {
+          if (item.code === action.topic.code) {
+            return Object.assign({}, item, {is_subscribed: false})
+          } else {
+            return item
+          }
+        }))
+        .setIn(['displayedTopics'], state.getIn(['displayedTopics']).map(item => {
           if (item.code === action.topic.code) {
             return Object.assign({}, item, {is_subscribed: false})
           } else {
