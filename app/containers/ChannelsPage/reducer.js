@@ -16,6 +16,7 @@ import {
 const initialState = fromJS({
   selectedCategory: 'news',
   displayedChannels: [],
+  displayedTopics: [],
   resent: false,
   reset: false,
   loading: false,
@@ -47,7 +48,8 @@ const localReducer = (state = initialState, action) => {
     case FILTER_CHANNELS:
       return state
         .set('selectedCategory', action.code)
-        .setIn(['displayedChannels'], state.getIn(['channels']).filter(c => c.sectionCategory === action.code))
+        .setIn(['displayedChannels'], state.getIn(['channels'] || []).filter(c => c.sectionCategory === action.code && c.channelCategory === 'channel'))
+        .setIn(['displayedTopics'], state.getIn(['channels'] || []).filter(c => c.sectionCategory === action.code && c.channelCategory === 'topic'))
     case USER_RESEND_ACTIVATION_SUCCESS:
       return state
         .set('resent', true)
@@ -62,6 +64,7 @@ const localReducer = (state = initialState, action) => {
         channel.sections.map(section => all.push({
           code: `${channel.code}_${section.code}`,
           name: `${channel.name} / ${section.name}`,
+          channelCategory: channel.category,
           channelCode: channel.code,
           channelName: channel.name,
           sectionName: section.name,
@@ -77,7 +80,8 @@ const localReducer = (state = initialState, action) => {
       })
       return state
         .setIn(['channels'], all)
-        .setIn(['displayedChannels'], all.filter(c => c.sectionCategory === state.get('selectedCategory')))
+        .setIn(['displayedChannels'], all.filter(c => c.sectionCategory === state.get('selectedCategory') && c.channelCategory === 'channel'))
+        .setIn(['displayedTopics'], all.filter(c => c.sectionCategory === state.get('selectedCategory') && c.channelCategory === 'topic'))
         .set('confirmedAt', action.data.subscriptions.confirmed_at)
         .set('hasCustomSchedule', action.data.subscriptions.has_custom_schedule)
         .set('loading', false)

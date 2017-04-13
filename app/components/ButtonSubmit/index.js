@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
-// border-bottom: 3px solid rgba(0, 0, 0, 0.14902);
-  // background-color: ${props => props.disabled ? '#d5d5d5' : 'rgb(0, 136, 201)'};
-
-const disabled = (disabled = false, color = '#4745d1') => {
+const disabled = (disabled = false, color = '#4745d1', textColor = '#ffffff') => {
   if (disabled) {
     return `
       color: #e5e5e5;
@@ -21,7 +18,8 @@ const disabled = (disabled = false, color = '#4745d1') => {
 
       &:active {
         background: ${color};
-        color: white;
+        color: ${textColor};
+        border-color: ${textColor};
       }
     `
   }
@@ -39,5 +37,5 @@ export default styled.button`
   border-width: 2px;
   display: inline-block;
 
-  ${props => disabled(props.disabled, props.color)};
+  ${props => disabled(props.disabled, props.color, props.textColor)};
 `

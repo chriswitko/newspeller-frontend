@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import styled from 'styled-components'
 import arrows from './select_up_down_arrow.svg'
 

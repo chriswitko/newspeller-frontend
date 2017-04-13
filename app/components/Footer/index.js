@@ -23,9 +23,11 @@ const Footer = _ => {
     <div>
       <Row>
         <Col lg={8} sm={12}>
-          <FA href='/about'><FormattedMessage {...messages.about} /></FA>
+          <FA href='https://medium.com/newspeller' target='_blank'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
+          &nbsp;&middot;&nbsp;
+          <FA href='https://twitter.com/newspeller'>@newspeller</FA>
           &nbsp;&middot;&nbsp;
           <FA href='/terms'><FormattedMessage {...messages.terms} /></FA>
           &nbsp;&middot;&nbsp;

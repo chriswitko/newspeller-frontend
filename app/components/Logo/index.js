@@ -1,4 +1,5 @@
 import React from 'react'
+// import PropTypes from 'prop-types'
 
 import Wrapper from './Wrapper'
 import Img from 'components/Img'
@@ -17,7 +18,7 @@ const Logo = props => {
 }
 
 // Logo.propTypes = {
-//   src: React.PropTypes.func.isRequired,
+//   src: PropTypes.func.isRequired,
 // }
 
 export default Logo

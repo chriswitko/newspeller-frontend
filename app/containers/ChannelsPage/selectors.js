@@ -42,12 +42,18 @@ const makeSelectChannels = _ => createSelector(
   (localState) => localState.getIn(['displayedChannels'])
 )
 
+const makeSelectTopics = _ => createSelector(
+  selectLocal,
+  (localState) => localState.getIn(['displayedTopics'])
+)
+
 const makeSelectToken = _ => createSelector(
   selectLocal,
   (localState) => localState.get('token') || window.localStorage.getItem('token')
 )
 
 export {
+  makeSelectTopics,
   makeSelectHasCustomSchedule,
   makeSelectChannels,
   makeSelectCategory,

@@ -157,5 +157,9 @@ export default defineMessages({
   'btnGoToSettings': {
     id: 'newspeller.containers.ChannelsPage.btnGoToSettings',
     defaultMessage: 'Go to Settings'
+  },
+  'topics': {
+    id: 'newspeller.containers.ChannelsPage.topics',
+    defaultMessage: 'Topics'
   }
 })

@@ -5,6 +5,7 @@
  */
 import React from 'react'
 import Helmet from 'react-helmet'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Link } from 'react-router'
@@ -103,7 +104,7 @@ export class IndexPage extends React.PureComponent {
                           <Small><strong>{this.numberOfSubscribersLastWeek()}</strong> <FormattedMessage {...messages.regFormSubsInfo} /></Small>
                         </Div>
                         <Div>
-                          <ButtonSubmit lg color='white' disabled={loading} type='submit'><FormattedMessage {...loading ? messages.btnPleaseWait : messages.regFormBtnSubmit} /></ButtonSubmit>
+                          <ButtonSubmit lg color='white' textColor='#4745d1' disabled={loading} type='submit'><FormattedMessage {...loading ? messages.btnPleaseWait : messages.regFormBtnSubmit} /></ButtonSubmit>
                         </Div>
                         <Div><Small><FormattedMessage {...messages.regFormPromise4} /> <Link to='terms'><FormattedMessage {...messages.linkTerms} /></Link> &amp; <Link to='privacy'><FormattedMessage {...messages.linkPrivacy} /></Link>.</Small></Div>
                       </form>
@@ -123,7 +124,7 @@ export class IndexPage extends React.PureComponent {
 }
 
 IndexPage.propTypes = {
-  handleActivate: React.PropTypes.func
+  handleActivate: PropTypes.func
 }
 
 const validateEmail = (email) => {

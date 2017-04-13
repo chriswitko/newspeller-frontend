@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -16,55 +17,55 @@ import Logo from 'components/Logo'
 import ButtonLink from 'components/ButtonLink'
 import Icon from 'assets/n_logo_r.png'
 
-class Header extends React.Component {
-  styleActions = (screenClass) => {
-    if (screenClass === 'xl') return { textAlign: 'right' }
-    if (screenClass === 'lg') return { textAlign: 'right' }
-    if (screenClass === 'md') return { textAlign: 'right' }
-    if (screenClass === 'sm') return { textAlign: 'center', paddingTop: '20px' }
-    if (screenClass === 'xs') return { textAlign: 'center', paddingTop: '20px' }
-    return { textAlign: 'right' }
-  };
+const styleActions = (screenClass) => {
+  if (screenClass === 'xl') return { textAlign: 'right' }
+  if (screenClass === 'lg') return { textAlign: 'right' }
+  if (screenClass === 'md') return { textAlign: 'right' }
+  if (screenClass === 'sm') return { textAlign: 'center', paddingTop: '20px' }
+  if (screenClass === 'xs') return { textAlign: 'center', paddingTop: '20px' }
+  return { textAlign: 'right' }
+}
 
-  styleLogo = (screenClass) => {
-    if (screenClass === 'xl') return { textAlign: 'left' }
-    if (screenClass === 'lg') return { textAlign: 'left' }
-    if (screenClass === 'md') return { textAlign: 'left' }
-    if (screenClass === 'sm') return { textAlign: 'center', paddingBottom: '10px' }
-    if (screenClass === 'xs') return { textAlign: 'center', paddingBottom: '10px' }
-    return { textAlign: 'left' }
-  };
+const styleLogo = (screenClass) => {
+  if (screenClass === 'xl') return { textAlign: 'left' }
+  if (screenClass === 'lg') return { textAlign: 'left' }
+  if (screenClass === 'md') return { textAlign: 'left' }
+  if (screenClass === 'sm') return { textAlign: 'center', paddingBottom: '10px' }
+  if (screenClass === 'xs') return { textAlign: 'center', paddingBottom: '10px' }
+  return { textAlign: 'left' }
+}
 
-  buttons = _ => {
-    return this.props.token ? (
+const buttons = (props) => {
+  return props.token ? (
+    <div>
+      <Link to='home'>
+        <FormattedMessage {...messages.home} />
+      </Link>
+      &nbsp;&nbsp;&nbsp;
+      <Link to='settings'>
+        <FormattedMessage {...messages.settings} />
+      </Link>
+      &nbsp;&nbsp;&nbsp;
+      <A href='#' onClick={props.handleLogout}>
+        <FormattedMessage {...messages.logout} />
+      </A>
+    </div>
+    ) : (
       <div>
-        <Link to='home'>
-          <FormattedMessage {...messages.home} />
-        </Link>
-        &nbsp;&nbsp;&nbsp;
-        <Link to='settings'>
-          <FormattedMessage {...messages.settings} />
-        </Link>
-        &nbsp;&nbsp;&nbsp;
-        <A href='#' onClick={this.props.handleLogout}>
-          <FormattedMessage {...messages.logout} />
-        </A>
+        <ButtonLink to='signin'>
+          <FormattedMessage {...messages.signin} />
+        </ButtonLink>
       </div>
-      ) : (
-        <div>
-          <ButtonLink to='signin'>
-            <FormattedMessage {...messages.signin} />
-          </ButtonLink>
-        </div>
-    )
-  }
+  )
+}
 
+class Header extends React.Component {
   render () {
     return (
       <div>
         <Row>
           <Col lg={5} sm={12}>
-            <ScreenClassRender style={this.styleLogo}>
+            <ScreenClassRender style={styleLogo}>
               <div style={{display: 'block', width: '100%'}}>
                 <div style={{float: 'left', marginRight: '15px'}}>
                   <img src={Icon} height='50' />
@@ -74,8 +75,8 @@ class Header extends React.Component {
             </ScreenClassRender>
           </Col>
           <Col lg={7} sm={12}>
-            <ScreenClassRender style={this.styleActions}>
-              {this.buttons()}
+            <ScreenClassRender style={styleActions}>
+              {buttons(this.props)}
             </ScreenClassRender>
           </Col>
         </Row>
@@ -85,7 +86,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  handleLogout: React.PropTypes.func
+  handleLogout: PropTypes.func
 }
 
 export const mapDispatchToProps = dispatch => {

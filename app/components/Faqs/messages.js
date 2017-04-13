@@ -27,7 +27,7 @@ export default defineMessages({
   },
   faqs3a: {
     id: 'newspeller.components.Faqs.faqs3a',
-    defaultMessage: 'Two guys ({linkChris} & {linkWojtek}), who lives in London, UK.'
+    defaultMessage: 'Two guys ({linkChris} & {linkWojtek}), who live in London, UK.'
   },
   faqs4q: {
     id: 'newspeller.components.Faqs.faqs4q',

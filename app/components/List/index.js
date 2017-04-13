@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Ul from './Ul'
 import Wrapper from './Wrapper'
@@ -27,10 +28,10 @@ const List = props => {
 }
 
 List.propTypes = {
-  component: React.PropTypes.func.isRequired,
-  items: React.PropTypes.any,
-  onRemove: React.PropTypes.func,
-  onAdd: React.PropTypes.func
+  component: PropTypes.func.isRequired,
+  items: PropTypes.any,
+  onRemove: PropTypes.func,
+  onAdd: PropTypes.func
 }
 
 export default List

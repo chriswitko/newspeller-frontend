@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import ProgressBar from './ProgressBar'
 
 const withProgressBar = WrappedComponent => {
@@ -56,8 +58,8 @@ const withProgressBar = WrappedComponent => {
   }
 
   AppWithProgressBar.propTypes = {
-    location: React.PropTypes.object,
-    router: React.PropTypes.object
+    location: PropTypes.object,
+    router: PropTypes.object
   }
 
   return AppWithProgressBar

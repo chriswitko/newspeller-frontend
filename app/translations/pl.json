@@ -76,6 +76,7 @@
   "newspeller.containers.ChannelsPage.customScheduleMsg": "Witaj. Dziękujemy za aktywację konta. Sprawdź domyślne ustawienia i dopasuj czas otrzymywania emaili do swoich potrzeb.",
   "newspeller.containers.ChannelsPage.btnAccept": "Akceptuję",
   "newspeller.containers.ChannelsPage.btnGoToSettings": "Przejdź do ustawień",
+  "newspeller.containers.ChannelsPage.topics": "Tematy",
   "newspeller.containers.RegisterPage.title": "Witaj na Newspeller",
   "newspeller.containers.RegisterPage.intro": "Wpisz swój adres email ponownie, utwórz hasło i wybierz strefę czasową",
   "newspeller.containers.RegisterPage.labelEmail": "Wpisz ponownie swój adres email",

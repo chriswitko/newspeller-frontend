@@ -8,6 +8,7 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
+import PropTypes from 'prop-types'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -27,7 +28,7 @@ export const App = props => {
         ]}
       />
       <Container>
-        <SpaceWrapper shadow bg='transparent' color='#6B788A'>
+        <SpaceWrapper bg='transparent' color='#6B788A'>
           <Row>
             <Col sm={12}>
               <Header />
@@ -46,7 +47,7 @@ export const App = props => {
 }
 
 App.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 }
 
 export default withProgressBar(App)

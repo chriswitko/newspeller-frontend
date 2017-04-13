@@ -14,7 +14,7 @@ import messages from './messages'
 
 import { makeSelectLocale } from 'containers/App/selectors'
 
-import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectCategory, makeSelectChannels, makeSelectHasCustomSchedule } from './selectors'
+import { makeSelectLoading, makeSelectError, makeSelectConfirmedAt, makeSelectResent, makeSelectFeeds, makeSelectCategory, makeSelectChannels, makeSelectTopics, makeSelectHasCustomSchedule } from './selectors'
 import { loadUserData, loadFeeds, addTopic, removeTopic, resendActivationEmail, filterChannels, acceptCustomSchedule } from './actions'
 
 import { Row, Col } from 'react-grid-system'
@@ -34,6 +34,7 @@ export class ChannelsPage extends React.PureComponent {
 
     this.showConfirmationAlert = this.showConfirmationAlert.bind(this)
     this.showCustomScheduleAlert = this.showCustomScheduleAlert.bind(this)
+    this.listTopics = this.listTopics.bind(this)
   }
 
   showConfirmationAlert = _ => {
@@ -64,6 +65,25 @@ export class ChannelsPage extends React.PureComponent {
         </SpaceWrapper>
       )
     }
+  }
+
+  listTopics = _ => {
+    const { selectedTopics, onRemove, onAdd, intl } = this.props
+
+    const listProps = {
+      onRemove,
+      onAdd,
+      intl
+    }
+
+    return selectedTopics.length ? (
+      <div>
+        <SpaceWrapper bg='black' color='white' header>
+          <FormattedMessage {...messages.topics} />
+        </SpaceWrapper>
+        <ChannelItem sections={selectedTopics} {...listProps} />
+      </div>
+    ) : ''
   }
 
   render () {
@@ -132,6 +152,7 @@ export class ChannelsPage extends React.PureComponent {
                       <Col lg={8} xs={12}>
                         {loading ? <SpaceWrapper><FormattedMessage {...messages.loading} /></SpaceWrapper> : (
                           <div>
+                            {this.listTopics()}
                             <SpaceWrapper bg='black' color='white' header>
                               <FormattedMessage {...messages.header} />
                             </SpaceWrapper>
@@ -211,6 +232,7 @@ export const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = createStructuredSelector({
   hasCustomeSchedule: makeSelectHasCustomSchedule(),
+  selectedTopics: makeSelectTopics(),
   selectedChannels: makeSelectChannels(),
   selectedCategory: makeSelectCategory(),
   resent: makeSelectResent(),
