@@ -22,7 +22,7 @@ const Footer = _ => {
   return (
     <div>
       <Row>
-        <Col lg={8} sm={12}>
+        <Col lg={9} sm={12}>
           <FA href='https://medium.com/newspeller' target='_blank'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='https://medium.com/newspeller' target='_blank'>FAQ</FA>
@@ -38,7 +38,7 @@ const Footer = _ => {
           <FA href='https://twitter.com/newspeller'>@newspeller</FA>
           <br />
         </Col>
-        <Col lg={4} sm={12}>
+        <Col lg={3} sm={12}>
           <LocaleToggle />
         </Col>
       </Row>
