@@ -37,7 +37,7 @@ export class ChannelsPage extends React.PureComponent {
     this.listTopics = this.listTopics.bind(this)
   }
 
-  showConfirmationAlert = _ => {
+  showConfirmationAlert () {
     const { loading, onResend, confirmedAt, resent } = this.props
 
     if (!loading && !confirmedAt && !resent) {
@@ -52,7 +52,7 @@ export class ChannelsPage extends React.PureComponent {
     }
   }
 
-  showCustomScheduleAlert = _ => {
+  showCustomScheduleAlert () {
     const { loading, onGoToSettings, confirmedAt, hasCustomeSchedule } = this.props
 
     if (!loading && confirmedAt && !hasCustomeSchedule) {
@@ -67,7 +67,7 @@ export class ChannelsPage extends React.PureComponent {
     }
   }
 
-  listTopics = _ => {
+  listTopics () {
     const { selectedTopics, onRemove, onAdd, intl } = this.props
 
     const listProps = {
