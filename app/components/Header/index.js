@@ -15,7 +15,6 @@ import A from './A'
 import Link from './Link'
 import Logo from 'components/Logo'
 import ButtonLink from 'components/ButtonLink'
-import Icon from 'assets/n_logo_r.png'
 
 const styleActions = (screenClass) => {
   if (screenClass === 'xl') return { textAlign: 'right' }
@@ -67,9 +66,6 @@ class Header extends React.Component {
           <Col lg={5} sm={12}>
             <ScreenClassRender style={styleLogo}>
               <div style={{display: 'block', width: '100%'}}>
-                <div style={{float: 'left', marginRight: '15px'}}>
-                  <img src={Icon} height='50' />
-                </div>
                 <Logo black style={{float: 'left'}} />
               </div>
             </ScreenClassRender>

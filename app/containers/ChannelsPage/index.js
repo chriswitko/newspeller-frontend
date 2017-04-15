@@ -102,12 +102,12 @@ export class ChannelsPage extends React.PureComponent {
       {name: 'Politics', code: 'politics', totalSubscribed: 0},
       {name: 'Business', code: 'business', totalSubscribed: 0},
       {name: 'Art & Entertainment', code: 'art_entertainment', totalSubscribed: 0},
-      {name: 'Travel', code: 'travel', totalSubscribed: 0},
-      {name: 'Food', code: 'food', totalSubscribed: 0},
-      {name: 'Moto', code: 'moto', totalSubscribed: 0},
-      {name: 'Movies', code: 'movies', totalSubscribed: 0},
-      {name: 'Fashion & Design', code: 'fashion_design', totalSubscribed: 0},
-      {name: 'Health & Living', code: 'health_living', totalSubscribed: 0}
+      // {name: 'Travel', code: 'travel', totalSubscribed: 0},
+      // {name: 'Food', code: 'food', totalSubscribed: 0},
+      // {name: 'Moto', code: 'moto', totalSubscribed: 0},
+      // {name: 'Movies', code: 'movies', totalSubscribed: 0},
+      {name: 'Fashion & Design', code: 'fashion_design', totalSubscribed: 0}
+      // {name: 'Health & Living', code: 'health_living', totalSubscribed: 0}
     ]
 
     return (

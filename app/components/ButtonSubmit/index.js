@@ -26,7 +26,7 @@ const disabled = (disabled = false, color = '#4745d1', textColor = '#ffffff') =>
 }
 
 export default styled.button`
-  padding: ${props => props.lg ? '1em 1.5em' : '0.65em 1em'};
+  padding: ${props => props.lg ? '0.8em 1.3em' : '0.65em 1em'};
   text-decoration: none;
   cursor: pointer;
   outline: 0;

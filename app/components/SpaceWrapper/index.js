@@ -28,9 +28,20 @@ const header = (header) => {
   if (header) {
     return `
       text-width: 600;
-      margin-bottom: 0px;
       border-bottom: 1px solid #d5d5d5;
       font-weight: bold;
+    `
+  }
+}
+
+const last = (last) => {
+  if (last) {
+    return `
+      margin-bottom: 0px;
+    `
+  } else {
+    return `
+      margin-bottom: 15px;
     `
   }
 }
@@ -55,24 +66,21 @@ const shadow = (shadow) => {
   }
 }
 
-const background = (bg = '#ffffff', color = '') => {
+const background = (bg = '#f8f8f8', color = '') => {
   if (bg === 'transparent') {
     return `
       background-color: transparent;
       padding: 15px 0 15px 0;
-      margin-bottom: 15px;
     `
-  } else if (bg === 'white' || bg === '#fff' || bg === '#ffffff') {
+  } else if (bg === 'white' || bg === '#f8f8f8') {
     return `
       background: ${bg};
       padding: 15px;
-      margin-bottom: 15px;
     `
   } else {
     return `
       background: ${bg};
       padding: 15px;
-      margin-bottom: 15px;
     `
   }
 }
@@ -119,6 +127,8 @@ const SpaceWrapper = styled.div`
   ${props => shadow(props.shadow)}
   ${props => dynamic(props.dynamic)}
   ${props => active(props.active)}
+  ${props => last(props.last || props.header)}
+
   display: table;
   width: 100%;
 

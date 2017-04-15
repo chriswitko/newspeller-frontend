@@ -5,16 +5,13 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
 import SpaceWrapper from 'components/SpaceWrapper'
-import Label from 'components/Label'
 import { Row, Col } from 'react-grid-system'
 
 const Faqs = ({intl}) => {
   return (
     <div>
       <SpaceWrapper header>
-        <Label>
-          <FormattedMessage {...messages.faqs} />:
-        </Label>
+        <FormattedMessage {...messages.faqs} />:
       </SpaceWrapper>
       <SpaceWrapper>
         <Row>

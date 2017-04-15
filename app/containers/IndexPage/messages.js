@@ -48,7 +48,7 @@ export default defineMessages({
   },
   regFormBtnSubmit: {
     id: 'newspeller.containers.IndexPage.regFormBtnSubmit',
-    defaultMessage: 'Activate my personal email'
+    defaultMessage: 'Subscribe'
   },
   regFormPromise4: {
     id: 'newspeller.containers.IndexPage.regFormPromise4',
@@ -77,5 +77,9 @@ export default defineMessages({
   btnPleaseWait: {
     id: 'newspeller.containers.IndexPage.btnPleaseWait',
     defaultMessage: 'Please wait'
+  },
+  about: {
+    id: 'newspeller.containers.IndexPage.about',
+    defaultMessage: 'Learn more...'
   }
 })

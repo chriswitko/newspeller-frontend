@@ -17,6 +17,7 @@
   "newspeller.containers.IndexPage.errorRequiredFields": "Pole email jest wymagane",
   "newspeller.containers.IndexPage.errorUserExists": "Podany adres email znajduje się już w naszej bazie danych. Spróbuj się zalogować.",
   "newspeller.containers.IndexPage.btnPleaseWait": "Proszę czekać...",
+  "newspeller.containers.IndexPage.about": "Dowiedz się więce...",
   "newspeller.components.Header.home": "Subskrypcje",
   "newspeller.components.Header.channels": "Szukaj",
   "newspeller.components.Header.settings": "Ustawienia",

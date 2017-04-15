@@ -3,7 +3,7 @@ import { injectGlobal } from 'styled-components'
 injectGlobal`
   html,
   body {
-    background-color: #F5F7FA;
+    background-color: #ffffff;
     height: 100%;
     width: 100%;
   }

@@ -25,15 +25,17 @@ const Footer = _ => {
         <Col lg={8} sm={12}>
           <FA href='https://medium.com/newspeller' target='_blank'><FormattedMessage {...messages.about} /></FA>
           &nbsp;&middot;&nbsp;
-          <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
-          &nbsp;&middot;&nbsp;
-          <FA href='https://twitter.com/newspeller'>@newspeller</FA>
+          <FA href='https://medium.com/newspeller' target='_blank'>FAQ</FA>
           &nbsp;&middot;&nbsp;
           <FA href='/terms'><FormattedMessage {...messages.terms} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='/privacy'><FormattedMessage {...messages.privacy} /></FA>
           &nbsp;&middot;&nbsp;
           <FA href='https://goo.gl/forms/xptTS15DCAdfQBIy2' target='_blank'><FormattedMessage {...messages.newsPub} /></FA>
+          &nbsp;&middot;&nbsp;
+          <FA href='mailto:inbox@newspeller.com'><FormattedMessage {...messages.contact} /></FA>
+          &nbsp;&middot;&nbsp;
+          <FA href='https://twitter.com/newspeller'>@newspeller</FA>
           <br />
         </Col>
         <Col lg={4} sm={12}>

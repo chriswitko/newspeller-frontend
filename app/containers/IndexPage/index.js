@@ -26,12 +26,8 @@ import Div from 'components/Div'
 import Small from 'components/Small'
 import SpaceWrapper from 'components/SpaceWrapper'
 import Alert from 'components/Alert'
-import ImgLogo from './components/ImgLogo'
-import HeroImg from './assets/email_envelope_letter_mail_message_-93-512.png'
 
-import OurPromise from 'components/OurPromise'
 import Faqs from 'components/Faqs'
-import PublishersBox from 'components/PublishersBox'
 
 export class IndexPage extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
@@ -72,47 +68,49 @@ export class IndexPage extends React.PureComponent {
           <Row>
             <Col sm={12}>
               <div>
-                <SpaceWrapper shadow bg='linear-gradient(135deg, #b93fe5, #549eff)' color='white'>
+                <SpaceWrapper>
                   <Row>
-                    <Col lg={4} xs={12} style={{textAlign: 'center'}}>
-                      <ImgLogo src={HeroImg} width='100%' style={{padding: '20px'}} />
-                    </Col>
                     <Col lg={8} xs={12}>
-                      <h1 style={{padding: 0, margin: 0, lineHeight: '1.2em'}}>
-                        <FormattedMessage {...messages.headline} />
-                      </h1>
-                      <p><FormattedMessage {...messages.subline} /></p>
-                      <ol>
-                        <li><FormattedMessage {...messages.perks1} /></li>
-                        <li><FormattedMessage {...messages.perks2} /></li>
-                        <li><FormattedMessage {...messages.perks3} /></li>
-                        <li><FormattedMessage {...messages.perks4} /></li>
-                      </ol>
-                      <form id='form' onSubmit={onSubmitForm}>
-                        <Div>
-                          <Label htmlFor='username'>
-                            <FormattedMessage {...messages.regFormEnterEmail} />
-                          </Label>
-                          { error ? <Div><Alert>{ intl.formatMessage(messages[error]) }</Alert></Div> : '' }
-                          <Input
-                            id='username'
-                            type='username'
-                            placeholder={intl.formatMessage(messages.inputEmailPlaceholder)}
-                            value={username}
-                            onChange={onChangeUsername}
-                            />
-                          <Small><strong>{this.numberOfSubscribersLastWeek()}</strong> <FormattedMessage {...messages.regFormSubsInfo} /></Small>
-                        </Div>
-                        <Div>
-                          <ButtonSubmit lg color='white' textColor='#4745d1' disabled={loading} type='submit'><FormattedMessage {...loading ? messages.btnPleaseWait : messages.regFormBtnSubmit} /></ButtonSubmit>
-                        </Div>
-                        <Div><Small><FormattedMessage {...messages.regFormPromise4} /> <Link to='terms'><FormattedMessage {...messages.linkTerms} /></Link> &amp; <Link to='privacy'><FormattedMessage {...messages.linkPrivacy} /></Link>.</Small></Div>
-                      </form>
+                      <SpaceWrapper last>
+                        <h1 style={{padding: 0, margin: 0, lineHeight: '1.2em'}}>
+                          <FormattedMessage {...messages.headline} />
+                        </h1>
+                        <p><FormattedMessage {...messages.subline} /></p>
+                        <ol>
+                          <li><FormattedMessage {...messages.perks1} /></li>
+                          <li><FormattedMessage {...messages.perks2} /></li>
+                          <li><FormattedMessage {...messages.perks3} /></li>
+                          <li><FormattedMessage {...messages.perks4} /></li>
+                        </ol>
+                        <a href='https://medium.com/newspeller' target='_blank'><FormattedMessage {...messages.about} /></a>
+                      </SpaceWrapper>
+                    </Col>
+                    <Col lg={4} xs={12}>
+                      <SpaceWrapper bg='white' color='black' last>
+                        <form id='form' onSubmit={onSubmitForm}>
+                          <Div>
+                            <Label htmlFor='username'>
+                              <FormattedMessage {...messages.regFormEnterEmail} />
+                            </Label>
+                            { error ? <Div><Alert>{ intl.formatMessage(messages[error]) }</Alert></Div> : '' }
+                            <Input
+                              id='username'
+                              type='username'
+                              placeholder={intl.formatMessage(messages.inputEmailPlaceholder)}
+                              value={username}
+                              onChange={onChangeUsername}
+                              />
+                            <Small className='highlight'><strong>{this.numberOfSubscribersLastWeek()}</strong> <FormattedMessage {...messages.regFormSubsInfo} /></Small>
+                          </Div>
+                          <Div>
+                            <ButtonSubmit lg disabled={loading} type='submit'><FormattedMessage {...loading ? messages.btnPleaseWait : messages.regFormBtnSubmit} /></ButtonSubmit>
+                          </Div>
+                          <Div><Small><FormattedMessage {...messages.regFormPromise4} /> <Link to='terms'><FormattedMessage {...messages.linkTerms} /></Link> &amp; <Link to='privacy'><FormattedMessage {...messages.linkPrivacy} /></Link>.</Small></Div>
+                        </form>
+                      </SpaceWrapper>
                     </Col>
                   </Row>
                 </SpaceWrapper>
-                <PublishersBox {...intl} />
-                <OurPromise {...intl} />
                 <Faqs {...intl} />
               </div>
             </Col>
